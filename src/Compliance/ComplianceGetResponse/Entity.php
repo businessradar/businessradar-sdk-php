@@ -6,7 +6,8 @@ namespace Businessradar\Compliance\ComplianceGetResponse;
 
 use Businessradar\Compliance\ComplianceGetResponse\Entity\EntityRole;
 use Businessradar\Compliance\ComplianceGetResponse\Entity\EntityType;
-use Businessradar\Compliance\ComplianceGetResponse\Entity\Result;
+use Businessradar\Compliance\ComplianceGetResponse\Entity\Gender;
+use Businessradar\Compliance\ComplianceGetResponse\Entity\Status;
 use Businessradar\Compliance\ComplianceGetResponse\Entity\Ubo;
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Attributes\Required;
@@ -14,7 +15,6 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type ResultShape from \Businessradar\Compliance\ComplianceGetResponse\Entity\Result
  * @phpstan-import-type UboShape from \Businessradar\Compliance\ComplianceGetResponse\Entity\Ubo
  *
  * @phpstan-type EntityShape = array{
@@ -22,9 +22,10 @@ use Businessradar\Core\Contracts\BaseModel;
  *   entityType: EntityType|value-of<EntityType>,
  *   externalID: string,
  *   name: string,
- *   results: list<Result|ResultShape>,
+ *   status: \Businessradar\Compliance\ComplianceGetResponse\Entity\Status|value-of<\Businessradar\Compliance\ComplianceGetResponse\Entity\Status>,
  *   ubo: null|Ubo|UboShape,
  *   country?: string|null,
+ *   gender?: null|Gender|value-of<Gender>,
  * }
  */
 final class Entity implements BaseModel
@@ -58,15 +59,30 @@ final class Entity implements BaseModel
     #[Required]
     public string $name;
 
-    /** @var list<Result> $results */
-    #[Required(list: Result::class)]
-    public array $results;
+    /**
+     * * `on_hold` - On Hold
+     * * `queued` - Queued
+     * * `in_progress` - In Progress
+     * * `completed` - Completed
+     * * `skipped` - Skipped
+     * * `failed` - Failed.
+     *
+     * @var value-of<Status> $status
+     */
+    #[Required(
+        enum: Status::class
+    )]
+    public string $status;
 
     #[Required]
     public ?Ubo $ubo;
 
     #[Optional(nullable: true)]
     public ?string $country;
+
+    /** @var value-of<Gender>|null $gender */
+    #[Optional(enum: Gender::class, nullable: true)]
+    public ?string $gender;
 
     /**
      * `new Entity()` is missing required properties by the API.
@@ -78,7 +94,7 @@ final class Entity implements BaseModel
      *   entityType: ...,
      *   externalID: ...,
      *   name: ...,
-     *   results: ...,
+     *   status: ...,
      *   ubo: ...,
      * )
      * ```
@@ -91,7 +107,7 @@ final class Entity implements BaseModel
      *   ->withEntityType(...)
      *   ->withExternalID(...)
      *   ->withName(...)
-     *   ->withResults(...)
+     *   ->withStatus(...)
      *   ->withUbo(...)
      * ```
      */
@@ -107,17 +123,19 @@ final class Entity implements BaseModel
      *
      * @param EntityRole|value-of<EntityRole> $entityRole
      * @param EntityType|value-of<EntityType> $entityType
-     * @param list<Result|ResultShape> $results
+     * @param Status|value-of<Status> $status
      * @param Ubo|UboShape|null $ubo
+     * @param Gender|value-of<Gender>|null $gender
      */
     public static function with(
         EntityRole|string $entityRole,
         EntityType|string $entityType,
         string $externalID,
         string $name,
-        array $results,
+        Status|string $status,
         Ubo|array|null $ubo,
         ?string $country = null,
+        Gender|string|null $gender = null,
     ): self {
         $self = new self;
 
@@ -125,10 +143,11 @@ final class Entity implements BaseModel
         $self['entityType'] = $entityType;
         $self['externalID'] = $externalID;
         $self['name'] = $name;
-        $self['results'] = $results;
+        $self['status'] = $status;
         $self['ubo'] = $ubo;
 
         null !== $country && $self['country'] = $country;
+        null !== $gender && $self['gender'] = $gender;
 
         return $self;
     }
@@ -180,12 +199,20 @@ final class Entity implements BaseModel
     }
 
     /**
-     * @param list<Result|ResultShape> $results
+     * * `on_hold` - On Hold
+     * * `queued` - Queued
+     * * `in_progress` - In Progress
+     * * `completed` - Completed
+     * * `skipped` - Skipped
+     * * `failed` - Failed.
+     *
+     * @param Status|value-of<Status> $status
      */
-    public function withResults(array $results): self
-    {
+    public function withStatus(
+        Status|string $status
+    ): self {
         $self = clone $this;
-        $self['results'] = $results;
+        $self['status'] = $status;
 
         return $self;
     }
@@ -205,6 +232,17 @@ final class Entity implements BaseModel
     {
         $self = clone $this;
         $self['country'] = $country;
+
+        return $self;
+    }
+
+    /**
+     * @param Gender|value-of<Gender>|null $gender
+     */
+    public function withGender(Gender|string|null $gender): self
+    {
+        $self = clone $this;
+        $self['gender'] = $gender;
 
         return $self;
     }
