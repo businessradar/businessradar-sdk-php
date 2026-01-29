@@ -35,27 +35,7 @@ final class ComplianceTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->compliance->create(
-            companyID: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(ComplianceNewResponse::class, $result);
-    }
-
-    #[Test]
-    public function testCreateWithOptionalParams(): void
-    {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
-
-        $result = $this->client->compliance->create(
-            companyID: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            allEntitiesScreeningEnabled: true,
-            directorsScreeningEnabled: true,
-            ownershipScreeningThreshold: 0,
-        );
+        $result = $this->client->compliance->create();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ComplianceNewResponse::class, $result);

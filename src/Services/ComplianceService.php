@@ -41,16 +41,16 @@ final class ComplianceService implements ComplianceContract
      * @throws APIException
      */
     public function create(
-        string $companyID,
         bool $allEntitiesScreeningEnabled = false,
+        ?string $companyID = null,
         bool $directorsScreeningEnabled = true,
         float $ownershipScreeningThreshold = 0.7,
         RequestOptions|array|null $requestOptions = null,
     ): ComplianceNewResponse {
         $params = Util::removeNulls(
             [
-                'companyID' => $companyID,
                 'allEntitiesScreeningEnabled' => $allEntitiesScreeningEnabled,
+                'companyID' => $companyID,
                 'directorsScreeningEnabled' => $directorsScreeningEnabled,
                 'ownershipScreeningThreshold' => $ownershipScreeningThreshold,
             ],
