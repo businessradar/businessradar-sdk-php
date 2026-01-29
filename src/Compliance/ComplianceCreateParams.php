@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Businessradar\Compliance;
 
+use Businessradar\Compliance\ComplianceCreateParams\Entity;
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Concerns\SdkParams;
@@ -14,10 +15,13 @@ use Businessradar\Core\Contracts\BaseModel;
  *
  * @see Businessradar\Services\ComplianceService::create()
  *
+ * @phpstan-import-type EntityShape from \Businessradar\Compliance\ComplianceCreateParams\Entity
+ *
  * @phpstan-type ComplianceCreateParamsShape = array{
  *   allEntitiesScreeningEnabled?: bool|null,
  *   companyID?: string|null,
  *   directorsScreeningEnabled?: bool|null,
+ *   entities?: list<Entity|EntityShape>|null,
  *   ownershipScreeningThreshold?: float|null,
  * }
  */
@@ -36,10 +40,20 @@ final class ComplianceCreateParams implements BaseModel
     #[Optional('company_id', nullable: true)]
     public ?string $companyID;
 
+    /**
+     * If directors should be screened.
+     */
     #[Optional('directors_screening_enabled')]
     public ?bool $directorsScreeningEnabled;
 
-    #[Optional('ownership_screening_threshold')]
+    /** @var list<Entity>|null $entities */
+    #[Optional(list: Entity::class)]
+    public ?array $entities;
+
+    /**
+     * The threshold for ultimate ownership to enable for screening.
+     */
+    #[Optional('ownership_screening_threshold', nullable: true)]
     public ?float $ownershipScreeningThreshold;
 
     public function __construct()
@@ -51,11 +65,14 @@ final class ComplianceCreateParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<Entity|EntityShape>|null $entities
      */
     public static function with(
         ?bool $allEntitiesScreeningEnabled = null,
         ?string $companyID = null,
         ?bool $directorsScreeningEnabled = null,
+        ?array $entities = null,
         ?float $ownershipScreeningThreshold = null,
     ): self {
         $self = new self;
@@ -63,6 +80,7 @@ final class ComplianceCreateParams implements BaseModel
         null !== $allEntitiesScreeningEnabled && $self['allEntitiesScreeningEnabled'] = $allEntitiesScreeningEnabled;
         null !== $companyID && $self['companyID'] = $companyID;
         null !== $directorsScreeningEnabled && $self['directorsScreeningEnabled'] = $directorsScreeningEnabled;
+        null !== $entities && $self['entities'] = $entities;
         null !== $ownershipScreeningThreshold && $self['ownershipScreeningThreshold'] = $ownershipScreeningThreshold;
 
         return $self;
@@ -88,6 +106,9 @@ final class ComplianceCreateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * If directors should be screened.
+     */
     public function withDirectorsScreeningEnabled(
         bool $directorsScreeningEnabled
     ): self {
@@ -97,8 +118,22 @@ final class ComplianceCreateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * @param list<Entity|EntityShape> $entities
+     */
+    public function withEntities(array $entities): self
+    {
+        $self = clone $this;
+        $self['entities'] = $entities;
+
+        return $self;
+    }
+
+    /**
+     * The threshold for ultimate ownership to enable for screening.
+     */
     public function withOwnershipScreeningThreshold(
-        float $ownershipScreeningThreshold
+        ?float $ownershipScreeningThreshold
     ): self {
         $self = clone $this;
         $self['ownershipScreeningThreshold'] = $ownershipScreeningThreshold;

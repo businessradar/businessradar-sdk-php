@@ -6,6 +6,7 @@ namespace Businessradar\Services;
 
 use Businessradar\Client;
 use Businessradar\Compliance\ComplianceCreateParams;
+use Businessradar\Compliance\ComplianceCreateParams\Entity;
 use Businessradar\Compliance\ComplianceGetResponse;
 use Businessradar\Compliance\ComplianceNewResponse;
 use Businessradar\Core\Contracts\BaseResponse;
@@ -14,6 +15,7 @@ use Businessradar\RequestOptions;
 use Businessradar\ServiceContracts\ComplianceRawContract;
 
 /**
+ * @phpstan-import-type EntityShape from \Businessradar\Compliance\ComplianceCreateParams\Entity
  * @phpstan-import-type RequestOpts from \Businessradar\RequestOptions
  */
 final class ComplianceRawService implements ComplianceRawContract
@@ -33,7 +35,8 @@ final class ComplianceRawService implements ComplianceRawContract
      *   allEntitiesScreeningEnabled?: bool,
      *   companyID?: string|null,
      *   directorsScreeningEnabled?: bool,
-     *   ownershipScreeningThreshold?: float,
+     *   entities?: list<Entity|EntityShape>,
+     *   ownershipScreeningThreshold?: float|null,
      * }|ComplianceCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -63,7 +66,7 @@ final class ComplianceRawService implements ComplianceRawContract
     /**
      * @api
      *
-     * Get compliance check results.
+     * Get compliance check details.
      *
      * @param RequestOpts|null $requestOptions
      *
