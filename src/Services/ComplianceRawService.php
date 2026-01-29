@@ -30,8 +30,8 @@ final class ComplianceRawService implements ComplianceRawContract
      * Create a new compliance check.
      *
      * @param array{
-     *   companyID: string,
      *   allEntitiesScreeningEnabled?: bool,
+     *   companyID?: string|null,
      *   directorsScreeningEnabled?: bool,
      *   ownershipScreeningThreshold?: float,
      * }|ComplianceCreateParams $params

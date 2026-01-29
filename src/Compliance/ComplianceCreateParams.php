@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Businessradar\Compliance;
 
 use Businessradar\Core\Attributes\Optional;
-use Businessradar\Core\Attributes\Required;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
@@ -16,8 +15,8 @@ use Businessradar\Core\Contracts\BaseModel;
  * @see Businessradar\Services\ComplianceService::create()
  *
  * @phpstan-type ComplianceCreateParamsShape = array{
- *   companyID: string,
  *   allEntitiesScreeningEnabled?: bool|null,
+ *   companyID?: string|null,
  *   directorsScreeningEnabled?: bool|null,
  *   ownershipScreeningThreshold?: float|null,
  * }
@@ -28,14 +27,14 @@ final class ComplianceCreateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Required('company_id')]
-    public string $companyID;
-
     /**
      * If enabled all found entities UBOs, directors, shareholders will be screened. This can have an high cost impact.
      */
     #[Optional('all_entities_screening_enabled')]
     public ?bool $allEntitiesScreeningEnabled;
+
+    #[Optional('company_id', nullable: true)]
+    public ?string $companyID;
 
     #[Optional('directors_screening_enabled')]
     public ?bool $directorsScreeningEnabled;
@@ -43,20 +42,6 @@ final class ComplianceCreateParams implements BaseModel
     #[Optional('ownership_screening_threshold')]
     public ?float $ownershipScreeningThreshold;
 
-    /**
-     * `new ComplianceCreateParams()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * ComplianceCreateParams::with(companyID: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new ComplianceCreateParams)->withCompanyID(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -68,26 +53,17 @@ final class ComplianceCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $companyID,
         ?bool $allEntitiesScreeningEnabled = null,
+        ?string $companyID = null,
         ?bool $directorsScreeningEnabled = null,
         ?float $ownershipScreeningThreshold = null,
     ): self {
         $self = new self;
 
-        $self['companyID'] = $companyID;
-
         null !== $allEntitiesScreeningEnabled && $self['allEntitiesScreeningEnabled'] = $allEntitiesScreeningEnabled;
+        null !== $companyID && $self['companyID'] = $companyID;
         null !== $directorsScreeningEnabled && $self['directorsScreeningEnabled'] = $directorsScreeningEnabled;
         null !== $ownershipScreeningThreshold && $self['ownershipScreeningThreshold'] = $ownershipScreeningThreshold;
-
-        return $self;
-    }
-
-    public function withCompanyID(string $companyID): self
-    {
-        $self = clone $this;
-        $self['companyID'] = $companyID;
 
         return $self;
     }
@@ -100,6 +76,14 @@ final class ComplianceCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['allEntitiesScreeningEnabled'] = $allEntitiesScreeningEnabled;
+
+        return $self;
+    }
+
+    public function withCompanyID(?string $companyID): self
+    {
+        $self = clone $this;
+        $self['companyID'] = $companyID;
 
         return $self;
     }

@@ -23,8 +23,8 @@ interface ComplianceContract
      * @throws APIException
      */
     public function create(
-        string $companyID,
         bool $allEntitiesScreeningEnabled = false,
+        ?string $companyID = null,
         bool $directorsScreeningEnabled = true,
         float $ownershipScreeningThreshold = 0.7,
         RequestOptions|array|null $requestOptions = null,
