@@ -10,22 +10,10 @@ The REST API documentation can be found on [api.businessradar.com](https://api.b
 
 ## Installation
 
-To use this package, install via Composer by adding the following to your application's `composer.json`:
-
 <!-- x-release-please-start-version -->
 
-```json
-{
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:businessradar/businessradar-sdk-php.git"
-    }
-  ],
-  "require": {
-    "businessradar/businessradar": "dev-main"
-  }
-}
+```
+composer require "businessradar/businessradar 0.1.0"
 ```
 
 <!-- x-release-please-end -->
