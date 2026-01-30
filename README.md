@@ -2,11 +2,11 @@
 
 The Business Radar PHP library provides convenient access to the Business Radar REST API from any PHP 8.1.0+ application.
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 ## Documentation
 
 The REST API documentation can be found on [api.businessradar.com](https://api.businessradar.com/ext/v3/).
+
+Reach out to support@businessradar.com for any technical questions/suggestions.
 
 ## Installation
 
