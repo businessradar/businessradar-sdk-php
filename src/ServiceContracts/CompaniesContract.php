@@ -63,7 +63,7 @@ interface CompaniesContract
      *
      * @param list<string> $country ISO 2-letter Country Code (e.g., NL, US)
      * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number (can be multiple)
-     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param list<string> $portfolioID Filter companies belonging to specific Portfolio IDs (UUID)
      * @param string $query custom search query to text search all companies
      * @param list<string> $registrationNumber Local Registration Number (can be multiple)
@@ -370,7 +370,7 @@ interface CompaniesContract
      *
      * @param \DateTimeInterface $maxCreatedAt filter updates created at or before this time
      * @param \DateTimeInterface $minCreatedAt filter updates created at or after this time
-     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListAttributeChangesResponse>
@@ -387,7 +387,7 @@ interface CompaniesContract
     /**
      * @api
      *
-     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListMissingCompanyInvestigationsResponse>

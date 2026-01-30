@@ -42,8 +42,9 @@ final class ComplianceService implements ComplianceContract
      *
      * ### Create Compliance Check (Asynchronous)
      *
-     * Initiate a new compliance screening. Once posted, Business Radar processes the
-     * request in the background.
+     * Initiate a new compliance screening for either a specific company or a custom
+     * list of entities. Once posted, Business Radar processes the request in the
+     * background.
      *
      * To check the progress and/or retrieve the final result, you can use the [GET
      * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
@@ -112,7 +113,7 @@ final class ComplianceService implements ComplianceContract
      *
      * @param string $entity Filter by entity external ID
      * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
-     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param Order|value-of<Order> $order Sorting order
      * @param ResultType|value-of<ResultType> $resultType Filter by result type
      * @param Sorting|value-of<Sorting> $sorting Sorting field
