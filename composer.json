@@ -27,7 +27,7 @@
     "sort-packages": true
   },
   "description": "Business Radar PHP SDK",
-  "name": "org-placeholder/businessradar",
+  "name": "businessradar/businessradar",
   "require": {
     "php": "^8.1",
     "php-http/discovery": "^1",
