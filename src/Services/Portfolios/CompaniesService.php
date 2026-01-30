@@ -37,11 +37,18 @@ final class CompaniesService implements CompaniesContract
     /**
      * @api
      *
-     * Register a new Portfolio Company.
+     * ### Register Portfolio Company (Asynchronous)
      *
-     * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company Portfolio Company Detail Serializer.
+     * Register and add a new company to the portfolio. Once posted, Business Radar
+     * processes the request in the background.
      *
-     * Alternative serializer for the Company model which is limited.
+     * To check the progress and/or retrieve the final result, you can use the [GET
+     * /registrations/{registration_id}](/ext/v3/#/ext/ext_v3_registrations_retrieve)
+     * endpoint.
+     *
+     * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company ### Portfolio Company Detail (Simplified)
+     *
+     * A lightweight data structure for company identification (UUID, DUNS, Name, Country)
      * @param Country|value-of<Country>|null $country
      * @param string|null $customerReference customer reference for the client to understand relationship
      * @param RequestOpts|null $requestOptions
@@ -78,9 +85,13 @@ final class CompaniesService implements CompaniesContract
     /**
      * @api
      *
-     * List And Create Portfolio Companies.
+     * ### Portfolio Companies
      *
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * Manage companies within a specific portfolio. - **GET**: List all companies
+     * currently in the portfolio. - **POST**: Register and add a new company to the
+     * portfolio.
+     *
+     * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListResponse>
@@ -103,7 +114,9 @@ final class CompaniesService implements CompaniesContract
     /**
      * @api
      *
-     * Remove Portfolio Companies.
+     * ### Remove Portfolio Company
+     *
+     * Remove a company from a portfolio using its internal `external_id`.
      *
      * @param RequestOpts|null $requestOptions
      *

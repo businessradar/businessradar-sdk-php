@@ -40,7 +40,23 @@ final class ComplianceService implements ComplianceContract
     /**
      * @api
      *
-     * Create a new compliance check.
+     * ### Create Compliance Check (Asynchronous)
+     *
+     * Initiate a new compliance screening using one of two methods:
+     *
+     * 1. **Company-based screening**: Provide a `company_id` to automatically screen
+     * the company and its associated entities (like UBOs and directors). You can
+     * optionally include a list of additional `entities` to be screened alongside the
+     * company.
+     *
+     * 2. **Custom entity screening**: Provide a list of `entities` without a
+     * `company_id` to screen specific individuals or organizations that are not
+     * necessarily affiliated with a company in our database.
+     *
+     * Once posted, Business Radar processes the request in the background.
+     *
+     * To check the progress and/or retrieve the final result, you can use the [GET
+     * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
      *
      * @param bool $allEntitiesScreeningEnabled If enabled all found entities UBOs, directors, shareholders will be screened. This can have an high cost impact.
      * @param bool $directorsScreeningEnabled if directors should be screened
@@ -77,7 +93,10 @@ final class ComplianceService implements ComplianceContract
     /**
      * @api
      *
-     * Get compliance check details.
+     * ### Compliance Check Status
+     *
+     * Check the current status, progress, and high-level scores of a specific compliance
+     * check.
      *
      * @param RequestOpts|null $requestOptions
      *
@@ -96,11 +115,14 @@ final class ComplianceService implements ComplianceContract
     /**
      * @api
      *
-     * List compliance results.
+     * ### List Compliance Results
+     *
+     * Retrieve all findings for a compliance check. Results can be filtered by entity,
+     * type of finding (e.g., Sanction, PEP), and confidence score.
      *
      * @param string $entity Filter by entity external ID
      * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param Order|value-of<Order> $order Sorting order
      * @param ResultType|value-of<ResultType> $resultType Filter by result type
      * @param Sorting|value-of<Sorting> $sorting Sorting field

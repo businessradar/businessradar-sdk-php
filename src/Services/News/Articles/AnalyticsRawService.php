@@ -29,7 +29,9 @@ final class AnalyticsRawService implements AnalyticsRawContract
     /**
      * @api
      *
-     * Get Count of Articles published by Date.
+     * ### Get Article Aggregations
+     *
+     * Retrieve the number of articles and their average sentiment, grouped by date.
      *
      * @param array{
      *   category?: list<string>,

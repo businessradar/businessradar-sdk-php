@@ -34,7 +34,14 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
-     * Register a new Portfolio Company.
+     * ### Register Portfolio Company (Asynchronous)
+     *
+     * Register and add a new company to the portfolio. Once posted, Business Radar
+     * processes the request in the background.
+     *
+     * To check the progress and/or retrieve the final result, you can use the [GET
+     * /registrations/{registration_id}](/ext/v3/#/ext/ext_v3_registrations_retrieve)
+     * endpoint.
      *
      * @param array{
      *   company?: PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null,
@@ -73,7 +80,11 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
-     * List And Create Portfolio Companies.
+     * ### Portfolio Companies
+     *
+     * Manage companies within a specific portfolio. - **GET**: List all companies
+     * currently in the portfolio. - **POST**: Register and add a new company to the
+     * portfolio.
      *
      * @param array{nextKey?: string}|CompanyListParams $params
      * @param RequestOpts|null $requestOptions
@@ -106,7 +117,9 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
-     * Remove Portfolio Companies.
+     * ### Remove Portfolio Company
+     *
+     * Remove a company from a portfolio using its internal `external_id`.
      *
      * @param array{portfolioID: string}|CompanyDeleteParams $params
      * @param RequestOpts|null $requestOptions

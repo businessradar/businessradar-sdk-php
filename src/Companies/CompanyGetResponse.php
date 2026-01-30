@@ -11,7 +11,14 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Company.
+ * ### Company.
+ *
+ * Detailed representation of a company in Business Radar.
+ *
+ * This data includes: - Basic info (name, country, website) - Identification (DUNS,
+ * external ID, registration numbers) - Industry classifications - Geographical data
+ * (address, coordinates) - Social and online presence - Summary metrics (article
+ * count, review scores, etc.)
  *
  * @phpstan-import-type IndustryCodeShape from \Businessradar\Companies\IndustryCode
  * @phpstan-import-type RegistrationNumberShape from \Businessradar\Companies\CompanyGetResponse\RegistrationNumber

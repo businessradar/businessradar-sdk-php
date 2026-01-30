@@ -9,7 +9,9 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Compliance check create serializer.
+ * ### Compliance Check.
+ *
+ * Used for creating a minimal compliance check record.
  *
  * @phpstan-type ComplianceNewResponseShape = array{externalID: string}
  */

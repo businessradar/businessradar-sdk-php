@@ -9,7 +9,9 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Serializer for Source Information.
+ * ### Source.
+ *
+ * Represents the origin of a news article, including its domain, URL, and name.
  *
  * @phpstan-type SourceShape = array{domain: string, name: string, url: string}
  */

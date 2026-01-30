@@ -11,7 +11,9 @@ use Businessradar\Core\Contracts\BaseModel;
 use Businessradar\News\Articles\Analytics\AnalyticsGetCountByDateParams\Interval;
 
 /**
- * Get Count of Articles published by Date.
+ * ### Get Article Aggregations.
+ *
+ * Retrieve the number of articles and their average sentiment, grouped by date.
  *
  * @see Businessradar\Services\News\Articles\AnalyticsService::getCountByDate()
  *
@@ -44,7 +46,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Category ID to filter articles.
+     * Filter by article Category IDs (UUIDs).
      *
      * @var list<string>|null $category
      */
@@ -52,7 +54,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?array $category;
 
     /**
-     * Company ID's.
+     * Filter by internal Company UUIDs.
      *
      * @var list<string>|null $company
      */
@@ -60,7 +62,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?array $company;
 
     /**
-     * ISO 2-letter Country Code.
+     * Filter by ISO 2-letter Country Codes (e.g., 'US', 'GB').
      *
      * @var list<string>|null $country
      */
@@ -68,13 +70,13 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?array $country;
 
     /**
-     * By default companies with the same trade names are grouped and the best one is picked, the other ones are not included. By disabling this the amount of company articles will grow significantly.
+     * By default, companies with the same trade names are grouped and the best match is selected. Enable this to see all associated companies.
      */
     #[Optional]
     public ?bool $disableCompanyArticleDeduplication;
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * Filter by one or more 9-digit Dun & Bradstreet Numbers.
      *
      * @var list<string>|null $dunsNumber
      */
@@ -82,7 +84,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?array $dunsNumber;
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * Filter by Global Ultimate DUNS Numbers.
      *
      * @var list<string>|null $globalUltimate
      */
@@ -90,23 +92,27 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?array $globalUltimate;
 
     /**
-     * Include clustered articles.
+     * Include articles that are part of a cluster (reprints or similar articles).
      */
     #[Optional]
     public ?bool $includeClusteredArticles;
 
-    /** @var value-of<Interval>|null $interval */
+    /**
+     * The time interval for aggregation.
+     *
+     * @var value-of<Interval>|null $interval
+     */
     #[Optional(enum: Interval::class)]
     public ?string $interval;
 
     /**
-     * Filter articles by materiality flag (true/false).
+     * Filter by materiality flag (relevance to business risk).
      */
     #[Optional]
     public ?bool $isMaterial;
 
     /**
-     * ISO 2-letter Language Code.
+     * Filter by ISO 2-letter Language Codes (e.g., 'en', 'nl').
      *
      * @var list<string>|null $language
      */
@@ -114,31 +120,31 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?array $language;
 
     /**
-     * Filter articles created before this date.
+     * Filter articles added to our database at or before this date/time.
      */
     #[Optional]
     public ?\DateTimeInterface $maxCreationDate;
 
     /**
-     * Filter articles published before this date.
+     * Filter articles published at or before this date/time.
      */
     #[Optional]
     public ?\DateTimeInterface $maxPublicationDate;
 
     /**
-     * Filter articles created after this date.
+     * Filter articles added to our database at or after this date/time.
      */
     #[Optional]
     public ?\DateTimeInterface $minCreationDate;
 
     /**
-     * Filter articles published after this date.
+     * Filter articles published at or after this date/time.
      */
     #[Optional]
     public ?\DateTimeInterface $minPublicationDate;
 
     /**
-     * Portfolio ID to filter articles.
+     * Filter articles related to companies in specific Portfolios (UUIDs).
      *
      * @var list<string>|null $portfolioID
      */
@@ -146,13 +152,13 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?array $portfolioID;
 
     /**
-     * Custom search filters to text search all articles.
+     * Full-text search query for filtering articles by content.
      */
     #[Optional]
     public ?string $query;
 
     /**
-     * Local Registration Number.
+     * Filter by local company registration numbers.
      *
      * @var list<string>|null $registrationNumber
      */
@@ -160,13 +166,13 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?array $registrationNumber;
 
     /**
-     * Filter articles on already saved article filter id.
+     * Apply a previously saved set of article filters (UUID).
      */
     #[Optional]
     public ?string $savedArticleFilterID;
 
     /**
-     * Filter articles with sentiment.
+     * Filter by sentiment: `true` for positive, `false` for negative.
      */
     #[Optional]
     public ?bool $sentiment;
@@ -238,7 +244,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Category ID to filter articles.
+     * Filter by article Category IDs (UUIDs).
      *
      * @param list<string> $category
      */
@@ -251,7 +257,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Company ID's.
+     * Filter by internal Company UUIDs.
      *
      * @param list<string> $company
      */
@@ -264,7 +270,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * ISO 2-letter Country Code.
+     * Filter by ISO 2-letter Country Codes (e.g., 'US', 'GB').
      *
      * @param list<string> $country
      */
@@ -277,7 +283,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * By default companies with the same trade names are grouped and the best one is picked, the other ones are not included. By disabling this the amount of company articles will grow significantly.
+     * By default, companies with the same trade names are grouped and the best match is selected. Enable this to see all associated companies.
      */
     public function withDisableCompanyArticleDeduplication(
         bool $disableCompanyArticleDeduplication
@@ -289,7 +295,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * Filter by one or more 9-digit Dun & Bradstreet Numbers.
      *
      * @param list<string> $dunsNumber
      */
@@ -302,7 +308,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * Filter by Global Ultimate DUNS Numbers.
      *
      * @param list<string> $globalUltimate
      */
@@ -315,7 +321,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Include clustered articles.
+     * Include articles that are part of a cluster (reprints or similar articles).
      */
     public function withIncludeClusteredArticles(
         bool $includeClusteredArticles
@@ -327,6 +333,8 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
+     * The time interval for aggregation.
+     *
      * @param Interval|value-of<Interval> $interval
      */
     public function withInterval(Interval|string $interval): self
@@ -338,7 +346,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Filter articles by materiality flag (true/false).
+     * Filter by materiality flag (relevance to business risk).
      */
     public function withIsMaterial(bool $isMaterial): self
     {
@@ -349,7 +357,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * ISO 2-letter Language Code.
+     * Filter by ISO 2-letter Language Codes (e.g., 'en', 'nl').
      *
      * @param list<string> $language
      */
@@ -362,7 +370,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Filter articles created before this date.
+     * Filter articles added to our database at or before this date/time.
      */
     public function withMaxCreationDate(
         \DateTimeInterface $maxCreationDate
@@ -374,7 +382,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Filter articles published before this date.
+     * Filter articles published at or before this date/time.
      */
     public function withMaxPublicationDate(
         \DateTimeInterface $maxPublicationDate
@@ -386,7 +394,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Filter articles created after this date.
+     * Filter articles added to our database at or after this date/time.
      */
     public function withMinCreationDate(
         \DateTimeInterface $minCreationDate
@@ -398,7 +406,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Filter articles published after this date.
+     * Filter articles published at or after this date/time.
      */
     public function withMinPublicationDate(
         \DateTimeInterface $minPublicationDate
@@ -410,7 +418,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Portfolio ID to filter articles.
+     * Filter articles related to companies in specific Portfolios (UUIDs).
      *
      * @param list<string> $portfolioID
      */
@@ -423,7 +431,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Custom search filters to text search all articles.
+     * Full-text search query for filtering articles by content.
      */
     public function withQuery(string $query): self
     {
@@ -434,7 +442,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Local Registration Number.
+     * Filter by local company registration numbers.
      *
      * @param list<string> $registrationNumber
      */
@@ -447,7 +455,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Filter articles on already saved article filter id.
+     * Apply a previously saved set of article filters (UUID).
      */
     public function withSavedArticleFilterID(string $savedArticleFilterID): self
     {
@@ -458,7 +466,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Filter articles with sentiment.
+     * Filter by sentiment: `true` for positive, `false` for negative.
      */
     public function withSentiment(bool $sentiment): self
     {

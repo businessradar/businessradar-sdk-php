@@ -11,7 +11,10 @@ use Businessradar\Core\Contracts\BaseModel;
 use Businessradar\Portfolios\Companies\CompanyListResponse\Company;
 
 /**
- * Portfolio Company Instance.
+ * ### Portfolio-Company.
+ *
+ * Represents the association between a company and a portfolio, including portfolio-
+ * specific data such as `customer_reference`.
  *
  * @phpstan-import-type CompanyShape from \Businessradar\Portfolios\Companies\CompanyListResponse\Company
  *
@@ -27,7 +30,10 @@ final class CompanyListResponse implements BaseModel
     use SdkModel;
 
     /**
-     * Company List.
+     * ### Company List.
+     *
+     * Provides a detailed overview of a company, including identification, contact info,
+     * and aggregated news/review metrics.
      */
     #[Required]
     public Company $company;
@@ -83,7 +89,10 @@ final class CompanyListResponse implements BaseModel
     }
 
     /**
-     * Company List.
+     * ### Company List.
+     *
+     * Provides a detailed overview of a company, including identification, contact info,
+     * and aggregated news/review metrics.
      *
      * @param Company|CompanyShape $company
      */

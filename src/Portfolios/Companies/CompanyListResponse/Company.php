@@ -11,7 +11,10 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Company List.
+ * ### Company List.
+ *
+ * Provides a detailed overview of a company, including identification, contact info,
+ * and aggregated news/review metrics.
  *
  * @phpstan-type CompanyShape = array{
  *   country: CountryEnum|value-of<CountryEnum>,

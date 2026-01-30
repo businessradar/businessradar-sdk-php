@@ -11,7 +11,10 @@ use Businessradar\Core\Contracts\BaseModel;
 use Businessradar\Portfolios\Portfolio\DefaultPermission;
 
 /**
- * Portfolio Instance.
+ * ### Portfolio.
+ *
+ * Represents a collection of companies (a portfolio) managed by a user or profile.
+ * Includes basic metadata and default permission settings.
  *
  * @phpstan-type PortfolioShape = array{
  *   externalID: string,

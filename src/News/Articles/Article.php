@@ -15,7 +15,12 @@ use Businessradar\News\Articles\Article\Source;
 use Businessradar\News\Articles\Article\SubArticle;
 
 /**
- * Custom Serializer for the Article Model.
+ * ### Article.
+ *
+ * The primary data structure for news articles. It provides comprehensive data,
+ * including: - Metadata (URLs, publication dates, languages, countries) - Content
+ * (titles, snippets, summaries - both original and translated) - Relationships
+ * (source, related companies, categories) - Analysis (sentiment, clustering status)
  *
  * @phpstan-import-type SourceShape from \Businessradar\News\Articles\Article\Source
  * @phpstan-import-type SubArticleShape from \Businessradar\News\Articles\Article\SubArticle
@@ -177,7 +182,9 @@ final class Article implements BaseModel
     public string $snippetEn;
 
     /**
-     * Serializer for Source Information.
+     * ### Source.
+     *
+     * Represents the origin of a news article, including its domain, URL, and name.
      */
     #[Required]
     public Source $source;
@@ -510,7 +517,9 @@ final class Article implements BaseModel
     }
 
     /**
-     * Serializer for Source Information.
+     * ### Source.
+     *
+     * Represents the origin of a news article, including its domain, URL, and name.
      *
      * @param Source|SourceShape $source
      */

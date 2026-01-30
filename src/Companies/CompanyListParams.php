@@ -10,13 +10,18 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Search all companies using Dun and Bradstreet.
+ * ### Search Companies.
  *
- * Companies will contain an optional external_id, which is null if company is not
- * registered in Business Radar.
+ * Search for companies across internal and external databases.
  *
- * When you pass query and optional country it will search using dun and
- * bradstreet, otherwise using internal search.
+ * - If `query` and an optional `country` are provided, the search is primarily
+ * conducted via Dun & Bradstreet.
+ *
+ * - If other filters (like `portfolio_id`) are provided, the search is limited to
+ * our internal database.
+ *
+ * The results include an `external_id` if the company is already registered in
+ * Business Radar.
  *
  * @see Businessradar\Services\CompaniesService::list()
  *
@@ -37,7 +42,7 @@ final class CompanyListParams implements BaseModel
     use SdkParams;
 
     /**
-     * ISO 2-letter Country Code.
+     * ISO 2-letter Country Code (e.g., NL, US).
      *
      * @var list<string>|null $country
      */
@@ -45,7 +50,7 @@ final class CompanyListParams implements BaseModel
     public ?array $country;
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * 9-digit Dun And Bradstreet Number (can be multiple).
      *
      * @var list<string>|null $dunsNumber
      */
@@ -53,13 +58,13 @@ final class CompanyListParams implements BaseModel
     public ?array $dunsNumber;
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      */
     #[Optional]
     public ?string $nextKey;
 
     /**
-     * Portfolio ID to filter companies.
+     * Filter companies belonging to specific Portfolio IDs (UUID).
      *
      * @var list<string>|null $portfolioID
      */
@@ -73,7 +78,7 @@ final class CompanyListParams implements BaseModel
     public ?string $query;
 
     /**
-     * Local Registration Number.
+     * Local Registration Number (can be multiple).
      *
      * @var list<string>|null $registrationNumber
      */
@@ -81,7 +86,7 @@ final class CompanyListParams implements BaseModel
     public ?array $registrationNumber;
 
     /**
-     * Website URL to search.
+     * Website URL to search for the company.
      */
     #[Optional]
     public ?string $websiteURL;
@@ -124,7 +129,7 @@ final class CompanyListParams implements BaseModel
     }
 
     /**
-     * ISO 2-letter Country Code.
+     * ISO 2-letter Country Code (e.g., NL, US).
      *
      * @param list<string> $country
      */
@@ -137,7 +142,7 @@ final class CompanyListParams implements BaseModel
     }
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * 9-digit Dun And Bradstreet Number (can be multiple).
      *
      * @param list<string> $dunsNumber
      */
@@ -150,7 +155,7 @@ final class CompanyListParams implements BaseModel
     }
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      */
     public function withNextKey(string $nextKey): self
     {
@@ -161,7 +166,7 @@ final class CompanyListParams implements BaseModel
     }
 
     /**
-     * Portfolio ID to filter companies.
+     * Filter companies belonging to specific Portfolio IDs (UUID).
      *
      * @param list<string> $portfolioID
      */
@@ -185,7 +190,7 @@ final class CompanyListParams implements BaseModel
     }
 
     /**
-     * Local Registration Number.
+     * Local Registration Number (can be multiple).
      *
      * @param list<string> $registrationNumber
      */
@@ -198,7 +203,7 @@ final class CompanyListParams implements BaseModel
     }
 
     /**
-     * Website URL to search.
+     * Website URL to search for the company.
      */
     public function withWebsiteURL(string $websiteURL): self
     {

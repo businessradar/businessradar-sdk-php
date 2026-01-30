@@ -12,7 +12,10 @@ use Businessradar\Core\Contracts\BaseModel;
 use Businessradar\Portfolios\PortfolioCreateParams\DefaultPermission;
 
 /**
- * List Create Portfolio.
+ * ### Portfolios.
+ *
+ * Manage collections of companies. This view allows you to list existing portfolios
+ * associated with your profile or create new ones.
  *
  * @see Businessradar\Services\PortfoliosService::create()
  *

@@ -9,7 +9,9 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Registration Number.
+ * ### Registration Number.
+ *
+ * Company registration numbers, such as Chamber of Commerce (KvK) or VAT numbers.
  *
  * @phpstan-type RegistrationNumberShape = array{
  *   description: string, number: string, type: int

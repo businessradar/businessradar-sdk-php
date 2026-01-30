@@ -9,7 +9,11 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Article Date Aggregation Serializer.
+ * ### Article Date Aggregation.
+ *
+ * Provides aggregated metrics for articles on a per-date basis. - **count**: Total
+ * articles found for the given date. - **average_sentiment**: Average sentiment score
+ * of these articles. - **date**: The specific date of the aggregation.
  *
  * @phpstan-type AnalyticsGetCountByDateResponseItemShape = array{
  *   averageSentiment: float, count: int, date: string

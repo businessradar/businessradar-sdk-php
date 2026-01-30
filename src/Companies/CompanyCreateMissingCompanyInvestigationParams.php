@@ -2,34 +2,46 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\News\Articles\Article\CompanyArticle;
+namespace Businessradar\Companies;
 
-use Businessradar\Companies\CountryEnum;
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Attributes\Required;
 use Businessradar\Core\Concerns\SdkModel;
+use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * ### News Company.
+ * ### Submit Missing Company Investigation (Asynchronous).
  *
- * Company information when associated with news articles. Includes DUNS numbers and an
- * optional customer reference.
+ * Submit a new investigation for a company that could not be found. Once
+ * submitted, Business Radar processes the investigation in the background.
  *
- * @phpstan-type CompanyShape = array{
+ * To check the progress and/or retrieve the final result, you can use the GET
+ * endpoint.
+ *
+ * @see Businessradar\Services\CompaniesService::createMissingCompanyInvestigation()
+ *
+ * @phpstan-type CompanyCreateMissingCompanyInvestigationParamsShape = array{
  *   country: CountryEnum|value-of<CountryEnum>,
- *   customerReference: string,
- *   name: string,
- *   dunsNumber?: string|null,
- *   externalID?: string|null,
- *   globalUltimateDunsNumber?: string|null,
- *   globalUltimateName?: string|null,
+ *   legalName: string,
+ *   addressNumber?: string|null,
+ *   addressPhone?: string|null,
+ *   addressPlace?: string|null,
+ *   addressPostal?: string|null,
+ *   addressRegion?: string|null,
+ *   addressStreet?: string|null,
+ *   description?: string|null,
+ *   officerName?: string|null,
+ *   officerTitle?: string|null,
+ *   tradeName?: string|null,
+ *   websiteURL?: string|null,
  * }
  */
-final class Company implements BaseModel
+final class CompanyCreateMissingCompanyInvestigationParams implements BaseModel
 {
-    /** @use SdkModel<CompanyShape> */
+    /** @use SdkModel<CompanyCreateMissingCompanyInvestigationParamsShape> */
     use SdkModel;
+    use SdkParams;
 
     /**
      * * `AF` - Afghanistan
@@ -288,38 +300,78 @@ final class Company implements BaseModel
     public string $country;
 
     /**
-     * Get Customer reference.
+     * Official name of the company as registered in legal documents.
      */
-    #[Required('customer_reference')]
-    public string $customerReference;
+    #[Required('legal_name')]
+    public string $legalName;
 
-    #[Required]
-    public string $name;
-
-    #[Optional('duns_number', nullable: true)]
-    public ?string $dunsNumber;
-
-    #[Optional('external_id')]
-    public ?string $externalID;
-
-    #[Optional('global_ultimate_duns_number', nullable: true)]
-    public ?string $globalUltimateDunsNumber;
-
-    #[Optional('global_ultimate_name', nullable: true)]
-    public ?string $globalUltimateName;
+    #[Optional('address_number', nullable: true)]
+    public ?string $addressNumber;
 
     /**
-     * `new Company()` is missing required properties by the API.
+     * Phone number should include international code prefix, e.g., +31.
+     */
+    #[Optional('address_phone', nullable: true)]
+    public ?string $addressPhone;
+
+    #[Optional('address_place', nullable: true)]
+    public ?string $addressPlace;
+
+    #[Optional('address_postal', nullable: true)]
+    public ?string $addressPostal;
+
+    #[Optional('address_region', nullable: true)]
+    public ?string $addressRegion;
+
+    #[Optional('address_street', nullable: true)]
+    public ?string $addressStreet;
+
+    /**
+     * Any additional notes or details about the company.
+     */
+    #[Optional(nullable: true)]
+    public ?string $description;
+
+    /**
+     * Name of the primary officer or CEO of the company.
+     */
+    #[Optional('officer_name', nullable: true)]
+    public ?string $officerName;
+
+    /**
+     * Title or position of the named officer in the company.
+     */
+    #[Optional('officer_title', nullable: true)]
+    public ?string $officerTitle;
+
+    /**
+     * Alternate name the company might use in its operations, distinct from the legal name.
+     */
+    #[Optional('trade_name', nullable: true)]
+    public ?string $tradeName;
+
+    /**
+     * Provide the official website of the company if available.
+     */
+    #[Optional('website_url', nullable: true)]
+    public ?string $websiteURL;
+
+    /**
+     * `new CompanyCreateMissingCompanyInvestigationParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Company::with(country: ..., customerReference: ..., name: ...)
+     * CompanyCreateMissingCompanyInvestigationParams::with(
+     *   country: ..., legalName: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Company)->withCountry(...)->withCustomerReference(...)->withName(...)
+     * (new CompanyCreateMissingCompanyInvestigationParams)
+     *   ->withCountry(...)
+     *   ->withLegalName(...)
      * ```
      */
     public function __construct()
@@ -336,23 +388,35 @@ final class Company implements BaseModel
      */
     public static function with(
         CountryEnum|string $country,
-        string $customerReference,
-        string $name,
-        ?string $dunsNumber = null,
-        ?string $externalID = null,
-        ?string $globalUltimateDunsNumber = null,
-        ?string $globalUltimateName = null,
+        string $legalName,
+        ?string $addressNumber = null,
+        ?string $addressPhone = null,
+        ?string $addressPlace = null,
+        ?string $addressPostal = null,
+        ?string $addressRegion = null,
+        ?string $addressStreet = null,
+        ?string $description = null,
+        ?string $officerName = null,
+        ?string $officerTitle = null,
+        ?string $tradeName = null,
+        ?string $websiteURL = null,
     ): self {
         $self = new self;
 
         $self['country'] = $country;
-        $self['customerReference'] = $customerReference;
-        $self['name'] = $name;
+        $self['legalName'] = $legalName;
 
-        null !== $dunsNumber && $self['dunsNumber'] = $dunsNumber;
-        null !== $externalID && $self['externalID'] = $externalID;
-        null !== $globalUltimateDunsNumber && $self['globalUltimateDunsNumber'] = $globalUltimateDunsNumber;
-        null !== $globalUltimateName && $self['globalUltimateName'] = $globalUltimateName;
+        null !== $addressNumber && $self['addressNumber'] = $addressNumber;
+        null !== $addressPhone && $self['addressPhone'] = $addressPhone;
+        null !== $addressPlace && $self['addressPlace'] = $addressPlace;
+        null !== $addressPostal && $self['addressPostal'] = $addressPostal;
+        null !== $addressRegion && $self['addressRegion'] = $addressRegion;
+        null !== $addressStreet && $self['addressStreet'] = $addressStreet;
+        null !== $description && $self['description'] = $description;
+        null !== $officerName && $self['officerName'] = $officerName;
+        null !== $officerTitle && $self['officerTitle'] = $officerTitle;
+        null !== $tradeName && $self['tradeName'] = $tradeName;
+        null !== $websiteURL && $self['websiteURL'] = $websiteURL;
 
         return $self;
     }
@@ -619,53 +683,118 @@ final class Company implements BaseModel
     }
 
     /**
-     * Get Customer reference.
+     * Official name of the company as registered in legal documents.
      */
-    public function withCustomerReference(string $customerReference): self
+    public function withLegalName(string $legalName): self
     {
         $self = clone $this;
-        $self['customerReference'] = $customerReference;
+        $self['legalName'] = $legalName;
 
         return $self;
     }
 
-    public function withName(string $name): self
+    public function withAddressNumber(?string $addressNumber): self
     {
         $self = clone $this;
-        $self['name'] = $name;
+        $self['addressNumber'] = $addressNumber;
 
         return $self;
     }
 
-    public function withDunsNumber(?string $dunsNumber): self
+    /**
+     * Phone number should include international code prefix, e.g., +31.
+     */
+    public function withAddressPhone(?string $addressPhone): self
     {
         $self = clone $this;
-        $self['dunsNumber'] = $dunsNumber;
+        $self['addressPhone'] = $addressPhone;
 
         return $self;
     }
 
-    public function withExternalID(string $externalID): self
+    public function withAddressPlace(?string $addressPlace): self
     {
         $self = clone $this;
-        $self['externalID'] = $externalID;
+        $self['addressPlace'] = $addressPlace;
 
         return $self;
     }
 
-    public function withGlobalUltimateDunsNumber(
-        ?string $globalUltimateDunsNumber
-    ): self {
+    public function withAddressPostal(?string $addressPostal): self
+    {
         $self = clone $this;
-        $self['globalUltimateDunsNumber'] = $globalUltimateDunsNumber;
+        $self['addressPostal'] = $addressPostal;
 
         return $self;
     }
 
-    public function withGlobalUltimateName(?string $globalUltimateName): self
+    public function withAddressRegion(?string $addressRegion): self
     {
         $self = clone $this;
-        $self['globalUltimateName'] = $globalUltimateName;
+        $self['addressRegion'] = $addressRegion;
+
+        return $self;
+    }
+
+    public function withAddressStreet(?string $addressStreet): self
+    {
+        $self = clone $this;
+        $self['addressStreet'] = $addressStreet;
+
+        return $self;
+    }
+
+    /**
+     * Any additional notes or details about the company.
+     */
+    public function withDescription(?string $description): self
+    {
+        $self = clone $this;
+        $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Name of the primary officer or CEO of the company.
+     */
+    public function withOfficerName(?string $officerName): self
+    {
+        $self = clone $this;
+        $self['officerName'] = $officerName;
+
+        return $self;
+    }
+
+    /**
+     * Title or position of the named officer in the company.
+     */
+    public function withOfficerTitle(?string $officerTitle): self
+    {
+        $self = clone $this;
+        $self['officerTitle'] = $officerTitle;
+
+        return $self;
+    }
+
+    /**
+     * Alternate name the company might use in its operations, distinct from the legal name.
+     */
+    public function withTradeName(?string $tradeName): self
+    {
+        $self = clone $this;
+        $self['tradeName'] = $tradeName;
+
+        return $self;
+    }
+
+    /**
+     * Provide the official website of the company if available.
+     */
+    public function withWebsiteURL(?string $websiteURL): self
+    {
+        $self = clone $this;
+        $self['websiteURL'] = $websiteURL;
 
         return $self;
     }

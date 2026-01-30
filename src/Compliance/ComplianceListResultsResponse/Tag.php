@@ -9,7 +9,7 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Compliance entity result tag serializer.
+ * Compliance entity result tag.
  *
  * @phpstan-type TagShape = array{tag: string}
  */

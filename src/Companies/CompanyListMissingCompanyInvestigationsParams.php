@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\News\Articles;
+namespace Businessradar\Companies;
 
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Concerns\SdkModel;
@@ -10,21 +10,20 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * ### Saved Article Filters.
+ * ### Missing Company Investigations.
  *
- * Retrieve a list of all search filters saved by the current profile. These filters
- * can be applied to article search requests using the `saved_article_filter_id`
- * parameter.
+ * List existing investigations or submit a new one for a company that could not be
+ * found.
  *
- * @see Businessradar\Services\News\ArticlesService::listSavedArticleFilters()
+ * @see Businessradar\Services\CompaniesService::listMissingCompanyInvestigations()
  *
- * @phpstan-type ArticleListSavedArticleFiltersParamsShape = array{
+ * @phpstan-type CompanyListMissingCompanyInvestigationsParamsShape = array{
  *   nextKey?: string|null
  * }
  */
-final class ArticleListSavedArticleFiltersParams implements BaseModel
+final class CompanyListMissingCompanyInvestigationsParams implements BaseModel
 {
-    /** @use SdkModel<ArticleListSavedArticleFiltersParamsShape> */
+    /** @use SdkModel<CompanyListMissingCompanyInvestigationsParamsShape> */
     use SdkModel;
     use SdkParams;
 
