@@ -13,7 +13,7 @@ The REST API documentation can be found on [api.businessradar.com](https://api.b
 <!-- x-release-please-start-version -->
 
 ```
-composer require "businessradar/businessradar 0.2.0"
+composer require "businessradar/businessradar 0.3.0"
 ```
 
 <!-- x-release-please-end -->
