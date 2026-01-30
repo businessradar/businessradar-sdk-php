@@ -4,7 +4,9 @@ namespace Tests\Services;
 
 use Businessradar\Client;
 use Businessradar\Compliance\ComplianceGetResponse;
+use Businessradar\Compliance\ComplianceListResultsResponse;
 use Businessradar\Compliance\ComplianceNewResponse;
+use Businessradar\NextKey;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -54,5 +56,25 @@ final class ComplianceTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ComplianceGetResponse::class, $result);
+    }
+
+    #[Test]
+    public function testListResults(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $page = $this->client->compliance->listResults(
+            '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(NextKey::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(ComplianceListResultsResponse::class, $item);
+        }
     }
 }

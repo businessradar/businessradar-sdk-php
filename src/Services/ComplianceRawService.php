@@ -8,9 +8,16 @@ use Businessradar\Client;
 use Businessradar\Compliance\ComplianceCreateParams;
 use Businessradar\Compliance\ComplianceCreateParams\Entity;
 use Businessradar\Compliance\ComplianceGetResponse;
+use Businessradar\Compliance\ComplianceListResultsParams;
+use Businessradar\Compliance\ComplianceListResultsParams\Order;
+use Businessradar\Compliance\ComplianceListResultsParams\ResultType;
+use Businessradar\Compliance\ComplianceListResultsParams\Sorting;
+use Businessradar\Compliance\ComplianceListResultsResponse;
 use Businessradar\Compliance\ComplianceNewResponse;
 use Businessradar\Core\Contracts\BaseResponse;
 use Businessradar\Core\Exceptions\APIException;
+use Businessradar\Core\Util;
+use Businessradar\NextKey;
 use Businessradar\RequestOptions;
 use Businessradar\ServiceContracts\ComplianceRawContract;
 
@@ -84,6 +91,53 @@ final class ComplianceRawService implements ComplianceRawContract
             path: ['ext/v3/compliance/%1$s', $externalID],
             options: $requestOptions,
             convert: ComplianceGetResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * List compliance results.
+     *
+     * @param array{
+     *   entity?: string,
+     *   minConfidence?: float,
+     *   nextKey?: string,
+     *   order?: Order|value-of<Order>,
+     *   resultType?: ResultType|value-of<ResultType>,
+     *   sorting?: Sorting|value-of<Sorting>,
+     * }|ComplianceListResultsParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<NextKey<ComplianceListResultsResponse>>
+     *
+     * @throws APIException
+     */
+    public function listResults(
+        string $externalID,
+        array|ComplianceListResultsParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = ComplianceListResultsParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['ext/v3/compliance/%1$s/results', $externalID],
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'minConfidence' => 'min_confidence',
+                    'nextKey' => 'next_key',
+                    'resultType' => 'result_type',
+                ],
+            ),
+            options: $options,
+            convert: ComplianceListResultsResponse::class,
+            page: NextKey::class,
         );
     }
 }

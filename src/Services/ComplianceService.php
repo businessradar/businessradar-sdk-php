@@ -7,9 +7,14 @@ namespace Businessradar\Services;
 use Businessradar\Client;
 use Businessradar\Compliance\ComplianceCreateParams\Entity;
 use Businessradar\Compliance\ComplianceGetResponse;
+use Businessradar\Compliance\ComplianceListResultsParams\Order;
+use Businessradar\Compliance\ComplianceListResultsParams\ResultType;
+use Businessradar\Compliance\ComplianceListResultsParams\Sorting;
+use Businessradar\Compliance\ComplianceListResultsResponse;
 use Businessradar\Compliance\ComplianceNewResponse;
 use Businessradar\Core\Exceptions\APIException;
 use Businessradar\Core\Util;
+use Businessradar\NextKey;
 use Businessradar\RequestOptions;
 use Businessradar\ServiceContracts\ComplianceContract;
 
@@ -84,6 +89,50 @@ final class ComplianceService implements ComplianceContract
     ): ComplianceGetResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($externalID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * List compliance results.
+     *
+     * @param string $entity Filter by entity external ID
+     * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
+     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * @param Order|value-of<Order> $order Sorting order
+     * @param ResultType|value-of<ResultType> $resultType Filter by result type
+     * @param Sorting|value-of<Sorting> $sorting Sorting field
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return NextKey<ComplianceListResultsResponse>
+     *
+     * @throws APIException
+     */
+    public function listResults(
+        string $externalID,
+        ?string $entity = null,
+        ?float $minConfidence = null,
+        ?string $nextKey = null,
+        Order|string $order = 'desc',
+        ResultType|string|null $resultType = null,
+        Sorting|string $sorting = 'created_at',
+        RequestOptions|array|null $requestOptions = null,
+    ): NextKey {
+        $params = Util::removeNulls(
+            [
+                'entity' => $entity,
+                'minConfidence' => $minConfidence,
+                'nextKey' => $nextKey,
+                'order' => $order,
+                'resultType' => $resultType,
+                'sorting' => $sorting,
+            ],
+        );
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->listResults($externalID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

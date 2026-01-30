@@ -6,8 +6,13 @@ namespace Businessradar\ServiceContracts;
 
 use Businessradar\Compliance\ComplianceCreateParams\Entity;
 use Businessradar\Compliance\ComplianceGetResponse;
+use Businessradar\Compliance\ComplianceListResultsParams\Order;
+use Businessradar\Compliance\ComplianceListResultsParams\ResultType;
+use Businessradar\Compliance\ComplianceListResultsParams\Sorting;
+use Businessradar\Compliance\ComplianceListResultsResponse;
 use Businessradar\Compliance\ComplianceNewResponse;
 use Businessradar\Core\Exceptions\APIException;
+use Businessradar\NextKey;
 use Businessradar\RequestOptions;
 
 /**
@@ -47,4 +52,30 @@ interface ComplianceContract
         string $externalID,
         RequestOptions|array|null $requestOptions = null
     ): ComplianceGetResponse;
+
+    /**
+     * @api
+     *
+     * @param string $entity Filter by entity external ID
+     * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
+     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * @param Order|value-of<Order> $order Sorting order
+     * @param ResultType|value-of<ResultType> $resultType Filter by result type
+     * @param Sorting|value-of<Sorting> $sorting Sorting field
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return NextKey<ComplianceListResultsResponse>
+     *
+     * @throws APIException
+     */
+    public function listResults(
+        string $externalID,
+        ?string $entity = null,
+        ?float $minConfidence = null,
+        ?string $nextKey = null,
+        Order|string $order = 'desc',
+        ResultType|string|null $resultType = null,
+        Sorting|string $sorting = 'created_at',
+        RequestOptions|array|null $requestOptions = null,
+    ): NextKey;
 }
