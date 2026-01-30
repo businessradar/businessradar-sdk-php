@@ -13,7 +13,7 @@ Reach out to support@businessradar.com for any technical questions/suggestions.
 <!-- x-release-please-start-version -->
 
 ```
-composer require "businessradar/businessradar 0.1.0"
+composer require "businessradar/businessradar 0.2.0"
 ```
 
 <!-- x-release-please-end -->

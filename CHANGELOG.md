@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2026-01-30)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/businessradar/businessradar-sdk-php/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** manual updates ([d12199c](https://github.com/businessradar/businessradar-sdk-php/commit/d12199c08293231c82fd5bfede2c2cb96f1e2ff1))
+
 ## 0.1.0 (2026-01-30)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/businessradar/businessradar-sdk-php/compare/v0.0.1...v0.1.0)
