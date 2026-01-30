@@ -35,7 +35,7 @@ interface ArticlesContract
      * @param \DateTimeInterface $maxPublicationDate filter articles published at or before this date/time
      * @param \DateTimeInterface $minCreationDate filter articles added to our database at or after this date/time
      * @param \DateTimeInterface $minPublicationDate filter articles published at or after this date/time
-     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param list<string> $portfolioID filter articles related to companies in specific Portfolios (UUIDs)
      * @param string $query full-text search query for filtering articles by content
      * @param list<string> $registrationNumber filter by local company registration numbers
@@ -95,7 +95,7 @@ interface ArticlesContract
     /**
      * @api
      *
-     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<ArticleListSavedArticleFiltersResponse>

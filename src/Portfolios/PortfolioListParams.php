@@ -26,7 +26,7 @@ final class PortfolioListParams implements BaseModel
     use SdkParams;
 
     /**
-     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      */
     #[Optional]
     public ?string $nextKey;
@@ -51,7 +51,7 @@ final class PortfolioListParams implements BaseModel
     }
 
     /**
-     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      */
     public function withNextKey(string $nextKey): self
     {
