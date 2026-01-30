@@ -2,29 +2,33 @@
 
 The Business Radar PHP library provides convenient access to the Business Radar REST API from any PHP 8.1.0+ application.
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 ## Documentation
 
 The REST API documentation can be found on [api.businessradar.com](https://api.businessradar.com/ext/v3/).
 
+Reach out to support@businessradar.com for any technical questions/suggestions.
+
 ## Installation
 
 To use this package, install via Composer by adding the following to your application's `composer.json`:
+
+<!-- x-release-please-start-version -->
 
 ```json
 {
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:stainless-sdks/businessradar-php.git"
+      "url": "git@github.com:businessradar/businessradar-sdk-php.git"
     }
   ],
   "require": {
-    "org-placeholder/businessradar": "dev-main"
+    "businessradar/businessradar": "dev-main"
   }
 }
 ```
+
+<!-- x-release-please-end -->
 
 ## Usage
 
@@ -191,4 +195,4 @@ PHP 8.1.0 or higher.
 
 ## Contributing
 
-See [the contributing documentation](https://github.com/stainless-sdks/businessradar-php/tree/main/CONTRIBUTING.md).
+See [the contributing documentation](https://github.com/businessradar/businessradar-sdk-php/tree/main/CONTRIBUTING.md).
