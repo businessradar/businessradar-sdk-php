@@ -9,7 +9,9 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * SavedArticleFilter Instance.
+ * ### Saved Article Filter.
+ *
+ * Represents a named set of article search filters that can be reused.
  *
  * @phpstan-type ArticleListSavedArticleFiltersResponseShape = array{
  *   externalID: string, name: string

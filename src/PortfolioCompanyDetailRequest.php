@@ -9,9 +9,9 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Portfolio Company Detail Serializer.
+ * ### Portfolio Company Detail (Simplified).
  *
- * Alternative serializer for the Company model which is limited.
+ * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
  *
  * @phpstan-type PortfolioCompanyDetailRequestShape = array{externalID: string}
  */

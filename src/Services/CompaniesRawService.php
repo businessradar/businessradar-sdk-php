@@ -36,7 +36,17 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
-     * Register new Company to Business Radar.
+     * ### Register Company (Asynchronous)
+     *
+     * Register a new company to Business Radar using its identification details. Once
+     * posted, Business Radar processes the request in the background.
+     *
+     * To check the progress and/or retrieve the final result, you can use the [GET
+     * /registrations/{registration_id}](/ext/v3/#/ext/ext_v3_registrations_retrieve)
+     * endpoint.
+     *
+     * If the company is already registered, the existing registration will be
+     * returned.
      *
      * @param array{
      *   company?: PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null,
@@ -74,7 +84,9 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
-     * Get Company Information.
+     * ### Retrieve Company Information
+     *
+     * Fetch detailed information about a specific company using its `external_id`.
      *
      * @param RequestOpts|null $requestOptions
      *
@@ -98,13 +110,18 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
-     * Search all companies using Dun and Bradstreet.
+     * ### Search Companies
      *
-     * Companies will contain an optional external_id, which is null if company is not
-     * registered in Business Radar.
+     * Search for companies across internal and external databases.
      *
-     * When you pass query and optional country it will search using dun and
-     * bradstreet, otherwise using internal search.
+     * - If `query` and an optional `country` are provided, the search is primarily
+     * conducted via Dun & Bradstreet.
+     *
+     * - If other filters (like `portfolio_id`) are provided, the search is limited to
+     * our internal database.
+     *
+     * The results include an `external_id` if the company is already registered in
+     * Business Radar.
      *
      * @param array{
      *   country?: list<string>,
@@ -153,7 +170,10 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
-     * List Company Updates.
+     * ### List Company Updates
+     *
+     * Retrieve a list of attribute changes for companies. This allows monitoring how
+     * company data has evolved over time.
      *
      * @param array{
      *   maxCreatedAt?: \DateTimeInterface,
@@ -196,7 +216,10 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
-     * Get Registration Information.
+     * ### Retrieve Registration Information
+     *
+     * Fetch details about a specific company registration request using its
+     * `registration_id`.
      *
      * @param RequestOpts|null $requestOptions
      *

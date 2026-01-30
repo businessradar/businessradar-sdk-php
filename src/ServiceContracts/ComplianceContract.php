@@ -58,7 +58,7 @@ interface ComplianceContract
      *
      * @param string $entity Filter by entity external ID
      * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      * @param Order|value-of<Order> $order Sorting order
      * @param ResultType|value-of<ResultType> $resultType Filter by result type
      * @param Sorting|value-of<Sorting> $sorting Sorting field

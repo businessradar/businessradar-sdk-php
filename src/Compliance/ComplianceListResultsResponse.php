@@ -16,7 +16,7 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Compliance entity result serializer.
+ * Compliance entity result.
  *
  * @phpstan-import-type AddressShape from \Businessradar\Compliance\ComplianceListResultsResponse\Address
  * @phpstan-import-type EntityShape from \Businessradar\Compliance\ComplianceListResultsResponse\Entity

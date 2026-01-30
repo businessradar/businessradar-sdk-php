@@ -36,7 +36,13 @@ final class ComplianceRawService implements ComplianceRawContract
     /**
      * @api
      *
-     * Create a new compliance check.
+     * ### Create Compliance Check (Asynchronous)
+     *
+     * Initiate a new compliance screening. Once posted, Business Radar processes the
+     * request in the background.
+     *
+     * To check the progress and/or retrieve the final result, you can use the [GET
+     * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
      *
      * @param array{
      *   allEntitiesScreeningEnabled?: bool,
@@ -73,7 +79,10 @@ final class ComplianceRawService implements ComplianceRawContract
     /**
      * @api
      *
-     * Get compliance check details.
+     * ### Compliance Check Status
+     *
+     * Check the current status, progress, and high-level scores of a specific compliance
+     * check.
      *
      * @param RequestOpts|null $requestOptions
      *
@@ -97,7 +106,10 @@ final class ComplianceRawService implements ComplianceRawContract
     /**
      * @api
      *
-     * List compliance results.
+     * ### List Compliance Results
+     *
+     * Retrieve all findings for a compliance check. Results can be filtered by entity,
+     * type of finding (e.g., Sanction, PEP), and confidence score.
      *
      * @param array{
      *   entity?: string,

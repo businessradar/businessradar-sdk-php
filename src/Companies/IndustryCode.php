@@ -10,7 +10,9 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Industry Code.
+ * ### Industry Code.
+ *
+ * Industry classification codes (e.g., NACE, SBI, SIC).
  *
  * @phpstan-type IndustryCodeShape = array{code: string, description?: string|null}
  */

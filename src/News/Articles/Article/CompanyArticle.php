@@ -12,7 +12,10 @@ use Businessradar\News\Articles\Article\CompanyArticle\Company;
 use Businessradar\News\Articles\CategoryTree;
 
 /**
- * Serialize Company Article.
+ * ### Company-Article.
+ *
+ * The relationship between a company and a specific article, including snippets and
+ * sentiment analysis relevant to that company.
  *
  * @phpstan-import-type CompanyShape from \Businessradar\News\Articles\Article\CompanyArticle\Company
  *
@@ -34,7 +37,10 @@ final class CompanyArticle implements BaseModel
     public array $categories;
 
     /**
-     * Custom Company Serializer for News Articles.
+     * ### News Company.
+     *
+     * Company information when associated with news articles. Includes DUNS numbers and an
+     * optional customer reference.
      */
     #[Required]
     public Company $company;
@@ -106,7 +112,10 @@ final class CompanyArticle implements BaseModel
     }
 
     /**
-     * Custom Company Serializer for News Articles.
+     * ### News Company.
+     *
+     * Company information when associated with news articles. Includes DUNS numbers and an
+     * optional customer reference.
      *
      * @param Company|CompanyShape $company
      */

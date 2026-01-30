@@ -63,7 +63,10 @@ final class ArticleExport implements BaseModel
     public string $fileType;
 
     /**
-     * Article Filter Serializer.
+     * ### Article Filters.
+     *
+     * Used to validate and process filters for article searches. Supports filtering by
+     * query text, countries, languages, specific companies (DUNS), and portfolios.
      */
     #[Required]
     public Filters $filters;
@@ -215,7 +218,10 @@ final class ArticleExport implements BaseModel
     }
 
     /**
-     * Article Filter Serializer.
+     * ### Article Filters.
+     *
+     * Used to validate and process filters for article searches. Supports filtering by
+     * query text, countries, languages, specific companies (DUNS), and portfolios.
      *
      * @param Filters|FiltersShape $filters
      */

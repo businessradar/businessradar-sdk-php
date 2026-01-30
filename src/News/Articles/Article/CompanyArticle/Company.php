@@ -11,7 +11,10 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Custom Company Serializer for News Articles.
+ * ### News Company.
+ *
+ * Company information when associated with news articles. Includes DUNS numbers and an
+ * optional customer reference.
  *
  * @phpstan-type CompanyShape = array{
  *   country: CountryEnum|value-of<CountryEnum>,

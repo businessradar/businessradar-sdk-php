@@ -39,11 +39,21 @@ final class CompaniesService implements CompaniesContract
     /**
      * @api
      *
-     * Register new Company to Business Radar.
+     * ### Register Company (Asynchronous)
      *
-     * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company Portfolio Company Detail Serializer.
+     * Register a new company to Business Radar using its identification details. Once
+     * posted, Business Radar processes the request in the background.
      *
-     * Alternative serializer for the Company model which is limited.
+     * To check the progress and/or retrieve the final result, you can use the [GET
+     * /registrations/{registration_id}](/ext/v3/#/ext/ext_v3_registrations_retrieve)
+     * endpoint.
+     *
+     * If the company is already registered, the existing registration will be
+     * returned.
+     *
+     * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company ### Portfolio Company Detail (Simplified)
+     *
+     * A lightweight data structure for company identification (UUID, DUNS, Name, Country)
      * @param Country|value-of<Country>|null $country
      * @param string|null $customerReference customer reference for the client to understand relationship
      * @param RequestOpts|null $requestOptions
@@ -79,7 +89,9 @@ final class CompaniesService implements CompaniesContract
     /**
      * @api
      *
-     * Get Company Information.
+     * ### Retrieve Company Information
+     *
+     * Fetch detailed information about a specific company using its `external_id`.
      *
      * @param RequestOpts|null $requestOptions
      *
@@ -98,21 +110,26 @@ final class CompaniesService implements CompaniesContract
     /**
      * @api
      *
-     * Search all companies using Dun and Bradstreet.
+     * ### Search Companies
      *
-     * Companies will contain an optional external_id, which is null if company is not
-     * registered in Business Radar.
+     * Search for companies across internal and external databases.
      *
-     * When you pass query and optional country it will search using dun and
-     * bradstreet, otherwise using internal search.
+     * - If `query` and an optional `country` are provided, the search is primarily
+     * conducted via Dun & Bradstreet.
      *
-     * @param list<string> $country ISO 2-letter Country Code
-     * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
-     * @param list<string> $portfolioID Portfolio ID to filter companies
+     * - If other filters (like `portfolio_id`) are provided, the search is limited to
+     * our internal database.
+     *
+     * The results include an `external_id` if the company is already registered in
+     * Business Radar.
+     *
+     * @param list<string> $country ISO 2-letter Country Code (e.g., NL, US)
+     * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number (can be multiple)
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param list<string> $portfolioID Filter companies belonging to specific Portfolio IDs (UUID)
      * @param string $query custom search query to text search all companies
-     * @param list<string> $registrationNumber Local Registration Number
-     * @param string $websiteURL Website URL to search
+     * @param list<string> $registrationNumber Local Registration Number (can be multiple)
+     * @param string $websiteURL Website URL to search for the company
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListResponse>
@@ -150,11 +167,14 @@ final class CompaniesService implements CompaniesContract
     /**
      * @api
      *
-     * List Company Updates.
+     * ### List Company Updates
+     *
+     * Retrieve a list of attribute changes for companies. This allows monitoring how
+     * company data has evolved over time.
      *
      * @param \DateTimeInterface $maxCreatedAt filter updates created at or before this time
      * @param \DateTimeInterface $minCreatedAt filter updates created at or after this time
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListAttributeChangesResponse>
@@ -184,7 +204,10 @@ final class CompaniesService implements CompaniesContract
     /**
      * @api
      *
-     * Get Registration Information.
+     * ### Retrieve Registration Information
+     *
+     * Fetch details about a specific company registration request using its
+     * `registration_id`.
      *
      * @param RequestOpts|null $requestOptions
      *

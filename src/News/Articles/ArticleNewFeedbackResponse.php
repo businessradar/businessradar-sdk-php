@@ -10,7 +10,10 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * External Article Feedback Serializer.
+ * ### External Article Feedback.
+ *
+ * Allows users to provide feedback on specific articles, including feedback type,
+ * comments, and contact information.
  *
  * @phpstan-type ArticleNewFeedbackResponseShape = array{
  *   article: string,

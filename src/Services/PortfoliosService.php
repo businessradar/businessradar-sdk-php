@@ -41,7 +41,10 @@ final class PortfoliosService implements PortfoliosContract
     /**
      * @api
      *
-     * List Create Portfolio.
+     * ### Portfolios
+     *
+     * Manage collections of companies. This view allows you to list existing portfolios
+     * associated with your profile or create new ones.
      *
      * @param string|null $customerReference customer reference for the client to understand relationship
      * @param DefaultPermission|value-of<DefaultPermission>|null $defaultPermission Default permission for all users in organization.
@@ -77,9 +80,12 @@ final class PortfoliosService implements PortfoliosContract
     /**
      * @api
      *
-     * List Create Portfolio.
+     * ### Portfolios
      *
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * Manage collections of companies. This view allows you to list existing portfolios
+     * associated with your profile or create new ones.
+     *
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<Portfolio>

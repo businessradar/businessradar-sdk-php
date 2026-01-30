@@ -10,7 +10,7 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Compliance entity result address serializer.
+ * Compliance entity result address.
  *
  * @phpstan-type AddressShape = array{
  *   city?: string|null,

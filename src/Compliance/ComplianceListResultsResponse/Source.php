@@ -10,7 +10,7 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Compliance entity result source serializer.
+ * Compliance entity result source.
  *
  * @phpstan-type SourceShape = array{
  *   url: string,

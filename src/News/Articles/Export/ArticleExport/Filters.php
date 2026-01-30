@@ -10,7 +10,10 @@ use Businessradar\Core\Contracts\BaseModel;
 use Businessradar\News\Articles\Export\ArticleExport\Filters\MediaType;
 
 /**
- * Article Filter Serializer.
+ * ### Article Filters.
+ *
+ * Used to validate and process filters for article searches. Supports filtering by
+ * query text, countries, languages, specific companies (DUNS), and portfolios.
  *
  * @phpstan-type FiltersShape = array{
  *   categories?: list<string>|null,

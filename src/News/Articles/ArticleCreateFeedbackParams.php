@@ -11,7 +11,10 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Create Article Feedback.
+ * ### Submit Article Feedback.
+ *
+ * Submit feedback for a specific article. This helps improve our analysis and
+ * relevance.
  *
  * @see Businessradar\Services\News\ArticlesService::createFeedback()
  *
