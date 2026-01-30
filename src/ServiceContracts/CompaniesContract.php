@@ -23,9 +23,9 @@ interface CompaniesContract
     /**
      * @api
      *
-     * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company Portfolio Company Detail Serializer.
+     * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company ### Portfolio Company Detail (Simplified)
      *
-     * Alternative serializer for the Company model which is limited.
+     * A lightweight data structure for company identification (UUID, DUNS, Name, Country)
      * @param Country|value-of<Country>|null $country
      * @param string|null $customerReference customer reference for the client to understand relationship
      * @param RequestOpts|null $requestOptions
@@ -57,13 +57,13 @@ interface CompaniesContract
     /**
      * @api
      *
-     * @param list<string> $country ISO 2-letter Country Code
-     * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
-     * @param list<string> $portfolioID Portfolio ID to filter companies
+     * @param list<string> $country ISO 2-letter Country Code (e.g., NL, US)
+     * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number (can be multiple)
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param list<string> $portfolioID Filter companies belonging to specific Portfolio IDs (UUID)
      * @param string $query custom search query to text search all companies
-     * @param list<string> $registrationNumber Local Registration Number
-     * @param string $websiteURL Website URL to search
+     * @param list<string> $registrationNumber Local Registration Number (can be multiple)
+     * @param string $websiteURL Website URL to search for the company
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListResponse>
@@ -86,7 +86,7 @@ interface CompaniesContract
      *
      * @param \DateTimeInterface $maxCreatedAt filter updates created at or before this time
      * @param \DateTimeInterface $minCreatedAt filter updates created at or after this time
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListAttributeChangesResponse>

@@ -11,9 +11,10 @@ use Businessradar\Core\Contracts\BaseModel;
 use Businessradar\PortfolioCompanyDetailRequest;
 
 /**
- * Portfolio Registration Serializer.
+ * ### Company Registration.
  *
- * Serializer used for registering a new company.
+ * Handles the registration of companies for monitoring. New companies can be
+ * identified by DUNS number, local registration number, or name and country.
  *
  * @phpstan-import-type PortfolioCompanyDetailRequestShape from \Businessradar\PortfolioCompanyDetailRequest
  *
@@ -32,9 +33,9 @@ final class RegistrationRequest implements BaseModel
     use SdkModel;
 
     /**
-     * Portfolio Company Detail Serializer.
+     * ### Portfolio Company Detail (Simplified).
      *
-     * Alternative serializer for the Company model which is limited.
+     * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
      */
     #[Optional(nullable: true)]
     public ?PortfolioCompanyDetailRequest $company;
@@ -92,9 +93,9 @@ final class RegistrationRequest implements BaseModel
     }
 
     /**
-     * Portfolio Company Detail Serializer.
+     * ### Portfolio Company Detail (Simplified).
      *
-     * Alternative serializer for the Company model which is limited.
+     * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
      *
      * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company
      */

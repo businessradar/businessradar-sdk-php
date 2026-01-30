@@ -11,7 +11,10 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Compliance entity request serializer.
+ * ### Compliance Entity Request.
+ *
+ * Represents an entity (individual or organization) to be included in a compliance
+ * screening.
  *
  * @phpstan-type EntityShape = array{
  *   name: string,

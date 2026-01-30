@@ -30,7 +30,10 @@ final class PortfoliosRawService implements PortfoliosRawContract
     /**
      * @api
      *
-     * List Create Portfolio.
+     * ### Portfolios
+     *
+     * Manage collections of companies. This view allows you to list existing portfolios
+     * associated with your profile or create new ones.
      *
      * @param array{
      *   name: string,
@@ -65,7 +68,10 @@ final class PortfoliosRawService implements PortfoliosRawContract
     /**
      * @api
      *
-     * List Create Portfolio.
+     * ### Portfolios
+     *
+     * Manage collections of companies. This view allows you to list existing portfolios
+     * associated with your profile or create new ones.
      *
      * @param array{nextKey?: string}|PortfolioListParams $params
      * @param RequestOpts|null $requestOptions

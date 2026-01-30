@@ -10,7 +10,11 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * List And Create Portfolio Companies.
+ * ### Portfolio Companies.
+ *
+ * Manage companies within a specific portfolio. - **GET**: List all companies
+ * currently in the portfolio. - **POST**: Register and add a new company to the
+ * portfolio.
  *
  * @see Businessradar\Services\Portfolios\CompaniesService::list()
  *
@@ -23,7 +27,7 @@ final class CompanyListParams implements BaseModel
     use SdkParams;
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      */
     #[Optional]
     public ?string $nextKey;
@@ -48,7 +52,7 @@ final class CompanyListParams implements BaseModel
     }
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      */
     public function withNextKey(string $nextKey): self
     {

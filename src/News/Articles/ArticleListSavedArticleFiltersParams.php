@@ -10,7 +10,11 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * List Create Saved Article Filter.
+ * ### Saved Article Filters.
+ *
+ * Retrieve a list of all search filters saved by the current profile. These filters
+ * can be applied to article search requests using the `saved_article_filter_id`
+ * parameter.
  *
  * @see Businessradar\Services\News\ArticlesService::listSavedArticleFilters()
  *
@@ -25,7 +29,7 @@ final class ArticleListSavedArticleFiltersParams implements BaseModel
     use SdkParams;
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      */
     #[Optional]
     public ?string $nextKey;
@@ -50,7 +54,7 @@ final class ArticleListSavedArticleFiltersParams implements BaseModel
     }
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      */
     public function withNextKey(string $nextKey): self
     {

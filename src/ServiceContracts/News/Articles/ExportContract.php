@@ -22,7 +22,10 @@ interface ExportContract
      * @param DataExportFileType|value-of<DataExportFileType> $fileType * `PDF` - PDF
      * * `EXCEL` - Excel
      * * `JSONL` - JSONL
-     * @param Filters|FiltersShape $filters article Filter Serializer
+     * @param Filters|FiltersShape $filters ### Article Filters
+     *
+     * Used to validate and process filters for article searches. Supports filtering by
+     * query text, countries, languages, specific companies (DUNS), and portfolios.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

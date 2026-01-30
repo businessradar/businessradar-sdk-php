@@ -12,7 +12,17 @@ use Businessradar\Core\Contracts\BaseModel;
 use Businessradar\PortfolioCompanyDetailRequest;
 
 /**
- * Register new Company to Business Radar.
+ * ### Register Company (Asynchronous).
+ *
+ * Register a new company to Business Radar using its identification details. Once
+ * posted, Business Radar processes the request in the background.
+ *
+ * To check the progress and/or retrieve the final result, you can use the [GET
+ * /registrations/{registration_id}](/ext/v3/#/ext/ext_v3_registrations_retrieve)
+ * endpoint.
+ *
+ * If the company is already registered, the existing registration will be
+ * returned.
  *
  * @see Businessradar\Services\CompaniesService::create()
  *
@@ -34,9 +44,9 @@ final class CompanyCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Portfolio Company Detail Serializer.
+     * ### Portfolio Company Detail (Simplified).
      *
-     * Alternative serializer for the Company model which is limited.
+     * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
      */
     #[Optional(nullable: true)]
     public ?PortfolioCompanyDetailRequest $company;
@@ -94,9 +104,9 @@ final class CompanyCreateParams implements BaseModel
     }
 
     /**
-     * Portfolio Company Detail Serializer.
+     * ### Portfolio Company Detail (Simplified).
      *
-     * Alternative serializer for the Company model which is limited.
+     * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
      *
      * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company
      */

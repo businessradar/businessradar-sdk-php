@@ -52,30 +52,30 @@ final class ArticlesService implements ArticlesContract
     /**
      * @api
      *
-     * Search News Articles.
+     * ### Search News Articles
      *
-     * List Articles from the Business Radar platform, search using advanced queries or
-     * check articles that have been published since last check.
+     * Retrieve articles matching the specified search criteria. Advanced queries and
+     * incremental checks (using publication/creation dates) are supported.
      *
-     * @param list<string> $category Category ID to filter articles
-     * @param list<string> $company Company ID's
-     * @param list<string> $country ISO 2-letter Country Code
-     * @param bool $disableCompanyArticleDeduplication By default companies with the same trade names are grouped and the best one is picked, the other ones are not included. By disabling this the amount of company articles will grow significantly.
-     * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number
-     * @param list<string> $globalUltimate 9-digit Dun And Bradstreet Number
-     * @param bool $includeClusteredArticles Include clustered articles
-     * @param bool $isMaterial Filter articles by materiality flag (true/false)
-     * @param list<string> $language ISO 2-letter Language Code
-     * @param \DateTimeInterface $maxCreationDate Filter articles created before this date
-     * @param \DateTimeInterface $maxPublicationDate Filter articles published before this date
-     * @param \DateTimeInterface $minCreationDate Filter articles created after this date
-     * @param \DateTimeInterface $minPublicationDate Filter articles published after this date
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
-     * @param list<string> $portfolioID Portfolio ID to filter articles
-     * @param string $query custom search filters to text search all articles
-     * @param list<string> $registrationNumber Local Registration Number
-     * @param string $savedArticleFilterID Filter articles on already saved article filter id
-     * @param bool $sentiment Filter articles with sentiment
+     * @param list<string> $category filter by article Category IDs (UUIDs)
+     * @param list<string> $company filter by internal Company UUIDs
+     * @param list<string> $country Filter by ISO 2-letter Country Codes (e.g., 'US', 'GB').
+     * @param bool $disableCompanyArticleDeduplication By default, companies with the same trade names are grouped and the best match is selected. Enable this to see all associated companies.
+     * @param list<string> $dunsNumber filter by one or more 9-digit Dun & Bradstreet Numbers
+     * @param list<string> $globalUltimate filter by Global Ultimate DUNS Numbers
+     * @param bool $includeClusteredArticles include articles that are part of a cluster (reprints or similar articles)
+     * @param bool $isMaterial filter by materiality flag (relevance to business risk)
+     * @param list<string> $language Filter by ISO 2-letter Language Codes (e.g., 'en', 'nl').
+     * @param \DateTimeInterface $maxCreationDate filter articles added to our database at or before this date/time
+     * @param \DateTimeInterface $maxPublicationDate filter articles published at or before this date/time
+     * @param \DateTimeInterface $minCreationDate filter articles added to our database at or after this date/time
+     * @param \DateTimeInterface $minPublicationDate filter articles published at or after this date/time
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
+     * @param list<string> $portfolioID filter articles related to companies in specific Portfolios (UUIDs)
+     * @param string $query full-text search query for filtering articles by content
+     * @param list<string> $registrationNumber filter by local company registration numbers
+     * @param string $savedArticleFilterID apply a previously saved set of article filters (UUID)
+     * @param bool $sentiment filter by sentiment: `true` for positive, `false` for negative
      * @param Sorting|value-of<Sorting> $sorting Sort articles
      * @param SortingOrder|value-of<SortingOrder> $sortingOrder Sort order
      * @param RequestOpts|null $requestOptions
@@ -143,7 +143,10 @@ final class ArticlesService implements ArticlesContract
     /**
      * @api
      *
-     * Create Article Feedback.
+     * ### Submit Article Feedback
+     *
+     * Submit feedback for a specific article. This helps improve our analysis and
+     * relevance.
      *
      * @param FeedbackTypeEnum|value-of<FeedbackTypeEnum> $feedbackType * `false_positive` - False Positive
      * * `no_risk` - No Risk
@@ -177,9 +180,13 @@ final class ArticlesService implements ArticlesContract
     /**
      * @api
      *
-     * List Create Saved Article Filter.
+     * ### Saved Article Filters
      *
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * Retrieve a list of all search filters saved by the current profile. These filters
+     * can be applied to article search requests using the `saved_article_filter_id`
+     * parameter.
+     *
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<ArticleListSavedArticleFiltersResponse>
@@ -201,7 +208,10 @@ final class ArticlesService implements ArticlesContract
     /**
      * @api
      *
-     * Retrieve Article Embedding Search.
+     * ### Find Related Articles
+     *
+     * Retrieve a list of articles that are semantically similar to the specified article,
+     * ranked by similarity distance.
      *
      * @param RequestOpts|null $requestOptions
      *

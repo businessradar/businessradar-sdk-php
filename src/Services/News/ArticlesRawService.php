@@ -37,10 +37,10 @@ final class ArticlesRawService implements ArticlesRawContract
     /**
      * @api
      *
-     * Search News Articles.
+     * ### Search News Articles
      *
-     * List Articles from the Business Radar platform, search using advanced queries or
-     * check articles that have been published since last check.
+     * Retrieve articles matching the specified search criteria. Advanced queries and
+     * incremental checks (using publication/creation dates) are supported.
      *
      * @param array{
      *   category?: list<string>,
@@ -112,7 +112,10 @@ final class ArticlesRawService implements ArticlesRawContract
     /**
      * @api
      *
-     * Create Article Feedback.
+     * ### Submit Article Feedback
+     *
+     * Submit feedback for a specific article. This helps improve our analysis and
+     * relevance.
      *
      * @param array{
      *   article: string,
@@ -148,7 +151,11 @@ final class ArticlesRawService implements ArticlesRawContract
     /**
      * @api
      *
-     * List Create Saved Article Filter.
+     * ### Saved Article Filters
+     *
+     * Retrieve a list of all search filters saved by the current profile. These filters
+     * can be applied to article search requests using the `saved_article_filter_id`
+     * parameter.
      *
      * @param array{nextKey?: string}|ArticleListSavedArticleFiltersParams $params
      * @param RequestOpts|null $requestOptions
@@ -180,7 +187,10 @@ final class ArticlesRawService implements ArticlesRawContract
     /**
      * @api
      *
-     * Retrieve Article Embedding Search.
+     * ### Find Related Articles
+     *
+     * Retrieve a list of articles that are semantically similar to the specified article,
+     * ranked by similarity distance.
      *
      * @param RequestOpts|null $requestOptions
      *

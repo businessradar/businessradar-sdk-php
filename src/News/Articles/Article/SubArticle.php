@@ -10,7 +10,10 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Serializer for snippet of Sub Article.
+ * ### Sub-Article.
+ *
+ * A lightweight representation of an article that is part of a larger cluster or
+ * related to a main article.
  *
  * @phpstan-type SubArticleShape = array{url: string, externalID?: string|null}
  */

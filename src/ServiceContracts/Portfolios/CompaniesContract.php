@@ -21,9 +21,9 @@ interface CompaniesContract
     /**
      * @api
      *
-     * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company Portfolio Company Detail Serializer.
+     * @param PortfolioCompanyDetailRequest|PortfolioCompanyDetailRequestShape|null $company ### Portfolio Company Detail (Simplified)
      *
-     * Alternative serializer for the Company model which is limited.
+     * A lightweight data structure for company identification (UUID, DUNS, Name, Country)
      * @param Country|value-of<Country>|null $country
      * @param string|null $customerReference customer reference for the client to understand relationship
      * @param RequestOpts|null $requestOptions
@@ -44,7 +44,7 @@ interface CompaniesContract
     /**
      * @api
      *
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListResponse>

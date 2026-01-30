@@ -9,7 +9,10 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Related Article Serializer.
+ * ### Related Article.
+ *
+ * An article that is semantically related to another, including a distance score
+ * indicating the degree of similarity.
  *
  * @phpstan-import-type ArticleShape from \Businessradar\News\Articles\Article
  *
@@ -23,7 +26,12 @@ final class ArticleGetRelatedResponseItem implements BaseModel
     use SdkModel;
 
     /**
-     * Custom Serializer for the Article Model.
+     * ### Article.
+     *
+     * The primary data structure for news articles. It provides comprehensive data,
+     * including: - Metadata (URLs, publication dates, languages, countries) - Content
+     * (titles, snippets, summaries - both original and translated) - Relationships
+     * (source, related companies, categories) - Analysis (sentiment, clustering status)
      */
     #[Required]
     public Article $article;
@@ -68,7 +76,12 @@ final class ArticleGetRelatedResponseItem implements BaseModel
     }
 
     /**
-     * Custom Serializer for the Article Model.
+     * ### Article.
+     *
+     * The primary data structure for news articles. It provides comprehensive data,
+     * including: - Metadata (URLs, publication dates, languages, countries) - Content
+     * (titles, snippets, summaries - both original and translated) - Relationships
+     * (source, related companies, categories) - Analysis (sentiment, clustering status)
      *
      * @param Article|ArticleShape $article
      */

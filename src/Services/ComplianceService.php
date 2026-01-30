@@ -40,7 +40,13 @@ final class ComplianceService implements ComplianceContract
     /**
      * @api
      *
-     * Create a new compliance check.
+     * ### Create Compliance Check (Asynchronous)
+     *
+     * Initiate a new compliance screening. Once posted, Business Radar processes the
+     * request in the background.
+     *
+     * To check the progress and/or retrieve the final result, you can use the [GET
+     * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
      *
      * @param bool $allEntitiesScreeningEnabled If enabled all found entities UBOs, directors, shareholders will be screened. This can have an high cost impact.
      * @param bool $directorsScreeningEnabled if directors should be screened
@@ -77,7 +83,10 @@ final class ComplianceService implements ComplianceContract
     /**
      * @api
      *
-     * Get compliance check details.
+     * ### Compliance Check Status
+     *
+     * Check the current status, progress, and high-level scores of a specific compliance
+     * check.
      *
      * @param RequestOpts|null $requestOptions
      *
@@ -96,11 +105,14 @@ final class ComplianceService implements ComplianceContract
     /**
      * @api
      *
-     * List compliance results.
+     * ### List Compliance Results
+     *
+     * Retrieve all findings for a compliance check. Results can be filtered by entity,
+     * type of finding (e.g., Sanction, PEP), and confidence score.
      *
      * @param string $entity Filter by entity external ID
      * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
-     * @param string $nextKey the next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results
+     * @param string $nextKey An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      * @param Order|value-of<Order> $order Sorting order
      * @param ResultType|value-of<ResultType> $resultType Filter by result type
      * @param Sorting|value-of<Sorting> $sorting Sorting field

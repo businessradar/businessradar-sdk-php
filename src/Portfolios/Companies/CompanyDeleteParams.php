@@ -10,7 +10,9 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Remove Portfolio Companies.
+ * ### Remove Portfolio Company.
+ *
+ * Remove a company from a portfolio using its internal `external_id`.
  *
  * @see Businessradar\Services\Portfolios\CompaniesService::delete()
  *

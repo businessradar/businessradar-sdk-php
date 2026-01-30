@@ -12,10 +12,10 @@ use Businessradar\News\Articles\ArticleListParams\Sorting;
 use Businessradar\News\Articles\ArticleListParams\SortingOrder;
 
 /**
- * Search News Articles.
+ * ### Search News Articles.
  *
- * List Articles from the Business Radar platform, search using advanced queries or
- * check articles that have been published since last check.
+ * Retrieve articles matching the specified search criteria. Advanced queries and
+ * incremental checks (using publication/creation dates) are supported.
  *
  * @see Businessradar\Services\News\ArticlesService::list()
  *
@@ -50,7 +50,7 @@ final class ArticleListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Category ID to filter articles.
+     * Filter by article Category IDs (UUIDs).
      *
      * @var list<string>|null $category
      */
@@ -58,7 +58,7 @@ final class ArticleListParams implements BaseModel
     public ?array $category;
 
     /**
-     * Company ID's.
+     * Filter by internal Company UUIDs.
      *
      * @var list<string>|null $company
      */
@@ -66,7 +66,7 @@ final class ArticleListParams implements BaseModel
     public ?array $company;
 
     /**
-     * ISO 2-letter Country Code.
+     * Filter by ISO 2-letter Country Codes (e.g., 'US', 'GB').
      *
      * @var list<string>|null $country
      */
@@ -74,13 +74,13 @@ final class ArticleListParams implements BaseModel
     public ?array $country;
 
     /**
-     * By default companies with the same trade names are grouped and the best one is picked, the other ones are not included. By disabling this the amount of company articles will grow significantly.
+     * By default, companies with the same trade names are grouped and the best match is selected. Enable this to see all associated companies.
      */
     #[Optional]
     public ?bool $disableCompanyArticleDeduplication;
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * Filter by one or more 9-digit Dun & Bradstreet Numbers.
      *
      * @var list<string>|null $dunsNumber
      */
@@ -88,7 +88,7 @@ final class ArticleListParams implements BaseModel
     public ?array $dunsNumber;
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * Filter by Global Ultimate DUNS Numbers.
      *
      * @var list<string>|null $globalUltimate
      */
@@ -96,19 +96,19 @@ final class ArticleListParams implements BaseModel
     public ?array $globalUltimate;
 
     /**
-     * Include clustered articles.
+     * Include articles that are part of a cluster (reprints or similar articles).
      */
     #[Optional]
     public ?bool $includeClusteredArticles;
 
     /**
-     * Filter articles by materiality flag (true/false).
+     * Filter by materiality flag (relevance to business risk).
      */
     #[Optional]
     public ?bool $isMaterial;
 
     /**
-     * ISO 2-letter Language Code.
+     * Filter by ISO 2-letter Language Codes (e.g., 'en', 'nl').
      *
      * @var list<string>|null $language
      */
@@ -116,37 +116,37 @@ final class ArticleListParams implements BaseModel
     public ?array $language;
 
     /**
-     * Filter articles created before this date.
+     * Filter articles added to our database at or before this date/time.
      */
     #[Optional]
     public ?\DateTimeInterface $maxCreationDate;
 
     /**
-     * Filter articles published before this date.
+     * Filter articles published at or before this date/time.
      */
     #[Optional]
     public ?\DateTimeInterface $maxPublicationDate;
 
     /**
-     * Filter articles created after this date.
+     * Filter articles added to our database at or after this date/time.
      */
     #[Optional]
     public ?\DateTimeInterface $minCreationDate;
 
     /**
-     * Filter articles published after this date.
+     * Filter articles published at or after this date/time.
      */
     #[Optional]
     public ?\DateTimeInterface $minPublicationDate;
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      */
     #[Optional]
     public ?string $nextKey;
 
     /**
-     * Portfolio ID to filter articles.
+     * Filter articles related to companies in specific Portfolios (UUIDs).
      *
      * @var list<string>|null $portfolioID
      */
@@ -154,13 +154,13 @@ final class ArticleListParams implements BaseModel
     public ?array $portfolioID;
 
     /**
-     * Custom search filters to text search all articles.
+     * Full-text search query for filtering articles by content.
      */
     #[Optional]
     public ?string $query;
 
     /**
-     * Local Registration Number.
+     * Filter by local company registration numbers.
      *
      * @var list<string>|null $registrationNumber
      */
@@ -168,13 +168,13 @@ final class ArticleListParams implements BaseModel
     public ?array $registrationNumber;
 
     /**
-     * Filter articles on already saved article filter id.
+     * Apply a previously saved set of article filters (UUID).
      */
     #[Optional]
     public ?string $savedArticleFilterID;
 
     /**
-     * Filter articles with sentiment.
+     * Filter by sentiment: `true` for positive, `false` for negative.
      */
     #[Optional]
     public ?bool $sentiment;
@@ -267,7 +267,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Category ID to filter articles.
+     * Filter by article Category IDs (UUIDs).
      *
      * @param list<string> $category
      */
@@ -280,7 +280,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Company ID's.
+     * Filter by internal Company UUIDs.
      *
      * @param list<string> $company
      */
@@ -293,7 +293,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * ISO 2-letter Country Code.
+     * Filter by ISO 2-letter Country Codes (e.g., 'US', 'GB').
      *
      * @param list<string> $country
      */
@@ -306,7 +306,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * By default companies with the same trade names are grouped and the best one is picked, the other ones are not included. By disabling this the amount of company articles will grow significantly.
+     * By default, companies with the same trade names are grouped and the best match is selected. Enable this to see all associated companies.
      */
     public function withDisableCompanyArticleDeduplication(
         bool $disableCompanyArticleDeduplication
@@ -318,7 +318,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * Filter by one or more 9-digit Dun & Bradstreet Numbers.
      *
      * @param list<string> $dunsNumber
      */
@@ -331,7 +331,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * 9-digit Dun And Bradstreet Number.
+     * Filter by Global Ultimate DUNS Numbers.
      *
      * @param list<string> $globalUltimate
      */
@@ -344,7 +344,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Include clustered articles.
+     * Include articles that are part of a cluster (reprints or similar articles).
      */
     public function withIncludeClusteredArticles(
         bool $includeClusteredArticles
@@ -356,7 +356,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Filter articles by materiality flag (true/false).
+     * Filter by materiality flag (relevance to business risk).
      */
     public function withIsMaterial(bool $isMaterial): self
     {
@@ -367,7 +367,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * ISO 2-letter Language Code.
+     * Filter by ISO 2-letter Language Codes (e.g., 'en', 'nl').
      *
      * @param list<string> $language
      */
@@ -380,7 +380,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Filter articles created before this date.
+     * Filter articles added to our database at or before this date/time.
      */
     public function withMaxCreationDate(
         \DateTimeInterface $maxCreationDate
@@ -392,7 +392,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Filter articles published before this date.
+     * Filter articles published at or before this date/time.
      */
     public function withMaxPublicationDate(
         \DateTimeInterface $maxPublicationDate
@@ -404,7 +404,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Filter articles created after this date.
+     * Filter articles added to our database at or after this date/time.
      */
     public function withMinCreationDate(
         \DateTimeInterface $minCreationDate
@@ -416,7 +416,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Filter articles published after this date.
+     * Filter articles published at or after this date/time.
      */
     public function withMinPublicationDate(
         \DateTimeInterface $minPublicationDate
@@ -428,7 +428,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      */
     public function withNextKey(string $nextKey): self
     {
@@ -439,7 +439,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Portfolio ID to filter articles.
+     * Filter articles related to companies in specific Portfolios (UUIDs).
      *
      * @param list<string> $portfolioID
      */
@@ -452,7 +452,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Custom search filters to text search all articles.
+     * Full-text search query for filtering articles by content.
      */
     public function withQuery(string $query): self
     {
@@ -463,7 +463,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Local Registration Number.
+     * Filter by local company registration numbers.
      *
      * @param list<string> $registrationNumber
      */
@@ -476,7 +476,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Filter articles on already saved article filter id.
+     * Apply a previously saved set of article filters (UUID).
      */
     public function withSavedArticleFilterID(string $savedArticleFilterID): self
     {
@@ -487,7 +487,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Filter articles with sentiment.
+     * Filter by sentiment: `true` for positive, `false` for negative.
      */
     public function withSentiment(bool $sentiment): self
     {

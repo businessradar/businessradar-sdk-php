@@ -10,7 +10,10 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * List Create Portfolio.
+ * ### Portfolios.
+ *
+ * Manage collections of companies. This view allows you to list existing portfolios
+ * associated with your profile or create new ones.
  *
  * @see Businessradar\Services\PortfoliosService::list()
  *
@@ -23,7 +26,7 @@ final class PortfolioListParams implements BaseModel
     use SdkParams;
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      */
     #[Optional]
     public ?string $nextKey;
@@ -48,7 +51,7 @@ final class PortfolioListParams implements BaseModel
     }
 
     /**
-     * The next_key is an cursor used to make it possible to paginate to the next results, pass the next_key from the previous request to retrieve next results.
+     * An opaque cursor value used for pagination. Pass the `next_key` received from a previous response to retrieve the next set of results.
      */
     public function withNextKey(string $nextKey): self
     {

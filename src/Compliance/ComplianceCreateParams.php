@@ -11,7 +11,13 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * Create a new compliance check.
+ * ### Create Compliance Check (Asynchronous).
+ *
+ * Initiate a new compliance screening. Once posted, Business Radar processes the
+ * request in the background.
+ *
+ * To check the progress and/or retrieve the final result, you can use the [GET
+ * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
  *
  * @see Businessradar\Services\ComplianceService::create()
  *
