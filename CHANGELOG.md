@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.3.0 (2026-01-30)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/businessradar/businessradar-sdk-php/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([3ad4436](https://github.com/businessradar/businessradar-sdk-php/commit/3ad443614b1a7c3d736d0fd5c6e561b8034f2578))
+* **api:** api update ([985e321](https://github.com/businessradar/businessradar-sdk-php/commit/985e32144480438c88e4759b5e78e26c0f8cf132))
+* **api:** api update ([4118c0c](https://github.com/businessradar/businessradar-sdk-php/commit/4118c0c4e22cf12f8fd3ff5017bf4b35017e39ce))
+* **api:** api update ([025e6a9](https://github.com/businessradar/businessradar-sdk-php/commit/025e6a9f1b83efd26a32ebb11d3bebc3c03ce04a))
+* **api:** api update ([f913b23](https://github.com/businessradar/businessradar-sdk-php/commit/f913b23d13b098cea70c5e7e9e4f9c173b76c06a))
+* **api:** api update ([78ca32c](https://github.com/businessradar/businessradar-sdk-php/commit/78ca32c318d2ee7d05309b1c49f201e66929a189))
+* **api:** api update ([ddf3e32](https://github.com/businessradar/businessradar-sdk-php/commit/ddf3e32031948ebb1804b8535f9a3044887c227d))
+* **api:** manual updates ([0baa1d2](https://github.com/businessradar/businessradar-sdk-php/commit/0baa1d2b3dd2ede4e3c73718594f8b9c3bfa79df))
+
 ## 0.2.0 (2026-01-30)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/businessradar/businessradar-sdk-php/compare/v0.1.0...v0.2.0)
