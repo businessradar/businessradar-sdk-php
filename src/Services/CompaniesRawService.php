@@ -5,13 +5,19 @@ declare(strict_types=1);
 namespace Businessradar\Services;
 
 use Businessradar\Client;
+use Businessradar\Companies\CompanyCreateMissingCompanyInvestigationParams;
 use Businessradar\Companies\CompanyCreateParams;
 use Businessradar\Companies\CompanyCreateParams\Country;
+use Businessradar\Companies\CompanyGetMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CompanyGetResponse;
 use Businessradar\Companies\CompanyListAttributeChangesParams;
 use Businessradar\Companies\CompanyListAttributeChangesResponse;
+use Businessradar\Companies\CompanyListMissingCompanyInvestigationsParams;
+use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListParams;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
+use Businessradar\Companies\CountryEnum;
 use Businessradar\Companies\Registration;
 use Businessradar\Core\Contracts\BaseResponse;
 use Businessradar\Core\Exceptions\APIException;
@@ -170,6 +176,57 @@ final class CompaniesRawService implements CompaniesRawContract
     /**
      * @api
      *
+     * ### Submit Missing Company Investigation (Asynchronous)
+     *
+     * Submit a new investigation for a company that could not be found. Once
+     * submitted, Business Radar processes the investigation in the background.
+     *
+     * To check the progress and/or retrieve the final result, you can use the GET
+     * endpoint.
+     *
+     * @param array{
+     *   country: value-of<CountryEnum>,
+     *   legalName: string,
+     *   addressNumber?: string|null,
+     *   addressPhone?: string|null,
+     *   addressPlace?: string|null,
+     *   addressPostal?: string|null,
+     *   addressRegion?: string|null,
+     *   addressStreet?: string|null,
+     *   description?: string|null,
+     *   officerName?: string|null,
+     *   officerTitle?: string|null,
+     *   tradeName?: string|null,
+     *   websiteURL?: string|null,
+     * }|CompanyCreateMissingCompanyInvestigationParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CompanyNewMissingCompanyInvestigationResponse>
+     *
+     * @throws APIException
+     */
+    public function createMissingCompanyInvestigation(
+        array|CompanyCreateMissingCompanyInvestigationParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = CompanyCreateMissingCompanyInvestigationParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: 'ext/v3/companies/investigations',
+            body: (object) $parsed,
+            options: $options,
+            convert: CompanyNewMissingCompanyInvestigationResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
      * ### List Company Updates
      *
      * Retrieve a list of attribute changes for companies. This allows monitoring how
@@ -210,6 +267,70 @@ final class CompaniesRawService implements CompaniesRawContract
             options: $options,
             convert: CompanyListAttributeChangesResponse::class,
             page: NextKey::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * ### Missing Company Investigations
+     *
+     * List existing investigations or submit a new one for a company that could not be
+     * found.
+     *
+     * @param array{
+     *   nextKey?: string
+     * }|CompanyListMissingCompanyInvestigationsParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<NextKey<CompanyListMissingCompanyInvestigationsResponse>>
+     *
+     * @throws APIException
+     */
+    public function listMissingCompanyInvestigations(
+        array|CompanyListMissingCompanyInvestigationsParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = CompanyListMissingCompanyInvestigationsParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: 'ext/v3/companies/investigations',
+            query: Util::array_transform_keys($parsed, ['nextKey' => 'next_key']),
+            options: $options,
+            convert: CompanyListMissingCompanyInvestigationsResponse::class,
+            page: NextKey::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * ### Retrieve Missing Company Investigation
+     *
+     * Fetch details about a specific missing company investigation using its
+     * `external_id`.
+     *
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CompanyGetMissingCompanyInvestigationResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveMissingCompanyInvestigation(
+        string $externalID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['ext/v3/companies/investigations/%1$s', $externalID],
+            options: $requestOptions,
+            convert: CompanyGetMissingCompanyInvestigationResponse::class,
         );
     }
 
