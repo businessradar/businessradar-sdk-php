@@ -6,9 +6,12 @@ namespace Businessradar\ServiceContracts;
 
 use Businessradar\Compliance\ComplianceCreateParams;
 use Businessradar\Compliance\ComplianceGetResponse;
+use Businessradar\Compliance\ComplianceListResultsParams;
+use Businessradar\Compliance\ComplianceListResultsResponse;
 use Businessradar\Compliance\ComplianceNewResponse;
 use Businessradar\Core\Contracts\BaseResponse;
 use Businessradar\Core\Exceptions\APIException;
+use Businessradar\NextKey;
 use Businessradar\RequestOptions;
 
 /**
@@ -43,5 +46,21 @@ interface ComplianceRawContract
     public function retrieve(
         string $externalID,
         RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|ComplianceListResultsParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<NextKey<ComplianceListResultsResponse>>
+     *
+     * @throws APIException
+     */
+    public function listResults(
+        string $externalID,
+        array|ComplianceListResultsParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }
