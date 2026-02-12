@@ -44,10 +44,10 @@ final class ComplianceService implements ComplianceContract
      *
      * Initiate a new compliance screening using one of two methods:
      *
-     * 1. **Company-based screening**: Provide a `company_id` to automatically screen
-     * the company and its associated entities (like UBOs and directors). You can
-     * optionally include a list of additional `entities` to be screened alongside the
-     * company.
+     * 1. **Company-based screening**: Provide a `company_id` to screen the company.
+     * Optionally enable screening of related entities (UBOs and directors) via
+     * `ubo_screening_enabled` and `directors_screening_enabled`. You can optionally
+     * include a list of additional `entities` to be screened alongside the company.
      *
      * 2. **Custom entity screening**: Provide a list of `entities` without a
      * `company_id` to screen specific individuals or organizations that are not
@@ -58,10 +58,11 @@ final class ComplianceService implements ComplianceContract
      * To check the progress and/or retrieve the final result, you can use the [GET
      * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
      *
-     * @param bool $allEntitiesScreeningEnabled If enabled all found entities UBOs, directors, shareholders will be screened. This can have an high cost impact.
+     * @param bool $allEntitiesScreeningEnabled If enabled all found entities (UBOs, directors, shareholders) will be screened. This can have a high cost impact.
      * @param bool $directorsScreeningEnabled if directors should be screened
      * @param list<Entity|EntityShape> $entities
      * @param float|null $ownershipScreeningThreshold the threshold for ultimate ownership to enable for screening
+     * @param bool $uboScreeningEnabled if enabled, UBOs discovered for the company will be screened
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -72,6 +73,7 @@ final class ComplianceService implements ComplianceContract
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
         ?float $ownershipScreeningThreshold = null,
+        bool $uboScreeningEnabled = false,
         RequestOptions|array|null $requestOptions = null,
     ): ComplianceNewResponse {
         $params = Util::removeNulls(
@@ -81,6 +83,7 @@ final class ComplianceService implements ComplianceContract
                 'directorsScreeningEnabled' => $directorsScreeningEnabled,
                 'entities' => $entities,
                 'ownershipScreeningThreshold' => $ownershipScreeningThreshold,
+                'uboScreeningEnabled' => $uboScreeningEnabled,
             ],
         );
 

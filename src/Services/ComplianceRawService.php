@@ -40,10 +40,10 @@ final class ComplianceRawService implements ComplianceRawContract
      *
      * Initiate a new compliance screening using one of two methods:
      *
-     * 1. **Company-based screening**: Provide a `company_id` to automatically screen
-     * the company and its associated entities (like UBOs and directors). You can
-     * optionally include a list of additional `entities` to be screened alongside the
-     * company.
+     * 1. **Company-based screening**: Provide a `company_id` to screen the company.
+     * Optionally enable screening of related entities (UBOs and directors) via
+     * `ubo_screening_enabled` and `directors_screening_enabled`. You can optionally
+     * include a list of additional `entities` to be screened alongside the company.
      *
      * 2. **Custom entity screening**: Provide a list of `entities` without a
      * `company_id` to screen specific individuals or organizations that are not
@@ -60,6 +60,7 @@ final class ComplianceRawService implements ComplianceRawContract
      *   directorsScreeningEnabled?: bool,
      *   entities?: list<Entity|EntityShape>,
      *   ownershipScreeningThreshold?: float|null,
+     *   uboScreeningEnabled?: bool,
      * }|ComplianceCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
