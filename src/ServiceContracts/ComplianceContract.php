@@ -24,10 +24,11 @@ interface ComplianceContract
     /**
      * @api
      *
-     * @param bool $allEntitiesScreeningEnabled If enabled all found entities UBOs, directors, shareholders will be screened. This can have an high cost impact.
+     * @param bool $allEntitiesScreeningEnabled If enabled all found entities (UBOs, directors, shareholders) will be screened. This can have a high cost impact.
      * @param bool $directorsScreeningEnabled if directors should be screened
      * @param list<Entity|EntityShape> $entities
      * @param float|null $ownershipScreeningThreshold the threshold for ultimate ownership to enable for screening
+     * @param bool $uboScreeningEnabled if enabled, UBOs discovered for the company will be screened
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -38,6 +39,7 @@ interface ComplianceContract
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
         ?float $ownershipScreeningThreshold = null,
+        bool $uboScreeningEnabled = false,
         RequestOptions|array|null $requestOptions = null,
     ): ComplianceNewResponse;
 
