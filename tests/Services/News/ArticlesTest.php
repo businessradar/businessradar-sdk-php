@@ -36,7 +36,7 @@ final class ArticlesTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->news->articles->list();
@@ -54,7 +54,7 @@ final class ArticlesTest extends TestCase
     public function testCreateFeedback(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->news->articles->createFeedback(
@@ -69,7 +69,7 @@ final class ArticlesTest extends TestCase
     public function testCreateFeedbackWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->news->articles->createFeedback(
@@ -87,7 +87,7 @@ final class ArticlesTest extends TestCase
     public function testListSavedArticleFilters(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->news->articles->listSavedArticleFilters();
@@ -108,7 +108,7 @@ final class ArticlesTest extends TestCase
     public function testRetrieveRelated(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->news->articles->retrieveRelated(
