@@ -40,7 +40,7 @@ final class CompaniesTest extends TestCase
     public function testCreate(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->companies->create();
@@ -53,7 +53,7 @@ final class CompaniesTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->companies->retrieve(
@@ -68,7 +68,7 @@ final class CompaniesTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->companies->list();
@@ -86,7 +86,7 @@ final class CompaniesTest extends TestCase
     public function testCreateMissingCompanyInvestigation(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->companies->createMissingCompanyInvestigation(
@@ -105,7 +105,7 @@ final class CompaniesTest extends TestCase
     public function testCreateMissingCompanyInvestigationWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->companies->createMissingCompanyInvestigation(
@@ -135,7 +135,7 @@ final class CompaniesTest extends TestCase
     public function testListAttributeChanges(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->companies->listAttributeChanges();
@@ -156,7 +156,7 @@ final class CompaniesTest extends TestCase
     public function testListMissingCompanyInvestigations(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->companies->listMissingCompanyInvestigations();
@@ -177,7 +177,7 @@ final class CompaniesTest extends TestCase
     public function testRetrieveMissingCompanyInvestigation(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->companies->retrieveMissingCompanyInvestigation(
@@ -195,7 +195,7 @@ final class CompaniesTest extends TestCase
     public function testRetrieveRegistration(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->companies->retrieveRegistration(
