@@ -124,6 +124,7 @@ final class ComplianceService implements ComplianceContract
      * type of finding (e.g., Sanction, PEP), and confidence score.
      *
      * @param string $entity Filter by entity external ID
+     * @param bool $excludeAutomatedFalsePositives Filter out automated false positive rated results
      * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param Order|value-of<Order> $order Sorting order
@@ -138,6 +139,7 @@ final class ComplianceService implements ComplianceContract
     public function listResults(
         string $externalID,
         ?string $entity = null,
+        bool $excludeAutomatedFalsePositives = true,
         ?float $minConfidence = null,
         ?string $nextKey = null,
         Order|string $order = 'desc',
@@ -148,6 +150,7 @@ final class ComplianceService implements ComplianceContract
         $params = Util::removeNulls(
             [
                 'entity' => $entity,
+                'excludeAutomatedFalsePositives' => $excludeAutomatedFalsePositives,
                 'minConfidence' => $minConfidence,
                 'nextKey' => $nextKey,
                 'order' => $order,

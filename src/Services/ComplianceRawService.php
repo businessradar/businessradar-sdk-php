@@ -124,6 +124,7 @@ final class ComplianceRawService implements ComplianceRawContract
      *
      * @param array{
      *   entity?: string,
+     *   excludeAutomatedFalsePositives?: bool,
      *   minConfidence?: float,
      *   nextKey?: string,
      *   order?: Order|value-of<Order>,
@@ -153,6 +154,7 @@ final class ComplianceRawService implements ComplianceRawContract
             query: Util::array_transform_keys(
                 $parsed,
                 [
+                    'excludeAutomatedFalsePositives' => 'exclude_automated_false_positives',
                     'minConfidence' => 'min_confidence',
                     'nextKey' => 'next_key',
                     'resultType' => 'result_type',
