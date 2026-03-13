@@ -18,6 +18,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *
  * @phpstan-type EntityShape = array{
  *   name: string,
+ *   aliases?: list<string>|null,
  *   country?: string|null,
  *   dateOfBirth?: string|null,
  *   entityType?: null|EntityType|value-of<EntityType>,
@@ -33,6 +34,14 @@ final class Entity implements BaseModel
 
     #[Required]
     public string $name;
+
+    /**
+     * Alternative names or aliases for the compliance entity.
+     *
+     * @var list<string>|null $aliases
+     */
+    #[Optional(list: 'string')]
+    public ?array $aliases;
 
     #[Optional(nullable: true)]
     public ?string $country;
@@ -82,10 +91,12 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<string>|null $aliases
      * @param EntityType|value-of<EntityType>|null $entityType
      */
     public static function with(
         string $name,
+        ?array $aliases = null,
         ?string $country = null,
         ?string $dateOfBirth = null,
         EntityType|string|null $entityType = null,
@@ -97,6 +108,7 @@ final class Entity implements BaseModel
 
         $self['name'] = $name;
 
+        null !== $aliases && $self['aliases'] = $aliases;
         null !== $country && $self['country'] = $country;
         null !== $dateOfBirth && $self['dateOfBirth'] = $dateOfBirth;
         null !== $entityType && $self['entityType'] = $entityType;
@@ -111,6 +123,19 @@ final class Entity implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * Alternative names or aliases for the compliance entity.
+     *
+     * @param list<string> $aliases
+     */
+    public function withAliases(array $aliases): self
+    {
+        $self = clone $this;
+        $self['aliases'] = $aliases;
 
         return $self;
     }

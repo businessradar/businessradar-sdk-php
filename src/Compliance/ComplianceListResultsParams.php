@@ -22,6 +22,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *
  * @phpstan-type ComplianceListResultsParamsShape = array{
  *   entity?: string|null,
+ *   excludeAutomatedFalsePositives?: bool|null,
  *   minConfidence?: float|null,
  *   nextKey?: string|null,
  *   order?: null|Order|value-of<Order>,
@@ -40,6 +41,12 @@ final class ComplianceListResultsParams implements BaseModel
      */
     #[Optional]
     public ?string $entity;
+
+    /**
+     * Filter out automated false positive rated results.
+     */
+    #[Optional]
+    public ?bool $excludeAutomatedFalsePositives;
 
     /**
      * Filter by minimum confidence score (0.0 - 1.0).
@@ -93,6 +100,7 @@ final class ComplianceListResultsParams implements BaseModel
      */
     public static function with(
         ?string $entity = null,
+        ?bool $excludeAutomatedFalsePositives = null,
         ?float $minConfidence = null,
         ?string $nextKey = null,
         Order|string|null $order = null,
@@ -102,6 +110,7 @@ final class ComplianceListResultsParams implements BaseModel
         $self = new self;
 
         null !== $entity && $self['entity'] = $entity;
+        null !== $excludeAutomatedFalsePositives && $self['excludeAutomatedFalsePositives'] = $excludeAutomatedFalsePositives;
         null !== $minConfidence && $self['minConfidence'] = $minConfidence;
         null !== $nextKey && $self['nextKey'] = $nextKey;
         null !== $order && $self['order'] = $order;
@@ -118,6 +127,18 @@ final class ComplianceListResultsParams implements BaseModel
     {
         $self = clone $this;
         $self['entity'] = $entity;
+
+        return $self;
+    }
+
+    /**
+     * Filter out automated false positive rated results.
+     */
+    public function withExcludeAutomatedFalsePositives(
+        bool $excludeAutomatedFalsePositives
+    ): self {
+        $self = clone $this;
+        $self['excludeAutomatedFalsePositives'] = $excludeAutomatedFalsePositives;
 
         return $self;
     }

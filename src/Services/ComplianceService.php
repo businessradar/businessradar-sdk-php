@@ -44,10 +44,10 @@ final class ComplianceService implements ComplianceContract
      *
      * Initiate a new compliance screening using one of two methods:
      *
-     * 1. **Company-based screening**: Provide a `company_id` to automatically screen
-     * the company and its associated entities (like UBOs and directors). You can
-     * optionally include a list of additional `entities` to be screened alongside the
-     * company.
+     * 1. **Company-based screening**: Provide a `company_id` to screen the company.
+     * Optionally enable screening of related entities (UBOs and directors) via
+     * `ubo_screening_enabled` and `directors_screening_enabled`. You can optionally
+     * include a list of additional `entities` to be screened alongside the company.
      *
      * 2. **Custom entity screening**: Provide a list of `entities` without a
      * `company_id` to screen specific individuals or organizations that are not
@@ -58,29 +58,29 @@ final class ComplianceService implements ComplianceContract
      * To check the progress and/or retrieve the final result, you can use the [GET
      * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
      *
-     * @param bool $allEntitiesScreeningEnabled If enabled all found entities UBOs, directors, shareholders will be screened. This can have an high cost impact.
      * @param bool $directorsScreeningEnabled if directors should be screened
      * @param list<Entity|EntityShape> $entities
      * @param float|null $ownershipScreeningThreshold the threshold for ultimate ownership to enable for screening
+     * @param bool $uboScreeningEnabled if enabled, UBOs discovered for the company will be screened
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
-        bool $allEntitiesScreeningEnabled = false,
         ?string $companyID = null,
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
         ?float $ownershipScreeningThreshold = null,
+        bool $uboScreeningEnabled = false,
         RequestOptions|array|null $requestOptions = null,
     ): ComplianceNewResponse {
         $params = Util::removeNulls(
             [
-                'allEntitiesScreeningEnabled' => $allEntitiesScreeningEnabled,
                 'companyID' => $companyID,
                 'directorsScreeningEnabled' => $directorsScreeningEnabled,
                 'entities' => $entities,
                 'ownershipScreeningThreshold' => $ownershipScreeningThreshold,
+                'uboScreeningEnabled' => $uboScreeningEnabled,
             ],
         );
 
@@ -121,6 +121,7 @@ final class ComplianceService implements ComplianceContract
      * type of finding (e.g., Sanction, PEP), and confidence score.
      *
      * @param string $entity Filter by entity external ID
+     * @param bool $excludeAutomatedFalsePositives Filter out automated false positive rated results
      * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param Order|value-of<Order> $order Sorting order
@@ -135,6 +136,7 @@ final class ComplianceService implements ComplianceContract
     public function listResults(
         string $externalID,
         ?string $entity = null,
+        bool $excludeAutomatedFalsePositives = true,
         ?float $minConfidence = null,
         ?string $nextKey = null,
         Order|string $order = 'desc',
@@ -145,6 +147,7 @@ final class ComplianceService implements ComplianceContract
         $params = Util::removeNulls(
             [
                 'entity' => $entity,
+                'excludeAutomatedFalsePositives' => $excludeAutomatedFalsePositives,
                 'minConfidence' => $minConfidence,
                 'nextKey' => $nextKey,
                 'order' => $order,

@@ -25,6 +25,8 @@ use Businessradar\Core\Contracts\BaseModel;
  *
  * @phpstan-type ComplianceListResultsResponseShape = array{
  *   addresses: list<Address|AddressShape>,
+ *   automatedFalsePositiveRating: string|null,
+ *   automatedFalsePositiveRatingComments: string|null,
  *   createdAt: \DateTimeInterface,
  *   entity: Entity|EntityShape,
  *   externalID: string,
@@ -56,6 +58,12 @@ final class ComplianceListResultsResponse implements BaseModel
     /** @var list<Address> $addresses */
     #[Required(list: Address::class)]
     public array $addresses;
+
+    #[Required('automated_false_positive_rating')]
+    public ?string $automatedFalsePositiveRating;
+
+    #[Required('automated_false_positive_rating_comments')]
+    public ?string $automatedFalsePositiveRatingComments;
 
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -139,6 +147,8 @@ final class ComplianceListResultsResponse implements BaseModel
      * ```
      * ComplianceListResultsResponse::with(
      *   addresses: ...,
+     *   automatedFalsePositiveRating: ...,
+     *   automatedFalsePositiveRatingComments: ...,
      *   createdAt: ...,
      *   entity: ...,
      *   externalID: ...,
@@ -154,6 +164,8 @@ final class ComplianceListResultsResponse implements BaseModel
      * ```
      * (new ComplianceListResultsResponse)
      *   ->withAddresses(...)
+     *   ->withAutomatedFalsePositiveRating(...)
+     *   ->withAutomatedFalsePositiveRatingComments(...)
      *   ->withCreatedAt(...)
      *   ->withEntity(...)
      *   ->withExternalID(...)
@@ -182,6 +194,8 @@ final class ComplianceListResultsResponse implements BaseModel
      */
     public static function with(
         array $addresses,
+        ?string $automatedFalsePositiveRating,
+        ?string $automatedFalsePositiveRatingComments,
         \DateTimeInterface $createdAt,
         Entity|array $entity,
         string $externalID,
@@ -207,6 +221,8 @@ final class ComplianceListResultsResponse implements BaseModel
         $self = new self;
 
         $self['addresses'] = $addresses;
+        $self['automatedFalsePositiveRating'] = $automatedFalsePositiveRating;
+        $self['automatedFalsePositiveRatingComments'] = $automatedFalsePositiveRatingComments;
         $self['createdAt'] = $createdAt;
         $self['entity'] = $entity;
         $self['externalID'] = $externalID;
@@ -240,6 +256,24 @@ final class ComplianceListResultsResponse implements BaseModel
     {
         $self = clone $this;
         $self['addresses'] = $addresses;
+
+        return $self;
+    }
+
+    public function withAutomatedFalsePositiveRating(
+        ?string $automatedFalsePositiveRating
+    ): self {
+        $self = clone $this;
+        $self['automatedFalsePositiveRating'] = $automatedFalsePositiveRating;
+
+        return $self;
+    }
+
+    public function withAutomatedFalsePositiveRatingComments(
+        ?string $automatedFalsePositiveRatingComments
+    ): self {
+        $self = clone $this;
+        $self['automatedFalsePositiveRatingComments'] = $automatedFalsePositiveRatingComments;
 
         return $self;
     }

@@ -3,6 +3,7 @@
 namespace Tests\Services\News;
 
 use Businessradar\Client;
+use Businessradar\Core\Util;
 use Businessradar\News\Articles\Article;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
 use Businessradar\News\Articles\ArticleNewFeedbackResponse;
@@ -25,7 +26,7 @@ final class ArticlesTest extends TestCase
     {
         parent::setUp();
 
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $testUrl = Util::getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
         $client = new Client(apiKey: 'My API Key', baseUrl: $testUrl);
 
         $this->client = $client;
@@ -35,7 +36,7 @@ final class ArticlesTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->news->articles->list();
@@ -53,7 +54,7 @@ final class ArticlesTest extends TestCase
     public function testCreateFeedback(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->news->articles->createFeedback(
@@ -68,7 +69,7 @@ final class ArticlesTest extends TestCase
     public function testCreateFeedbackWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->news->articles->createFeedback(
@@ -86,7 +87,7 @@ final class ArticlesTest extends TestCase
     public function testListSavedArticleFilters(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->news->articles->listSavedArticleFilters();
@@ -107,7 +108,7 @@ final class ArticlesTest extends TestCase
     public function testRetrieveRelated(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->news->articles->retrieveRelated(

@@ -18,6 +18,7 @@ use Businessradar\Core\Contracts\BaseModel;
  * @phpstan-import-type UboShape from \Businessradar\Compliance\ComplianceListResultsResponse\Entity\Ubo
  *
  * @phpstan-type EntityShape = array{
+ *   aliases: list<string>,
  *   entityRole: EntityRole|value-of<EntityRole>,
  *   entityType: EntityType|value-of<EntityType>,
  *   externalID: string,
@@ -32,6 +33,10 @@ final class Entity implements BaseModel
 {
     /** @use SdkModel<EntityShape> */
     use SdkModel;
+
+    /** @var list<string> $aliases */
+    #[Required(list: 'string')]
+    public array $aliases;
 
     /**
      * * `ubo` - Ultimate Beneficial Owner
@@ -88,6 +93,7 @@ final class Entity implements BaseModel
      * To enforce required parameters use
      * ```
      * Entity::with(
+     *   aliases: ...,
      *   entityRole: ...,
      *   entityType: ...,
      *   externalID: ...,
@@ -101,6 +107,7 @@ final class Entity implements BaseModel
      *
      * ```
      * (new Entity)
+     *   ->withAliases(...)
      *   ->withEntityRole(...)
      *   ->withEntityType(...)
      *   ->withExternalID(...)
@@ -119,6 +126,7 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<string> $aliases
      * @param EntityRole|value-of<EntityRole> $entityRole
      * @param EntityType|value-of<EntityType> $entityType
      * @param Status|value-of<Status> $status
@@ -126,6 +134,7 @@ final class Entity implements BaseModel
      * @param Gender|value-of<Gender>|null $gender
      */
     public static function with(
+        array $aliases,
         EntityRole|string $entityRole,
         EntityType|string $entityType,
         string $externalID,
@@ -137,6 +146,7 @@ final class Entity implements BaseModel
     ): self {
         $self = new self;
 
+        $self['aliases'] = $aliases;
         $self['entityRole'] = $entityRole;
         $self['entityType'] = $entityType;
         $self['externalID'] = $externalID;
@@ -146,6 +156,17 @@ final class Entity implements BaseModel
 
         null !== $country && $self['country'] = $country;
         null !== $gender && $self['gender'] = $gender;
+
+        return $self;
+    }
+
+    /**
+     * @param list<string> $aliases
+     */
+    public function withAliases(array $aliases): self
+    {
+        $self = clone $this;
+        $self['aliases'] = $aliases;
 
         return $self;
     }

@@ -49,9 +49,9 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
     ) {
-        $this->apiKey = (string) ($apiKey ?? getenv('BUSINESSRADAR_API_KEY'));
+        $this->apiKey = (string) ($apiKey ?? Util::getenv('BUSINESSRADAR_API_KEY'));
 
-        $baseUrl ??= getenv(
+        $baseUrl ??= Util::getenv(
             'BUSINESS_RADAR_BASE_URL'
         ) ?: 'https://api.businessradar.com';
 
