@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.4.0 (2026-03-13)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/businessradar/businessradar-sdk-php/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** api update ([c1d64d2](https://github.com/businessradar/businessradar-sdk-php/commit/c1d64d28d08384f076964afc8a38bbe2098ab8bf))
+* **api:** api update ([aecc1a0](https://github.com/businessradar/businessradar-sdk-php/commit/aecc1a0be85f06bae2c2f6585580bdf2d9e04af6))
+* **api:** api update ([75bcecf](https://github.com/businessradar/businessradar-sdk-php/commit/75bcecfc2890628a770a7d80b3779d5d5fd0318b))
+* use `$_ENV` aware getenv helper ([674386b](https://github.com/businessradar/businessradar-sdk-php/commit/674386be8fc61294fdcec3123a05db19b157cfe0))
+
+
+### Bug Fixes
+
+* used redirect count instead of retry count in base client ([81e5f1a](https://github.com/businessradar/businessradar-sdk-php/commit/81e5f1a202687cc926237f2296a53ea460d296f9))
+
+
+### Chores
+
+* **internal:** codegen related update ([1ccd0fc](https://github.com/businessradar/businessradar-sdk-php/commit/1ccd0fc824f739e879f22dc5121d3e1dc08c27bd))
+* **internal:** php cs fixer should not be memory limited ([991eda3](https://github.com/businessradar/businessradar-sdk-php/commit/991eda36359fc9d87802604206b59733d277e720))
+* **internal:** remove mock server code ([6eba5b5](https://github.com/businessradar/businessradar-sdk-php/commit/6eba5b57843d3ed76ed4c43828f711867c435f31))
+* **internal:** upgrade phpunit ([8e12cca](https://github.com/businessradar/businessradar-sdk-php/commit/8e12ccae687c9f076c059bc5b2aed51a345618f5))
+* **release:** add packagist trigger on published release ([5510fce](https://github.com/businessradar/businessradar-sdk-php/commit/5510fce38b7df8291dcabd931483bb87015c9b0d))
+* update mock server docs ([d8dba45](https://github.com/businessradar/businessradar-sdk-php/commit/d8dba450b3c05d8bcc4789a8a3ffa58bed728116))
+
 ## 0.3.0 (2026-01-30)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/businessradar/businessradar-sdk-php/compare/v0.2.0...v0.3.0)
