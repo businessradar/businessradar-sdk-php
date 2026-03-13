@@ -34,7 +34,6 @@ use Businessradar\Core\Contracts\BaseModel;
  * @phpstan-import-type EntityShape from \Businessradar\Compliance\ComplianceCreateParams\Entity
  *
  * @phpstan-type ComplianceCreateParamsShape = array{
- *   allEntitiesScreeningEnabled?: bool|null,
  *   companyID?: string|null,
  *   directorsScreeningEnabled?: bool|null,
  *   entities?: list<Entity|EntityShape>|null,
@@ -47,12 +46,6 @@ final class ComplianceCreateParams implements BaseModel
     /** @use SdkModel<ComplianceCreateParamsShape> */
     use SdkModel;
     use SdkParams;
-
-    /**
-     * If enabled all found entities (UBOs, directors, shareholders) will be screened. This can have a high cost impact.
-     */
-    #[Optional('all_entities_screening_enabled')]
-    public ?bool $allEntitiesScreeningEnabled;
 
     #[Optional('company_id', nullable: true)]
     public ?string $companyID;
@@ -92,7 +85,6 @@ final class ComplianceCreateParams implements BaseModel
      * @param list<Entity|EntityShape>|null $entities
      */
     public static function with(
-        ?bool $allEntitiesScreeningEnabled = null,
         ?string $companyID = null,
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
@@ -101,24 +93,11 @@ final class ComplianceCreateParams implements BaseModel
     ): self {
         $self = new self;
 
-        null !== $allEntitiesScreeningEnabled && $self['allEntitiesScreeningEnabled'] = $allEntitiesScreeningEnabled;
         null !== $companyID && $self['companyID'] = $companyID;
         null !== $directorsScreeningEnabled && $self['directorsScreeningEnabled'] = $directorsScreeningEnabled;
         null !== $entities && $self['entities'] = $entities;
         null !== $ownershipScreeningThreshold && $self['ownershipScreeningThreshold'] = $ownershipScreeningThreshold;
         null !== $uboScreeningEnabled && $self['uboScreeningEnabled'] = $uboScreeningEnabled;
-
-        return $self;
-    }
-
-    /**
-     * If enabled all found entities (UBOs, directors, shareholders) will be screened. This can have a high cost impact.
-     */
-    public function withAllEntitiesScreeningEnabled(
-        bool $allEntitiesScreeningEnabled
-    ): self {
-        $self = clone $this;
-        $self['allEntitiesScreeningEnabled'] = $allEntitiesScreeningEnabled;
 
         return $self;
     }
