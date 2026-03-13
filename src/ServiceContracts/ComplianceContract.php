@@ -24,7 +24,6 @@ interface ComplianceContract
     /**
      * @api
      *
-     * @param bool $allEntitiesScreeningEnabled If enabled all found entities (UBOs, directors, shareholders) will be screened. This can have a high cost impact.
      * @param bool $directorsScreeningEnabled if directors should be screened
      * @param list<Entity|EntityShape> $entities
      * @param float|null $ownershipScreeningThreshold the threshold for ultimate ownership to enable for screening
@@ -34,7 +33,6 @@ interface ComplianceContract
      * @throws APIException
      */
     public function create(
-        bool $allEntitiesScreeningEnabled = false,
         ?string $companyID = null,
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,

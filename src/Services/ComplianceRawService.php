@@ -55,7 +55,6 @@ final class ComplianceRawService implements ComplianceRawContract
      * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
      *
      * @param array{
-     *   allEntitiesScreeningEnabled?: bool,
      *   companyID?: string|null,
      *   directorsScreeningEnabled?: bool,
      *   entities?: list<Entity|EntityShape>,
