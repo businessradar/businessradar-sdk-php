@@ -36,6 +36,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   socialLogo: string|null,
  *   addressLatitude?: float|null,
  *   addressLongitude?: float|null,
+ *   addressNumber?: string|null,
  *   addressPhone?: string|null,
  *   addressPlace?: string|null,
  *   addressPostal?: string|null,
@@ -358,6 +359,9 @@ final class CompanyGetResponse implements BaseModel
     #[Optional('address_longitude', nullable: true)]
     public ?float $addressLongitude;
 
+    #[Optional('address_number', nullable: true)]
+    public ?string $addressNumber;
+
     #[Optional('address_phone', nullable: true)]
     public ?string $addressPhone;
 
@@ -493,6 +497,7 @@ final class CompanyGetResponse implements BaseModel
         ?string $socialLogo,
         ?float $addressLatitude = null,
         ?float $addressLongitude = null,
+        ?string $addressNumber = null,
         ?string $addressPhone = null,
         ?string $addressPlace = null,
         ?string $addressPostal = null,
@@ -526,6 +531,7 @@ final class CompanyGetResponse implements BaseModel
 
         null !== $addressLatitude && $self['addressLatitude'] = $addressLatitude;
         null !== $addressLongitude && $self['addressLongitude'] = $addressLongitude;
+        null !== $addressNumber && $self['addressNumber'] = $addressNumber;
         null !== $addressPhone && $self['addressPhone'] = $addressPhone;
         null !== $addressPlace && $self['addressPlace'] = $addressPlace;
         null !== $addressPostal && $self['addressPostal'] = $addressPostal;
@@ -907,6 +913,14 @@ final class CompanyGetResponse implements BaseModel
     {
         $self = clone $this;
         $self['addressLongitude'] = $addressLongitude;
+
+        return $self;
+    }
+
+    public function withAddressNumber(?string $addressNumber): self
+    {
+        $self = clone $this;
+        $self['addressNumber'] = $addressNumber;
 
         return $self;
     }
