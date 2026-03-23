@@ -37,6 +37,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   companyID?: string|null,
  *   directorsScreeningEnabled?: bool|null,
  *   entities?: list<Entity|EntityShape>|null,
+ *   name?: string|null,
  *   ownershipScreeningThreshold?: float|null,
  *   uboScreeningEnabled?: bool|null,
  * }
@@ -59,6 +60,12 @@ final class ComplianceCreateParams implements BaseModel
     /** @var list<Entity>|null $entities */
     #[Optional(list: Entity::class)]
     public ?array $entities;
+
+    /**
+     * Custom name for this compliance check.
+     */
+    #[Optional(nullable: true)]
+    public ?string $name;
 
     /**
      * The threshold for ultimate ownership to enable for screening.
@@ -88,6 +95,7 @@ final class ComplianceCreateParams implements BaseModel
         ?string $companyID = null,
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
+        ?string $name = null,
         ?float $ownershipScreeningThreshold = null,
         ?bool $uboScreeningEnabled = null,
     ): self {
@@ -96,6 +104,7 @@ final class ComplianceCreateParams implements BaseModel
         null !== $companyID && $self['companyID'] = $companyID;
         null !== $directorsScreeningEnabled && $self['directorsScreeningEnabled'] = $directorsScreeningEnabled;
         null !== $entities && $self['entities'] = $entities;
+        null !== $name && $self['name'] = $name;
         null !== $ownershipScreeningThreshold && $self['ownershipScreeningThreshold'] = $ownershipScreeningThreshold;
         null !== $uboScreeningEnabled && $self['uboScreeningEnabled'] = $uboScreeningEnabled;
 
@@ -129,6 +138,17 @@ final class ComplianceCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['entities'] = $entities;
+
+        return $self;
+    }
+
+    /**
+     * Custom name for this compliance check.
+     */
+    public function withName(?string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
 
         return $self;
     }

@@ -58,6 +58,7 @@ final class ComplianceRawService implements ComplianceRawContract
      *   companyID?: string|null,
      *   directorsScreeningEnabled?: bool,
      *   entities?: list<Entity|EntityShape>,
+     *   name?: string|null,
      *   ownershipScreeningThreshold?: float|null,
      *   uboScreeningEnabled?: bool,
      * }|ComplianceCreateParams $params
