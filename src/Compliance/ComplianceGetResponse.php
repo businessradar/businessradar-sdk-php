@@ -28,6 +28,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   adverseMediaScore?: null|AdverseMediaScore|value-of<AdverseMediaScore>,
  *   complianceScore?: null|ComplianceScore|value-of<ComplianceScore>,
  *   countryScore?: null|CountryScore|value-of<CountryScore>,
+ *   name?: string|null,
  *   pepScore?: null|PepScore|value-of<PepScore>,
  *   sanctionScore?: null|SanctionScore|value-of<SanctionScore>,
  *   status?: null|Status|value-of<Status>,
@@ -67,6 +68,12 @@ final class ComplianceGetResponse implements BaseModel
     /** @var value-of<CountryScore>|null $countryScore */
     #[Optional('country_score', enum: CountryScore::class, nullable: true)]
     public ?string $countryScore;
+
+    /**
+     * Custom name for this compliance check.
+     */
+    #[Optional(nullable: true)]
+    public ?string $name;
 
     /** @var value-of<PepScore>|null $pepScore */
     #[Optional('pep_score', enum: PepScore::class, nullable: true)]
@@ -133,6 +140,7 @@ final class ComplianceGetResponse implements BaseModel
         AdverseMediaScore|string|null $adverseMediaScore = null,
         ComplianceScore|string|null $complianceScore = null,
         CountryScore|string|null $countryScore = null,
+        ?string $name = null,
         PepScore|string|null $pepScore = null,
         SanctionScore|string|null $sanctionScore = null,
         Status|string|null $status = null,
@@ -147,6 +155,7 @@ final class ComplianceGetResponse implements BaseModel
         null !== $adverseMediaScore && $self['adverseMediaScore'] = $adverseMediaScore;
         null !== $complianceScore && $self['complianceScore'] = $complianceScore;
         null !== $countryScore && $self['countryScore'] = $countryScore;
+        null !== $name && $self['name'] = $name;
         null !== $pepScore && $self['pepScore'] = $pepScore;
         null !== $sanctionScore && $self['sanctionScore'] = $sanctionScore;
         null !== $status && $self['status'] = $status;
@@ -225,6 +234,17 @@ final class ComplianceGetResponse implements BaseModel
     ): self {
         $self = clone $this;
         $self['countryScore'] = $countryScore;
+
+        return $self;
+    }
+
+    /**
+     * Custom name for this compliance check.
+     */
+    public function withName(?string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
 
         return $self;
     }

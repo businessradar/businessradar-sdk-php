@@ -26,6 +26,7 @@ interface ComplianceContract
      *
      * @param bool $directorsScreeningEnabled if directors should be screened
      * @param list<Entity|EntityShape> $entities
+     * @param string|null $name custom name for this compliance check
      * @param float|null $ownershipScreeningThreshold the threshold for ultimate ownership to enable for screening
      * @param bool $uboScreeningEnabled if enabled, UBOs discovered for the company will be screened
      * @param RequestOpts|null $requestOptions
@@ -36,6 +37,7 @@ interface ComplianceContract
         ?string $companyID = null,
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
+        ?string $name = null,
         ?float $ownershipScreeningThreshold = null,
         bool $uboScreeningEnabled = false,
         RequestOptions|array|null $requestOptions = null,
