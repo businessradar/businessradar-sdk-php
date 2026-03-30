@@ -9,6 +9,7 @@ use Businessradar\Core\Attributes\Required;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
+use Businessradar\News\Articles\ArticleCreateFeedbackParams\FeedbackType;
 
 /**
  * ### Submit Article Feedback.
@@ -22,7 +23,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   article: string,
  *   comment?: string|null,
  *   email?: string|null,
- *   feedbackType?: null|FeedbackTypeEnum|value-of<FeedbackTypeEnum>,
+ *   feedbackType?: null|FeedbackType|value-of<FeedbackType>,
  * }
  */
 final class ArticleCreateFeedbackParams implements BaseModel
@@ -45,9 +46,9 @@ final class ArticleCreateFeedbackParams implements BaseModel
      * * `no_risk` - No Risk
      * * `risk_confirmed` - Risk Confirmed.
      *
-     * @var value-of<FeedbackTypeEnum>|null $feedbackType
+     * @var value-of<FeedbackType>|null $feedbackType
      */
-    #[Optional('feedback_type', enum: FeedbackTypeEnum::class)]
+    #[Optional('feedback_type', enum: FeedbackType::class)]
     public ?string $feedbackType;
 
     /**
@@ -74,13 +75,13 @@ final class ArticleCreateFeedbackParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param FeedbackTypeEnum|value-of<FeedbackTypeEnum>|null $feedbackType
+     * @param FeedbackType|value-of<FeedbackType>|null $feedbackType
      */
     public static function with(
         string $article,
         ?string $comment = null,
         ?string $email = null,
-        FeedbackTypeEnum|string|null $feedbackType = null,
+        FeedbackType|string|null $feedbackType = null,
     ): self {
         $self = new self;
 
@@ -122,11 +123,10 @@ final class ArticleCreateFeedbackParams implements BaseModel
      * * `no_risk` - No Risk
      * * `risk_confirmed` - Risk Confirmed.
      *
-     * @param FeedbackTypeEnum|value-of<FeedbackTypeEnum> $feedbackType
+     * @param FeedbackType|value-of<FeedbackType> $feedbackType
      */
-    public function withFeedbackType(
-        FeedbackTypeEnum|string $feedbackType
-    ): self {
+    public function withFeedbackType(FeedbackType|string $feedbackType): self
+    {
         $self = clone $this;
         $self['feedbackType'] = $feedbackType;
 
