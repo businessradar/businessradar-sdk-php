@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Businessradar\ServiceContracts;
 
+use Businessradar\Companies\CompanyCreateFeedbackParams\FeedbackType;
 use Businessradar\Companies\CompanyCreateParams\Country;
 use Businessradar\Companies\CompanyGetMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CompanyGetResponse;
 use Businessradar\Companies\CompanyListAttributeChangesResponse;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CountryEnum;
 use Businessradar\Companies\Registration;
@@ -84,6 +86,33 @@ interface CompaniesContract
         ?string $websiteURL = null,
         RequestOptions|array|null $requestOptions = null,
     ): NextKey;
+
+    /**
+     * @api
+     *
+     * @param FeedbackType|value-of<FeedbackType> $feedbackType * `NOT_ENOUGH_NEWS` - Not Enough News
+     * * `COMPANY_NAME_OUTDATED` - Company Name Outdated
+     * * `INCORRECT_COMPANY_WEBSITE` - Incorrect Company Website
+     * * `MISSING_REGISTRATION_NUMBER` - Missing Registration Number
+     * * `MISSING_TRADE_NAME` - Missing Trade Name
+     * * `INCORRECT_TRADE_NAME` - Incorrect Trade Name
+     * * `NOT_ENOUGH_REVIEWS` - Not Enough Reviews
+     * * `OUTDATED_CORPORATE_LINKAGE` - Outdated Corporate Linkage
+     * * `INCORRECT_CORPORATE_LINKAGE` - Incorrect Corporate Linkage
+     * * `OTHER` - Other
+     * @param string|null $notificationEmail email address to notify when feedback is resolved
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function createFeedback(
+        string $company,
+        FeedbackType|string $feedbackType,
+        ?string $comment = null,
+        ?string $notificationEmail = null,
+        ?string $tradeName = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): CompanyNewFeedbackResponse;
 
     /**
      * @api
