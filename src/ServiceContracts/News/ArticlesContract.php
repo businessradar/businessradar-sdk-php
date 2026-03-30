@@ -6,11 +6,11 @@ namespace Businessradar\ServiceContracts\News;
 
 use Businessradar\Core\Exceptions\APIException;
 use Businessradar\News\Articles\Article;
+use Businessradar\News\Articles\ArticleCreateFeedbackParams\FeedbackType;
 use Businessradar\News\Articles\ArticleListParams\Sorting;
 use Businessradar\News\Articles\ArticleListParams\SortingOrder;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
 use Businessradar\News\Articles\ArticleNewFeedbackResponse;
-use Businessradar\News\Articles\FeedbackTypeEnum;
 use Businessradar\NextKey;
 use Businessradar\RequestOptions;
 
@@ -77,7 +77,7 @@ interface ArticlesContract
     /**
      * @api
      *
-     * @param FeedbackTypeEnum|value-of<FeedbackTypeEnum> $feedbackType * `false_positive` - False Positive
+     * @param FeedbackType|value-of<FeedbackType> $feedbackType * `false_positive` - False Positive
      * * `no_risk` - No Risk
      * * `risk_confirmed` - Risk Confirmed
      * @param RequestOpts|null $requestOptions
@@ -88,7 +88,7 @@ interface ArticlesContract
         string $article,
         ?string $comment = null,
         ?string $email = null,
-        FeedbackTypeEnum|string|null $feedbackType = null,
+        FeedbackType|string|null $feedbackType = null,
         RequestOptions|array|null $requestOptions = null,
     ): ArticleNewFeedbackResponse;
 

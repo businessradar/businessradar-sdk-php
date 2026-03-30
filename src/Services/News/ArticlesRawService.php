@@ -11,6 +11,7 @@ use Businessradar\Core\Exceptions\APIException;
 use Businessradar\Core\Util;
 use Businessradar\News\Articles\Article;
 use Businessradar\News\Articles\ArticleCreateFeedbackParams;
+use Businessradar\News\Articles\ArticleCreateFeedbackParams\FeedbackType;
 use Businessradar\News\Articles\ArticleGetRelatedResponseItem;
 use Businessradar\News\Articles\ArticleListParams;
 use Businessradar\News\Articles\ArticleListParams\Sorting;
@@ -18,7 +19,6 @@ use Businessradar\News\Articles\ArticleListParams\SortingOrder;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersParams;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
 use Businessradar\News\Articles\ArticleNewFeedbackResponse;
-use Businessradar\News\Articles\FeedbackTypeEnum;
 use Businessradar\NextKey;
 use Businessradar\RequestOptions;
 use Businessradar\ServiceContracts\News\ArticlesRawContract;
@@ -121,7 +121,7 @@ final class ArticlesRawService implements ArticlesRawContract
      *   article: string,
      *   comment?: string|null,
      *   email?: string|null,
-     *   feedbackType?: FeedbackTypeEnum|value-of<FeedbackTypeEnum>,
+     *   feedbackType?: FeedbackType|value-of<FeedbackType>,
      * }|ArticleCreateFeedbackParams $params
      * @param RequestOpts|null $requestOptions
      *
