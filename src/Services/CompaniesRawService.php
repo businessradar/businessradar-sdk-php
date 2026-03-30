@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Businessradar\Services;
 
 use Businessradar\Client;
+use Businessradar\Companies\CompanyCreateFeedbackParams;
+use Businessradar\Companies\CompanyCreateFeedbackParams\FeedbackType;
 use Businessradar\Companies\CompanyCreateMissingCompanyInvestigationParams;
 use Businessradar\Companies\CompanyCreateParams;
 use Businessradar\Companies\CompanyCreateParams\Country;
@@ -16,6 +18,7 @@ use Businessradar\Companies\CompanyListMissingCompanyInvestigationsParams;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListParams;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CountryEnum;
 use Businessradar\Companies\Registration;
@@ -170,6 +173,49 @@ final class CompaniesRawService implements CompaniesRawContract
             options: $options,
             convert: CompanyListResponse::class,
             page: NextKey::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * ### Submit Company Feedback
+     *
+     * Submit feedback about a specific company. If feedback already exists for
+     * the same company and profile, the existing record is updated.
+     *
+     * Optionally provide a `notification_email` to be notified when the feedback
+     * is resolved.
+     *
+     * @param array{
+     *   company: string,
+     *   feedbackType: value-of<FeedbackType>,
+     *   comment?: string|null,
+     *   notificationEmail?: string|null,
+     *   tradeName?: string|null,
+     * }|CompanyCreateFeedbackParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CompanyNewFeedbackResponse>
+     *
+     * @throws APIException
+     */
+    public function createFeedback(
+        array|CompanyCreateFeedbackParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = CompanyCreateFeedbackParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: 'ext/v3/companies/feedback/',
+            body: (object) $parsed,
+            options: $options,
+            convert: CompanyNewFeedbackResponse::class,
         );
     }
 

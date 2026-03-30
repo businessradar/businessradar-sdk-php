@@ -8,6 +8,7 @@ use Businessradar\Companies\CompanyGetResponse;
 use Businessradar\Companies\CompanyListAttributeChangesResponse;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CountryEnum;
 use Businessradar\Companies\Registration;
@@ -80,6 +81,41 @@ final class CompaniesTest extends TestCase
             // @phpstan-ignore-next-line method.alreadyNarrowedType
             $this->assertInstanceOf(CompanyListResponse::class, $item);
         }
+    }
+
+    #[Test]
+    public function testCreateFeedback(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Mock server tests are disabled');
+        }
+
+        $result = $this->client->companies->createFeedback(
+            company: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+            feedbackType: 'NOT_ENOUGH_NEWS',
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CompanyNewFeedbackResponse::class, $result);
+    }
+
+    #[Test]
+    public function testCreateFeedbackWithOptionalParams(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Mock server tests are disabled');
+        }
+
+        $result = $this->client->companies->createFeedback(
+            company: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+            feedbackType: 'NOT_ENOUGH_NEWS',
+            comment: 'comment',
+            notificationEmail: 'dev@stainless.com',
+            tradeName: 'trade_name',
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CompanyNewFeedbackResponse::class, $result);
     }
 
     #[Test]
