@@ -34,11 +34,13 @@ use Businessradar\Core\Contracts\BaseModel;
  * @phpstan-import-type EntityShape from \Businessradar\Compliance\ComplianceCreateParams\Entity
  *
  * @phpstan-type ComplianceCreateParamsShape = array{
+ *   adverseMediaMonitoringEnabled?: bool|null,
  *   companyID?: string|null,
  *   directorsScreeningEnabled?: bool|null,
  *   entities?: list<Entity|EntityShape>|null,
  *   name?: string|null,
  *   ownershipScreeningThreshold?: float|null,
+ *   sanctionMonitoringEnabled?: bool|null,
  *   uboScreeningEnabled?: bool|null,
  * }
  */
@@ -47,6 +49,12 @@ final class ComplianceCreateParams implements BaseModel
     /** @use SdkModel<ComplianceCreateParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * If enabled, adverse media monitoring will be activated for all system-created entities (company, directors, UBOs).
+     */
+    #[Optional('adverse_media_monitoring_enabled')]
+    public ?bool $adverseMediaMonitoringEnabled;
 
     #[Optional('company_id', nullable: true)]
     public ?string $companyID;
@@ -74,6 +82,12 @@ final class ComplianceCreateParams implements BaseModel
     public ?float $ownershipScreeningThreshold;
 
     /**
+     * If enabled, sanctions monitoring will be activated for all system-created entities (company, directors, UBOs).
+     */
+    #[Optional('sanction_monitoring_enabled')]
+    public ?bool $sanctionMonitoringEnabled;
+
+    /**
      * If enabled, UBOs discovered for the company will be screened.
      */
     #[Optional('ubo_screening_enabled')]
@@ -92,21 +106,37 @@ final class ComplianceCreateParams implements BaseModel
      * @param list<Entity|EntityShape>|null $entities
      */
     public static function with(
+        ?bool $adverseMediaMonitoringEnabled = null,
         ?string $companyID = null,
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
         ?string $name = null,
         ?float $ownershipScreeningThreshold = null,
+        ?bool $sanctionMonitoringEnabled = null,
         ?bool $uboScreeningEnabled = null,
     ): self {
         $self = new self;
 
+        null !== $adverseMediaMonitoringEnabled && $self['adverseMediaMonitoringEnabled'] = $adverseMediaMonitoringEnabled;
         null !== $companyID && $self['companyID'] = $companyID;
         null !== $directorsScreeningEnabled && $self['directorsScreeningEnabled'] = $directorsScreeningEnabled;
         null !== $entities && $self['entities'] = $entities;
         null !== $name && $self['name'] = $name;
         null !== $ownershipScreeningThreshold && $self['ownershipScreeningThreshold'] = $ownershipScreeningThreshold;
+        null !== $sanctionMonitoringEnabled && $self['sanctionMonitoringEnabled'] = $sanctionMonitoringEnabled;
         null !== $uboScreeningEnabled && $self['uboScreeningEnabled'] = $uboScreeningEnabled;
+
+        return $self;
+    }
+
+    /**
+     * If enabled, adverse media monitoring will be activated for all system-created entities (company, directors, UBOs).
+     */
+    public function withAdverseMediaMonitoringEnabled(
+        bool $adverseMediaMonitoringEnabled
+    ): self {
+        $self = clone $this;
+        $self['adverseMediaMonitoringEnabled'] = $adverseMediaMonitoringEnabled;
 
         return $self;
     }
@@ -161,6 +191,18 @@ final class ComplianceCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['ownershipScreeningThreshold'] = $ownershipScreeningThreshold;
+
+        return $self;
+    }
+
+    /**
+     * If enabled, sanctions monitoring will be activated for all system-created entities (company, directors, UBOs).
+     */
+    public function withSanctionMonitoringEnabled(
+        bool $sanctionMonitoringEnabled
+    ): self {
+        $self = clone $this;
+        $self['sanctionMonitoringEnabled'] = $sanctionMonitoringEnabled;
 
         return $self;
     }
