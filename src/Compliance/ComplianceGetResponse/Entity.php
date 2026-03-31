@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Businessradar\Compliance\ComplianceGetResponse;
 
-use Businessradar\Compliance\ComplianceGetResponse\Entity\EntityRole;
 use Businessradar\Compliance\ComplianceGetResponse\Entity\EntityType;
 use Businessradar\Compliance\ComplianceGetResponse\Entity\Gender;
 use Businessradar\Compliance\ComplianceGetResponse\Entity\Status;
@@ -18,11 +17,13 @@ use Businessradar\Core\Contracts\BaseModel;
  * @phpstan-import-type UboShape from \Businessradar\Compliance\ComplianceGetResponse\Entity\Ubo
  *
  * @phpstan-type EntityShape = array{
+ *   adverseMediaMonitoringEnabled: bool,
  *   aliases: list<string>,
- *   entityRole: EntityRole|value-of<EntityRole>,
+ *   entityRole: string,
  *   entityType: EntityType|value-of<EntityType>,
  *   externalID: string,
  *   name: string,
+ *   sanctionMonitoringEnabled: bool,
  *   status: \Businessradar\Compliance\ComplianceGetResponse\Entity\Status|value-of<\Businessradar\Compliance\ComplianceGetResponse\Entity\Status>,
  *   ubo: null|Ubo|UboShape,
  *   country?: string|null,
@@ -34,19 +35,14 @@ final class Entity implements BaseModel
     /** @use SdkModel<EntityShape> */
     use SdkModel;
 
+    #[Required('adverse_media_monitoring_enabled')]
+    public bool $adverseMediaMonitoringEnabled;
+
     /** @var list<string> $aliases */
     #[Required(list: 'string')]
     public array $aliases;
 
-    /**
-     * * `ubo` - Ultimate Beneficial Owner
-     * * `director` - Director
-     * * `company` - Company
-     * * `manually_added` - Manually added.
-     *
-     * @var value-of<EntityRole> $entityRole
-     */
-    #[Required('entity_role', enum: EntityRole::class)]
+    #[Required('entity_role')]
     public string $entityRole;
 
     /**
@@ -63,6 +59,9 @@ final class Entity implements BaseModel
 
     #[Required]
     public string $name;
+
+    #[Required('sanction_monitoring_enabled')]
+    public bool $sanctionMonitoringEnabled;
 
     /**
      * * `on_hold` - On Hold
@@ -95,11 +94,13 @@ final class Entity implements BaseModel
      * To enforce required parameters use
      * ```
      * Entity::with(
+     *   adverseMediaMonitoringEnabled: ...,
      *   aliases: ...,
      *   entityRole: ...,
      *   entityType: ...,
      *   externalID: ...,
      *   name: ...,
+     *   sanctionMonitoringEnabled: ...,
      *   status: ...,
      *   ubo: ...,
      * )
@@ -109,11 +110,13 @@ final class Entity implements BaseModel
      *
      * ```
      * (new Entity)
+     *   ->withAdverseMediaMonitoringEnabled(...)
      *   ->withAliases(...)
      *   ->withEntityRole(...)
      *   ->withEntityType(...)
      *   ->withExternalID(...)
      *   ->withName(...)
+     *   ->withSanctionMonitoringEnabled(...)
      *   ->withStatus(...)
      *   ->withUbo(...)
      * ```
@@ -129,18 +132,19 @@ final class Entity implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $aliases
-     * @param EntityRole|value-of<EntityRole> $entityRole
      * @param EntityType|value-of<EntityType> $entityType
      * @param Status|value-of<Status> $status
      * @param Ubo|UboShape|null $ubo
      * @param Gender|value-of<Gender>|null $gender
      */
     public static function with(
+        bool $adverseMediaMonitoringEnabled,
         array $aliases,
-        EntityRole|string $entityRole,
+        string $entityRole,
         EntityType|string $entityType,
         string $externalID,
         string $name,
+        bool $sanctionMonitoringEnabled,
         Status|string $status,
         Ubo|array|null $ubo,
         ?string $country = null,
@@ -148,16 +152,27 @@ final class Entity implements BaseModel
     ): self {
         $self = new self;
 
+        $self['adverseMediaMonitoringEnabled'] = $adverseMediaMonitoringEnabled;
         $self['aliases'] = $aliases;
         $self['entityRole'] = $entityRole;
         $self['entityType'] = $entityType;
         $self['externalID'] = $externalID;
         $self['name'] = $name;
+        $self['sanctionMonitoringEnabled'] = $sanctionMonitoringEnabled;
         $self['status'] = $status;
         $self['ubo'] = $ubo;
 
         null !== $country && $self['country'] = $country;
         null !== $gender && $self['gender'] = $gender;
+
+        return $self;
+    }
+
+    public function withAdverseMediaMonitoringEnabled(
+        bool $adverseMediaMonitoringEnabled
+    ): self {
+        $self = clone $this;
+        $self['adverseMediaMonitoringEnabled'] = $adverseMediaMonitoringEnabled;
 
         return $self;
     }
@@ -173,15 +188,7 @@ final class Entity implements BaseModel
         return $self;
     }
 
-    /**
-     * * `ubo` - Ultimate Beneficial Owner
-     * * `director` - Director
-     * * `company` - Company
-     * * `manually_added` - Manually added.
-     *
-     * @param EntityRole|value-of<EntityRole> $entityRole
-     */
-    public function withEntityRole(EntityRole|string $entityRole): self
+    public function withEntityRole(string $entityRole): self
     {
         $self = clone $this;
         $self['entityRole'] = $entityRole;
@@ -215,6 +222,15 @@ final class Entity implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    public function withSanctionMonitoringEnabled(
+        bool $sanctionMonitoringEnabled
+    ): self {
+        $self = clone $this;
+        $self['sanctionMonitoringEnabled'] = $sanctionMonitoringEnabled;
 
         return $self;
     }
