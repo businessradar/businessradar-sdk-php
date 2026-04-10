@@ -302,7 +302,7 @@ final class CompanyNewMissingCompanyInvestigationResponse implements BaseModel
     public string $country;
 
     /**
-     * The date and time when this missing company record was created.
+     * The date and time when this investigation was created.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -729,7 +729,7 @@ final class CompanyNewMissingCompanyInvestigationResponse implements BaseModel
     }
 
     /**
-     * The date and time when this missing company record was created.
+     * The date and time when this investigation was created.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
