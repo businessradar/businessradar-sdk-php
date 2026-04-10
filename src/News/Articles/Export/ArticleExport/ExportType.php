@@ -10,7 +10,8 @@ namespace Businessradar\News\Articles\Export\ArticleExport;
  * * `COMPANIES` - Companies
  * * `REGISTRATIONS` - Registrations
  * * `COMPLIANCE` - Compliance
- * * `BILLING` - Billing.
+ * * `BILLING` - Billing
+ * * `KEY_EVENTS` - Key Events.
  */
 enum ExportType: string
 {
@@ -25,4 +26,6 @@ enum ExportType: string
     case COMPLIANCE = 'COMPLIANCE';
 
     case BILLING = 'BILLING';
+
+    case KEY_EVENTS = 'KEY_EVENTS';
 }
