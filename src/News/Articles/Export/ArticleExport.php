@@ -42,7 +42,8 @@ final class ArticleExport implements BaseModel
      * * `COMPANIES` - Companies
      * * `REGISTRATIONS` - Registrations
      * * `COMPLIANCE` - Compliance
-     * * `BILLING` - Billing.
+     * * `BILLING` - Billing
+     * * `KEY_EVENTS` - Key Events.
      *
      * @var value-of<ExportType> $exportType
      */
@@ -182,7 +183,8 @@ final class ArticleExport implements BaseModel
      * * `COMPANIES` - Companies
      * * `REGISTRATIONS` - Registrations
      * * `COMPLIANCE` - Compliance
-     * * `BILLING` - Billing.
+     * * `BILLING` - Billing
+     * * `KEY_EVENTS` - Key Events.
      *
      * @param ExportType|value-of<ExportType> $exportType
      */
