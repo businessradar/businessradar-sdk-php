@@ -15,7 +15,7 @@ jobs:
 
       - name: Publish to Packagist
         run: |-
-          curl --fail-with-body -X POST -H 'Content-Type: application/json' "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_SAFE_KEY}" -d '{"repository":"https://www.github.com/businessradar/businessradar-sdk-php"}'
+          curl --fail-with-body -X POST -H 'Content-Type: application/json' "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_SAFE_KEY}" -d '{"repository":"https://github.com/businessradar/businessradar-sdk-php"}'
         env:
           PACKAGIST_USERNAME: ${{ secrets.BUSINESS_RADAR_PACKAGIST_USERNAME || secrets.PACKAGIST_USERNAME }}
           PACKAGIST_SAFE_KEY: ${{ secrets.BUSINESS_RADAR_PACKAGIST_SAFE_KEY || secrets.PACKAGIST_SAFE_KEY }}
