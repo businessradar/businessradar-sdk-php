@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Businessradar;
 
 use Businessradar\Core\BaseClient;
+use Businessradar\Core\Implementation\StreamingHttpClient;
 use Businessradar\Core\Util;
 use Businessradar\Services\CompaniesService;
 use Businessradar\Services\ComplianceService;
@@ -64,6 +65,11 @@ class Client extends BaseClient
             ),
             $requestOptions,
         );
+
+        if (is_null($options->streamingTransporter)) {
+            assert(!is_null($options->transporter));
+            $options->streamingTransporter = new StreamingHttpClient($options->transporter);
+        }
 
         /** @var array<string, string|null> $headers */
         $headers = [
