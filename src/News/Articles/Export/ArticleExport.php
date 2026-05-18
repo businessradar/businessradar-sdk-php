@@ -8,20 +8,19 @@ use Businessradar\Core\Attributes\Required;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 use Businessradar\News\Articles\Export\ArticleExport\ExportType;
-use Businessradar\News\Articles\Export\ArticleExport\Filters;
 use Businessradar\News\Articles\Export\ArticleExport\Status;
 
 /**
  * Data Export Serializer.
  *
- * @phpstan-import-type FiltersShape from \Businessradar\News\Articles\Export\ArticleExport\Filters
+ * @phpstan-import-type ArticleFiltersShape from \Businessradar\News\Articles\Export\ArticleFilters
  *
  * @phpstan-type ArticleExportShape = array{
  *   createdAt: \DateTimeInterface,
  *   exportType: ExportType|value-of<ExportType>,
  *   externalID: string,
  *   fileType: DataExportFileType|value-of<DataExportFileType>,
- *   filters: Filters|FiltersShape,
+ *   filters: ArticleFilters|ArticleFiltersShape,
  *   location: string|null,
  *   resultCount: int|null,
  *   status: Status|value-of<Status>,
@@ -70,7 +69,7 @@ final class ArticleExport implements BaseModel
      * query text, countries, languages, specific companies (DUNS), and portfolios.
      */
     #[Required]
-    public Filters $filters;
+    public ArticleFilters $filters;
 
     /**
      * Location of exports.
@@ -140,7 +139,7 @@ final class ArticleExport implements BaseModel
      *
      * @param ExportType|value-of<ExportType> $exportType
      * @param DataExportFileType|value-of<DataExportFileType> $fileType
-     * @param Filters|FiltersShape $filters
+     * @param ArticleFilters|ArticleFiltersShape $filters
      * @param Status|value-of<Status> $status
      */
     public static function with(
@@ -148,7 +147,7 @@ final class ArticleExport implements BaseModel
         ExportType|string $exportType,
         string $externalID,
         DataExportFileType|string $fileType,
-        Filters|array $filters,
+        ArticleFilters|array $filters,
         ?string $location,
         ?int $resultCount,
         Status|string $status,
@@ -225,9 +224,9 @@ final class ArticleExport implements BaseModel
      * Used to validate and process filters for article searches. Supports filtering by
      * query text, countries, languages, specific companies (DUNS), and portfolios.
      *
-     * @param Filters|FiltersShape $filters
+     * @param ArticleFilters|ArticleFiltersShape $filters
      */
-    public function withFilters(Filters|array $filters): self
+    public function withFilters(ArticleFilters|array $filters): self
     {
         $self = clone $this;
         $self['filters'] = $filters;

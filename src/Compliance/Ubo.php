@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\Compliance\ComplianceGetResponse\Entity;
+namespace Businessradar\Compliance;
 
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Attributes\Required;
