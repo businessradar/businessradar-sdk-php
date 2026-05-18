@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\News\Articles\Export\ArticleExport;
+namespace Businessradar\News\Articles\Export;
 
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
-use Businessradar\News\Articles\Export\ArticleExport\Filters\MediaType;
+use Businessradar\News\Articles\Export\ArticleFilters\MediaType;
 
 /**
  * ### Article Filters.
@@ -15,7 +15,7 @@ use Businessradar\News\Articles\Export\ArticleExport\Filters\MediaType;
  * Used to validate and process filters for article searches. Supports filtering by
  * query text, countries, languages, specific companies (DUNS), and portfolios.
  *
- * @phpstan-type FiltersShape = array{
+ * @phpstan-type ArticleFiltersShape = array{
  *   categories?: list<string>|null,
  *   companies?: list<string>|null,
  *   countries?: list<string>|null,
@@ -38,9 +38,9 @@ use Businessradar\News\Articles\Export\ArticleExport\Filters\MediaType;
  *   sentiment?: bool|null,
  * }
  */
-final class Filters implements BaseModel
+final class ArticleFilters implements BaseModel
 {
-    /** @use SdkModel<FiltersShape> */
+    /** @use SdkModel<ArticleFiltersShape> */
     use SdkModel;
 
     /** @var list<string>|null $categories */

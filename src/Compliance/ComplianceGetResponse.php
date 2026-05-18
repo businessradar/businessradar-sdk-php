@@ -8,7 +8,6 @@ use Businessradar\Compliance\ComplianceGetResponse\ActivityScore;
 use Businessradar\Compliance\ComplianceGetResponse\AdverseMediaScore;
 use Businessradar\Compliance\ComplianceGetResponse\ComplianceScore;
 use Businessradar\Compliance\ComplianceGetResponse\CountryScore;
-use Businessradar\Compliance\ComplianceGetResponse\Entity;
 use Businessradar\Compliance\ComplianceGetResponse\PepScore;
 use Businessradar\Compliance\ComplianceGetResponse\SanctionScore;
 use Businessradar\Compliance\ComplianceGetResponse\Status;
@@ -18,10 +17,10 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type EntityShape from \Businessradar\Compliance\ComplianceGetResponse\Entity
+ * @phpstan-import-type ComplianceEntityRetrieveShape from \Businessradar\Compliance\ComplianceEntityRetrieve
  *
  * @phpstan-type ComplianceGetResponseShape = array{
- *   entities: list<Entity|EntityShape>,
+ *   entities: list<ComplianceEntityRetrieve|ComplianceEntityRetrieveShape>,
  *   externalID: string,
  *   progress: float,
  *   activityScore?: null|ActivityScore|value-of<ActivityScore>,
@@ -39,8 +38,8 @@ final class ComplianceGetResponse implements BaseModel
     /** @use SdkModel<ComplianceGetResponseShape> */
     use SdkModel;
 
-    /** @var list<Entity> $entities */
-    #[Required(list: Entity::class)]
+    /** @var list<ComplianceEntityRetrieve> $entities */
+    #[Required(list: ComplianceEntityRetrieve::class)]
     public array $entities;
 
     #[Required('external_id')]
@@ -123,7 +122,7 @@ final class ComplianceGetResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Entity|EntityShape> $entities
+     * @param list<ComplianceEntityRetrieve|ComplianceEntityRetrieveShape> $entities
      * @param ActivityScore|value-of<ActivityScore>|null $activityScore
      * @param AdverseMediaScore|value-of<AdverseMediaScore>|null $adverseMediaScore
      * @param ComplianceScore|value-of<ComplianceScore>|null $complianceScore
@@ -164,7 +163,7 @@ final class ComplianceGetResponse implements BaseModel
     }
 
     /**
-     * @param list<Entity|EntityShape> $entities
+     * @param list<ComplianceEntityRetrieve|ComplianceEntityRetrieveShape> $entities
      */
     public function withEntities(array $entities): self
     {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\News\Articles\Export\ArticleExport\Filters;
+namespace Businessradar\News\Articles\Export\ArticleFilters;
 
 enum MediaType: string
 {

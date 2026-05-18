@@ -2,21 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\Compliance\ComplianceListResultsResponse;
+namespace Businessradar\Compliance;
 
-use Businessradar\Compliance\ComplianceListResultsResponse\Entity\EntityType;
-use Businessradar\Compliance\ComplianceListResultsResponse\Entity\Gender;
-use Businessradar\Compliance\ComplianceListResultsResponse\Entity\Status;
-use Businessradar\Compliance\ComplianceListResultsResponse\Entity\Ubo;
+use Businessradar\Compliance\ComplianceEntityRetrieve\EntityType;
+use Businessradar\Compliance\ComplianceEntityRetrieve\Gender;
+use Businessradar\Compliance\ComplianceEntityRetrieve\Status;
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Attributes\Required;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type UboShape from \Businessradar\Compliance\ComplianceListResultsResponse\Entity\Ubo
+ * @phpstan-import-type UboShape from \Businessradar\Compliance\Ubo
  *
- * @phpstan-type EntityShape = array{
+ * @phpstan-type ComplianceEntityRetrieveShape = array{
  *   adverseMediaMonitoringEnabled: bool,
  *   aliases: list<string>,
  *   entityRole: string,
@@ -30,9 +29,9 @@ use Businessradar\Core\Contracts\BaseModel;
  *   gender?: null|Gender|value-of<Gender>,
  * }
  */
-final class Entity implements BaseModel
+final class ComplianceEntityRetrieve implements BaseModel
 {
-    /** @use SdkModel<EntityShape> */
+    /** @use SdkModel<ComplianceEntityRetrieveShape> */
     use SdkModel;
 
     #[Required('adverse_media_monitoring_enabled')]
@@ -87,11 +86,11 @@ final class Entity implements BaseModel
     public ?string $gender;
 
     /**
-     * `new Entity()` is missing required properties by the API.
+     * `new ComplianceEntityRetrieve()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Entity::with(
+     * ComplianceEntityRetrieve::with(
      *   adverseMediaMonitoringEnabled: ...,
      *   aliases: ...,
      *   entityRole: ...,
@@ -107,7 +106,7 @@ final class Entity implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Entity)
+     * (new ComplianceEntityRetrieve)
      *   ->withAdverseMediaMonitoringEnabled(...)
      *   ->withAliases(...)
      *   ->withEntityRole(...)

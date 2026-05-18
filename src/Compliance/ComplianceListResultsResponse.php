@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Businessradar\Compliance;
 
 use Businessradar\Compliance\ComplianceListResultsResponse\Address;
-use Businessradar\Compliance\ComplianceListResultsResponse\Entity;
 use Businessradar\Compliance\ComplianceListResultsResponse\Language;
 use Businessradar\Compliance\ComplianceListResultsResponse\ResultType;
 use Businessradar\Compliance\ComplianceListResultsResponse\Source;
@@ -19,7 +18,7 @@ use Businessradar\Core\Contracts\BaseModel;
  * Compliance entity result.
  *
  * @phpstan-import-type AddressShape from \Businessradar\Compliance\ComplianceListResultsResponse\Address
- * @phpstan-import-type EntityShape from \Businessradar\Compliance\ComplianceListResultsResponse\Entity
+ * @phpstan-import-type ComplianceEntityRetrieveShape from \Businessradar\Compliance\ComplianceEntityRetrieve
  * @phpstan-import-type SourceShape from \Businessradar\Compliance\ComplianceListResultsResponse\Source
  * @phpstan-import-type TagShape from \Businessradar\Compliance\ComplianceListResultsResponse\Tag
  *
@@ -28,7 +27,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   automatedFalsePositiveRating: string|null,
  *   automatedFalsePositiveRatingComments: string|null,
  *   createdAt: \DateTimeInterface,
- *   entity: Entity|EntityShape,
+ *   entity: ComplianceEntityRetrieve|ComplianceEntityRetrieveShape,
  *   externalID: string,
  *   name: string,
  *   resultType: ResultType|value-of<ResultType>,
@@ -69,7 +68,7 @@ final class ComplianceListResultsResponse implements BaseModel
     public \DateTimeInterface $createdAt;
 
     #[Required]
-    public Entity $entity;
+    public ComplianceEntityRetrieve $entity;
 
     #[Required('external_id')]
     public string $externalID;
@@ -186,7 +185,7 @@ final class ComplianceListResultsResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Address|AddressShape> $addresses
-     * @param Entity|EntityShape $entity
+     * @param ComplianceEntityRetrieve|ComplianceEntityRetrieveShape $entity
      * @param ResultType|value-of<ResultType> $resultType
      * @param list<Source|SourceShape> $sources
      * @param list<Tag|TagShape> $tags
@@ -197,7 +196,7 @@ final class ComplianceListResultsResponse implements BaseModel
         ?string $automatedFalsePositiveRating,
         ?string $automatedFalsePositiveRatingComments,
         \DateTimeInterface $createdAt,
-        Entity|array $entity,
+        ComplianceEntityRetrieve|array $entity,
         string $externalID,
         string $name,
         ResultType|string $resultType,
@@ -287,9 +286,9 @@ final class ComplianceListResultsResponse implements BaseModel
     }
 
     /**
-     * @param Entity|EntityShape $entity
+     * @param ComplianceEntityRetrieve|ComplianceEntityRetrieveShape $entity
      */
-    public function withEntity(Entity|array $entity): self
+    public function withEntity(ComplianceEntityRetrieve|array $entity): self
     {
         $self = clone $this;
         $self['entity'] = $entity;

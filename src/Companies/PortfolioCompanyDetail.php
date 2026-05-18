@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\Companies\Registration;
+namespace Businessradar\Companies;
 
-use Businessradar\Companies\CountryEnum;
 use Businessradar\Core\Attributes\Required;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
@@ -14,16 +13,16 @@ use Businessradar\Core\Contracts\BaseModel;
  *
  * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
  *
- * @phpstan-type CompanyShape = array{
+ * @phpstan-type PortfolioCompanyDetailShape = array{
  *   country: CountryEnum|value-of<CountryEnum>,
  *   dunsNumber: string|null,
  *   externalID: string,
  *   name: string,
  * }
  */
-final class Company implements BaseModel
+final class PortfolioCompanyDetail implements BaseModel
 {
-    /** @use SdkModel<CompanyShape> */
+    /** @use SdkModel<PortfolioCompanyDetailShape> */
     use SdkModel;
 
     /**
@@ -292,17 +291,19 @@ final class Company implements BaseModel
     public string $name;
 
     /**
-     * `new Company()` is missing required properties by the API.
+     * `new PortfolioCompanyDetail()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Company::with(country: ..., dunsNumber: ..., externalID: ..., name: ...)
+     * PortfolioCompanyDetail::with(
+     *   country: ..., dunsNumber: ..., externalID: ..., name: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Company)
+     * (new PortfolioCompanyDetail)
      *   ->withCountry(...)
      *   ->withDunsNumber(...)
      *   ->withExternalID(...)
