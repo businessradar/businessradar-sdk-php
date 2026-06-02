@@ -88,8 +88,6 @@ enum Language: string
 
     case KM = 'km';
 
-    case NO = 'no';
-
     case KN = 'kn';
 
     case KO = 'ko';
@@ -115,6 +113,8 @@ enum Language: string
     case NE = 'ne';
 
     case NL = 'nl';
+
+    case NO = 'no';
 
     case OS = 'os';
 
