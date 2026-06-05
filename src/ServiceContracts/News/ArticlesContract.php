@@ -41,7 +41,7 @@ interface ArticlesContract
      * @param list<string> $registrationNumber filter by local company registration numbers
      * @param string $savedArticleFilterID apply a previously saved set of article filters (UUID)
      * @param bool $sentiment filter by sentiment: `true` for positive, `false` for negative
-     * @param Sorting|value-of<Sorting> $sorting Sort articles
+     * @param Sorting|value-of<Sorting> $sorting Sort articles. Use 'priority' to sort primarily by category priority (publication date as tiebreaker), surfacing the most important articles across the whole result set regardless of date. Lower numeric priority values indicate higher priority, so use sorting_order=asc for best-first ordering.
      * @param SortingOrder|value-of<SortingOrder> $sortingOrder Sort order
      * @param RequestOpts|null $requestOptions
      *
