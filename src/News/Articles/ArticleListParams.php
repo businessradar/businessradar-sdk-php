@@ -180,7 +180,7 @@ final class ArticleListParams implements BaseModel
     public ?bool $sentiment;
 
     /**
-     * Sort articles.
+     * Sort articles. Use 'priority' to sort primarily by category priority (publication date as tiebreaker), surfacing the most important articles across the whole result set regardless of date. Lower numeric priority values indicate higher priority, so use sorting_order=asc for best-first ordering.
      *
      * @var value-of<Sorting>|null $sorting
      */
@@ -498,7 +498,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Sort articles.
+     * Sort articles. Use 'priority' to sort primarily by category priority (publication date as tiebreaker), surfacing the most important articles across the whole result set regardless of date. Lower numeric priority values indicate higher priority, so use sorting_order=asc for best-first ordering.
      *
      * @param Sorting|value-of<Sorting> $sorting
      */

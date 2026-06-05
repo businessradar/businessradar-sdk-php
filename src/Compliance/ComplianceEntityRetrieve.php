@@ -26,6 +26,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   status: Status|value-of<Status>,
  *   ubo: null|Ubo|UboShape,
  *   country?: string|null,
+ *   dateOfBirth?: string|null,
  *   gender?: null|Gender|value-of<Gender>,
  * }
  */
@@ -80,6 +81,9 @@ final class ComplianceEntityRetrieve implements BaseModel
 
     #[Optional(nullable: true)]
     public ?string $country;
+
+    #[Optional('date_of_birth', nullable: true)]
+    public ?string $dateOfBirth;
 
     /** @var value-of<Gender>|null $gender */
     #[Optional(enum: Gender::class, nullable: true)]
@@ -145,6 +149,7 @@ final class ComplianceEntityRetrieve implements BaseModel
         Status|string $status,
         Ubo|array|null $ubo,
         ?string $country = null,
+        ?string $dateOfBirth = null,
         Gender|string|null $gender = null,
     ): self {
         $self = new self;
@@ -160,6 +165,7 @@ final class ComplianceEntityRetrieve implements BaseModel
         $self['ubo'] = $ubo;
 
         null !== $country && $self['country'] = $country;
+        null !== $dateOfBirth && $self['dateOfBirth'] = $dateOfBirth;
         null !== $gender && $self['gender'] = $gender;
 
         return $self;
@@ -265,6 +271,14 @@ final class ComplianceEntityRetrieve implements BaseModel
     {
         $self = clone $this;
         $self['country'] = $country;
+
+        return $self;
+    }
+
+    public function withDateOfBirth(?string $dateOfBirth): self
+    {
+        $self = clone $this;
+        $self['dateOfBirth'] = $dateOfBirth;
 
         return $self;
     }
