@@ -50,7 +50,7 @@ final class ArticleListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Filter by one or more article Category IDs (UUIDs).
+     * Filter by article Category IDs (UUIDs).
      *
      * @var list<string>|null $category
      */
@@ -267,7 +267,7 @@ final class ArticleListParams implements BaseModel
     }
 
     /**
-     * Filter by one or more article Category IDs (UUIDs).
+     * Filter by article Category IDs (UUIDs).
      *
      * @param list<string> $category
      */

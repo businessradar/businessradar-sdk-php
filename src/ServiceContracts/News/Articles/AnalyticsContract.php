@@ -17,7 +17,7 @@ interface AnalyticsContract
     /**
      * @api
      *
-     * @param list<string> $category filter by one or more article Category IDs (UUIDs)
+     * @param list<string> $category filter by article Category IDs (UUIDs)
      * @param list<string> $company filter by internal Company UUIDs
      * @param list<string> $country Filter by ISO 2-letter Country Codes (e.g., 'US', 'GB').
      * @param bool $disableCompanyArticleDeduplication By default, companies with the same trade names are grouped and the best match is selected. Enable this to see all associated companies.
