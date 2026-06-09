@@ -119,7 +119,6 @@ final class Article implements BaseModel
      * * `ka` - Georgian
      * * `kk` - Kazakh
      * * `km` - Khmer
-     * * `no` - Norwegian
      * * `kn` - Kannada
      * * `ko` - Korean
      * * `ky` - Kyrgyz
@@ -133,6 +132,7 @@ final class Article implements BaseModel
      * * `my` - Burmese
      * * `ne` - Nepali
      * * `nl` - Dutch
+     * * `no` - Norwegian
      * * `os` - Ossetic
      * * `pa` - Punjabi
      * * `pl` - Polish
@@ -433,7 +433,6 @@ final class Article implements BaseModel
      * * `ka` - Georgian
      * * `kk` - Kazakh
      * * `km` - Khmer
-     * * `no` - Norwegian
      * * `kn` - Kannada
      * * `ko` - Korean
      * * `ky` - Kyrgyz
@@ -447,6 +446,7 @@ final class Article implements BaseModel
      * * `my` - Burmese
      * * `ne` - Nepali
      * * `nl` - Dutch
+     * * `no` - Norwegian
      * * `os` - Ossetic
      * * `pa` - Punjabi
      * * `pl` - Polish

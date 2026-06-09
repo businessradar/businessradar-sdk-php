@@ -2,23 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\Companies\Registration;
+namespace Businessradar\Compliance\ComplianceListResponse;
 
 use Businessradar\Companies\CountryEnum;
+use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Attributes\Required;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * ### Portfolio Company Detail (Simplified).
- *
- * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
- *
  * @phpstan-type CompanyShape = array{
  *   country: CountryEnum|value-of<CountryEnum>,
- *   dunsNumber: string|null,
- *   externalID: string,
  *   name: string,
+ *   externalID?: string|null,
  * }
  */
 final class Company implements BaseModel
@@ -282,31 +278,24 @@ final class Company implements BaseModel
     #[Required(enum: CountryEnum::class)]
     public string $country;
 
-    #[Required('duns_number')]
-    public ?string $dunsNumber;
-
-    #[Required('external_id')]
-    public string $externalID;
-
     #[Required]
     public string $name;
+
+    #[Optional('external_id')]
+    public ?string $externalID;
 
     /**
      * `new Company()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Company::with(country: ..., dunsNumber: ..., externalID: ..., name: ...)
+     * Company::with(country: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Company)
-     *   ->withCountry(...)
-     *   ->withDunsNumber(...)
-     *   ->withExternalID(...)
-     *   ->withName(...)
+     * (new Company)->withCountry(...)->withName(...)
      * ```
      */
     public function __construct()
@@ -323,16 +312,15 @@ final class Company implements BaseModel
      */
     public static function with(
         CountryEnum|string $country,
-        ?string $dunsNumber,
-        string $externalID,
         string $name,
+        ?string $externalID = null
     ): self {
         $self = new self;
 
         $self['country'] = $country;
-        $self['dunsNumber'] = $dunsNumber;
-        $self['externalID'] = $externalID;
         $self['name'] = $name;
+
+        null !== $externalID && $self['externalID'] = $externalID;
 
         return $self;
     }
@@ -598,10 +586,10 @@ final class Company implements BaseModel
         return $self;
     }
 
-    public function withDunsNumber(?string $dunsNumber): self
+    public function withName(string $name): self
     {
         $self = clone $this;
-        $self['dunsNumber'] = $dunsNumber;
+        $self['name'] = $name;
 
         return $self;
     }
@@ -610,14 +598,6 @@ final class Company implements BaseModel
     {
         $self = clone $this;
         $self['externalID'] = $externalID;
-
-        return $self;
-    }
-
-    public function withName(string $name): self
-    {
-        $self = clone $this;
-        $self['name'] = $name;
 
         return $self;
     }

@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Businessradar\Compliance\ComplianceListResultsResponse\Entity;
+namespace Businessradar\Compliance\ComplianceListResponse;
 
 /**
- * * `on_hold` - On Hold
+ * * `pending` - Pending
  * * `queued` - Queued
  * * `in_progress` - In Progress
+ * * `searching_directors` - Searching Directors
  * * `completed` - Completed
- * * `skipped` - Skipped
  * * `failed` - Failed.
  */
 enum Status: string
 {
-    case ON_HOLD = 'on_hold';
+    case PENDING = 'pending';
 
     case QUEUED = 'queued';
 
     case IN_PROGRESS = 'in_progress';
 
-    case COMPLETED = 'completed';
+    case SEARCHING_DIRECTORS = 'searching_directors';
 
-    case SKIPPED = 'skipped';
+    case COMPLETED = 'completed';
 
     case FAILED = 'failed';
 }

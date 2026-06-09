@@ -8,7 +8,6 @@ use Businessradar\Compliance\ComplianceGetResponse\ActivityScore;
 use Businessradar\Compliance\ComplianceGetResponse\AdverseMediaScore;
 use Businessradar\Compliance\ComplianceGetResponse\ComplianceScore;
 use Businessradar\Compliance\ComplianceGetResponse\CountryScore;
-use Businessradar\Compliance\ComplianceGetResponse\Entity;
 use Businessradar\Compliance\ComplianceGetResponse\PepScore;
 use Businessradar\Compliance\ComplianceGetResponse\SanctionScore;
 use Businessradar\Compliance\ComplianceGetResponse\Status;
@@ -18,16 +17,17 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type EntityShape from \Businessradar\Compliance\ComplianceGetResponse\Entity
+ * @phpstan-import-type ComplianceEntityRetrieveShape from \Businessradar\Compliance\ComplianceEntityRetrieve
  *
  * @phpstan-type ComplianceGetResponseShape = array{
- *   entities: list<Entity|EntityShape>,
+ *   entities: list<ComplianceEntityRetrieve|ComplianceEntityRetrieveShape>,
  *   externalID: string,
  *   progress: float,
  *   activityScore?: null|ActivityScore|value-of<ActivityScore>,
  *   adverseMediaScore?: null|AdverseMediaScore|value-of<AdverseMediaScore>,
  *   complianceScore?: null|ComplianceScore|value-of<ComplianceScore>,
  *   countryScore?: null|CountryScore|value-of<CountryScore>,
+ *   name?: string|null,
  *   pepScore?: null|PepScore|value-of<PepScore>,
  *   sanctionScore?: null|SanctionScore|value-of<SanctionScore>,
  *   status?: null|Status|value-of<Status>,
@@ -38,8 +38,8 @@ final class ComplianceGetResponse implements BaseModel
     /** @use SdkModel<ComplianceGetResponseShape> */
     use SdkModel;
 
-    /** @var list<Entity> $entities */
-    #[Required(list: Entity::class)]
+    /** @var list<ComplianceEntityRetrieve> $entities */
+    #[Required(list: ComplianceEntityRetrieve::class)]
     public array $entities;
 
     #[Required('external_id')]
@@ -67,6 +67,12 @@ final class ComplianceGetResponse implements BaseModel
     /** @var value-of<CountryScore>|null $countryScore */
     #[Optional('country_score', enum: CountryScore::class, nullable: true)]
     public ?string $countryScore;
+
+    /**
+     * Custom name for this compliance check.
+     */
+    #[Optional(nullable: true)]
+    public ?string $name;
 
     /** @var value-of<PepScore>|null $pepScore */
     #[Optional('pep_score', enum: PepScore::class, nullable: true)]
@@ -116,7 +122,7 @@ final class ComplianceGetResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Entity|EntityShape> $entities
+     * @param list<ComplianceEntityRetrieve|ComplianceEntityRetrieveShape> $entities
      * @param ActivityScore|value-of<ActivityScore>|null $activityScore
      * @param AdverseMediaScore|value-of<AdverseMediaScore>|null $adverseMediaScore
      * @param ComplianceScore|value-of<ComplianceScore>|null $complianceScore
@@ -133,6 +139,7 @@ final class ComplianceGetResponse implements BaseModel
         AdverseMediaScore|string|null $adverseMediaScore = null,
         ComplianceScore|string|null $complianceScore = null,
         CountryScore|string|null $countryScore = null,
+        ?string $name = null,
         PepScore|string|null $pepScore = null,
         SanctionScore|string|null $sanctionScore = null,
         Status|string|null $status = null,
@@ -147,6 +154,7 @@ final class ComplianceGetResponse implements BaseModel
         null !== $adverseMediaScore && $self['adverseMediaScore'] = $adverseMediaScore;
         null !== $complianceScore && $self['complianceScore'] = $complianceScore;
         null !== $countryScore && $self['countryScore'] = $countryScore;
+        null !== $name && $self['name'] = $name;
         null !== $pepScore && $self['pepScore'] = $pepScore;
         null !== $sanctionScore && $self['sanctionScore'] = $sanctionScore;
         null !== $status && $self['status'] = $status;
@@ -155,7 +163,7 @@ final class ComplianceGetResponse implements BaseModel
     }
 
     /**
-     * @param list<Entity|EntityShape> $entities
+     * @param list<ComplianceEntityRetrieve|ComplianceEntityRetrieveShape> $entities
      */
     public function withEntities(array $entities): self
     {
@@ -225,6 +233,17 @@ final class ComplianceGetResponse implements BaseModel
     ): self {
         $self = clone $this;
         $self['countryScore'] = $countryScore;
+
+        return $self;
+    }
+
+    /**
+     * Custom name for this compliance check.
+     */
+    public function withName(?string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
 
         return $self;
     }

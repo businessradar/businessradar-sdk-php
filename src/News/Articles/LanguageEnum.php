@@ -46,7 +46,6 @@ namespace Businessradar\News\Articles;
  * * `ka` - Georgian
  * * `kk` - Kazakh
  * * `km` - Khmer
- * * `no` - Norwegian
  * * `kn` - Kannada
  * * `ko` - Korean
  * * `ky` - Kyrgyz
@@ -60,6 +59,7 @@ namespace Businessradar\News\Articles;
  * * `my` - Burmese
  * * `ne` - Nepali
  * * `nl` - Dutch
+ * * `no` - Norwegian
  * * `os` - Ossetic
  * * `pa` - Punjabi
  * * `pl` - Polish
@@ -169,8 +169,6 @@ enum LanguageEnum: string
 
     case KM = 'km';
 
-    case NO = 'no';
-
     case KN = 'kn';
 
     case KO = 'ko';
@@ -196,6 +194,8 @@ enum LanguageEnum: string
     case NE = 'ne';
 
     case NL = 'nl';
+
+    case NO = 'no';
 
     case OS = 'os';
 

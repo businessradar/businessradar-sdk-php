@@ -8,11 +8,11 @@ use Businessradar\Client;
 use Businessradar\Core\Exceptions\APIException;
 use Businessradar\Core\Util;
 use Businessradar\News\Articles\Article;
+use Businessradar\News\Articles\ArticleCreateFeedbackParams\FeedbackType;
 use Businessradar\News\Articles\ArticleListParams\Sorting;
 use Businessradar\News\Articles\ArticleListParams\SortingOrder;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
 use Businessradar\News\Articles\ArticleNewFeedbackResponse;
-use Businessradar\News\Articles\FeedbackTypeEnum;
 use Businessradar\NextKey;
 use Businessradar\RequestOptions;
 use Businessradar\ServiceContracts\News\ArticlesContract;
@@ -76,7 +76,7 @@ final class ArticlesService implements ArticlesContract
      * @param list<string> $registrationNumber filter by local company registration numbers
      * @param string $savedArticleFilterID apply a previously saved set of article filters (UUID)
      * @param bool $sentiment filter by sentiment: `true` for positive, `false` for negative
-     * @param Sorting|value-of<Sorting> $sorting Sort articles
+     * @param Sorting|value-of<Sorting> $sorting Sort articles. Use 'priority' to sort primarily by category priority (publication date as tiebreaker), surfacing the most important articles across the whole result set regardless of date. Lower numeric priority values indicate higher priority, so use sorting_order=asc for best-first ordering.
      * @param SortingOrder|value-of<SortingOrder> $sortingOrder Sort order
      * @param RequestOpts|null $requestOptions
      *
@@ -148,7 +148,7 @@ final class ArticlesService implements ArticlesContract
      * Submit feedback for a specific article. This helps improve our analysis and
      * relevance.
      *
-     * @param FeedbackTypeEnum|value-of<FeedbackTypeEnum> $feedbackType * `false_positive` - False Positive
+     * @param FeedbackType|value-of<FeedbackType> $feedbackType * `false_positive` - False Positive
      * * `no_risk` - No Risk
      * * `risk_confirmed` - Risk Confirmed
      * @param RequestOpts|null $requestOptions
@@ -159,7 +159,7 @@ final class ArticlesService implements ArticlesContract
         string $article,
         ?string $comment = null,
         ?string $email = null,
-        FeedbackTypeEnum|string|null $feedbackType = null,
+        FeedbackType|string|null $feedbackType = null,
         RequestOptions|array|null $requestOptions = null,
     ): ArticleNewFeedbackResponse {
         $params = Util::removeNulls(

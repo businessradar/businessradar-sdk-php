@@ -7,7 +7,6 @@ use Businessradar\Core\Util;
 use Businessradar\News\Articles\Article;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
 use Businessradar\News\Articles\ArticleNewFeedbackResponse;
-use Businessradar\News\Articles\FeedbackTypeEnum;
 use Businessradar\NextKey;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -76,7 +75,7 @@ final class ArticlesTest extends TestCase
             article: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
             comment: 'comment',
             email: 'dev@stainless.com',
-            feedbackType: FeedbackTypeEnum::FALSE_POSITIVE,
+            feedbackType: 'false_positive',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

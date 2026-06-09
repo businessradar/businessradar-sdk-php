@@ -34,8 +34,10 @@ use Businessradar\Core\Contracts\BaseModel;
  *   slug: string,
  *   socialDescription: string|null,
  *   socialLogo: string|null,
+ *   tradeNames: list<string>,
  *   addressLatitude?: float|null,
  *   addressLongitude?: float|null,
+ *   addressNumber?: string|null,
  *   addressPhone?: string|null,
  *   addressPlace?: string|null,
  *   addressPostal?: string|null,
@@ -352,11 +354,18 @@ final class CompanyGetResponse implements BaseModel
     #[Required('social_logo')]
     public ?string $socialLogo;
 
+    /** @var list<string> $tradeNames */
+    #[Required('trade_names', list: 'string')]
+    public array $tradeNames;
+
     #[Optional('address_latitude', nullable: true)]
     public ?float $addressLatitude;
 
     #[Optional('address_longitude', nullable: true)]
     public ?float $addressLongitude;
+
+    #[Optional('address_number', nullable: true)]
+    public ?string $addressNumber;
 
     #[Optional('address_phone', nullable: true)]
     public ?string $addressPhone;
@@ -446,6 +455,7 @@ final class CompanyGetResponse implements BaseModel
      *   slug: ...,
      *   socialDescription: ...,
      *   socialLogo: ...,
+     *   tradeNames: ...,
      * )
      * ```
      *
@@ -463,6 +473,7 @@ final class CompanyGetResponse implements BaseModel
      *   ->withSlug(...)
      *   ->withSocialDescription(...)
      *   ->withSocialLogo(...)
+     *   ->withTradeNames(...)
      * ```
      */
     public function __construct()
@@ -479,6 +490,7 @@ final class CompanyGetResponse implements BaseModel
      * @param list<IndustryCode|IndustryCodeShape> $industryCodes
      * @param list<IndustryCode|IndustryCodeShape> $primaryIndustryCodes
      * @param list<RegistrationNumber|RegistrationNumberShape> $registrationNumbers
+     * @param list<string> $tradeNames
      */
     public static function with(
         CountryEnum|string $country,
@@ -491,8 +503,10 @@ final class CompanyGetResponse implements BaseModel
         string $slug,
         ?string $socialDescription,
         ?string $socialLogo,
+        array $tradeNames,
         ?float $addressLatitude = null,
         ?float $addressLongitude = null,
+        ?string $addressNumber = null,
         ?string $addressPhone = null,
         ?string $addressPlace = null,
         ?string $addressPostal = null,
@@ -523,9 +537,11 @@ final class CompanyGetResponse implements BaseModel
         $self['slug'] = $slug;
         $self['socialDescription'] = $socialDescription;
         $self['socialLogo'] = $socialLogo;
+        $self['tradeNames'] = $tradeNames;
 
         null !== $addressLatitude && $self['addressLatitude'] = $addressLatitude;
         null !== $addressLongitude && $self['addressLongitude'] = $addressLongitude;
+        null !== $addressNumber && $self['addressNumber'] = $addressNumber;
         null !== $addressPhone && $self['addressPhone'] = $addressPhone;
         null !== $addressPlace && $self['addressPlace'] = $addressPlace;
         null !== $addressPostal && $self['addressPostal'] = $addressPostal;
@@ -895,6 +911,17 @@ final class CompanyGetResponse implements BaseModel
         return $self;
     }
 
+    /**
+     * @param list<string> $tradeNames
+     */
+    public function withTradeNames(array $tradeNames): self
+    {
+        $self = clone $this;
+        $self['tradeNames'] = $tradeNames;
+
+        return $self;
+    }
+
     public function withAddressLatitude(?float $addressLatitude): self
     {
         $self = clone $this;
@@ -907,6 +934,14 @@ final class CompanyGetResponse implements BaseModel
     {
         $self = clone $this;
         $self['addressLongitude'] = $addressLongitude;
+
+        return $self;
+    }
+
+    public function withAddressNumber(?string $addressNumber): self
+    {
+        $self = clone $this;
+        $self['addressNumber'] = $addressNumber;
 
         return $self;
     }

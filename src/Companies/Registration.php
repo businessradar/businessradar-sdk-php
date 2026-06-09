@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Businessradar\Companies;
 
-use Businessradar\Companies\Registration\Company;
 use Businessradar\Companies\Registration\Country;
 use Businessradar\Companies\Registration\Status;
 use Businessradar\Core\Attributes\Optional;
@@ -18,7 +17,7 @@ use Businessradar\Core\Contracts\BaseModel;
  * Handles the registration of companies for monitoring. New companies can be
  * identified by DUNS number, local registration number, or name and country.
  *
- * @phpstan-import-type CompanyShape from \Businessradar\Companies\Registration\Company
+ * @phpstan-import-type PortfolioCompanyDetailShape from \Businessradar\Companies\PortfolioCompanyDetail
  *
  * @phpstan-type RegistrationShape = array{
  *   externalID: string,
@@ -26,7 +25,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   progress: float,
  *   status: Status|value-of<Status>,
  *   statusText: string,
- *   company?: null|Company|CompanyShape,
+ *   company?: null|PortfolioCompanyDetail|PortfolioCompanyDetailShape,
  *   country?: null|Country|value-of<Country>,
  *   customerReference?: string|null,
  *   dunsNumber?: string|null,
@@ -91,7 +90,7 @@ final class Registration implements BaseModel
      * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
      */
     #[Optional(nullable: true)]
-    public ?Company $company;
+    public ?PortfolioCompanyDetail $company;
 
     /** @var value-of<Country>|null $country */
     #[Optional(enum: Country::class, nullable: true)]
@@ -144,7 +143,7 @@ final class Registration implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Status|value-of<Status> $status
-     * @param Company|CompanyShape|null $company
+     * @param PortfolioCompanyDetail|PortfolioCompanyDetailShape|null $company
      * @param Country|value-of<Country>|null $country
      */
     public static function with(
@@ -153,7 +152,7 @@ final class Registration implements BaseModel
         float $progress,
         Status|string $status,
         string $statusText,
-        Company|array|null $company = null,
+        PortfolioCompanyDetail|array|null $company = null,
         Country|string|null $country = null,
         ?string $customerReference = null,
         ?string $dunsNumber = null,
@@ -254,10 +253,11 @@ final class Registration implements BaseModel
      *
      * A lightweight data structure for company identification (UUID, DUNS, Name, Country).
      *
-     * @param Company|CompanyShape|null $company
+     * @param PortfolioCompanyDetail|PortfolioCompanyDetailShape|null $company
      */
-    public function withCompany(Company|array|null $company): self
-    {
+    public function withCompany(
+        PortfolioCompanyDetail|array|null $company
+    ): self {
         $self = clone $this;
         $self['company'] = $company;
 

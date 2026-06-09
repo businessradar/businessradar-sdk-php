@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Businessradar\ServiceContracts;
 
+use Businessradar\Companies\CompanyCreateFeedbackParams;
 use Businessradar\Companies\CompanyCreateMissingCompanyInvestigationParams;
 use Businessradar\Companies\CompanyCreateParams;
 use Businessradar\Companies\CompanyGetMissingCompanyInvestigationResponse;
@@ -14,6 +15,7 @@ use Businessradar\Companies\CompanyListMissingCompanyInvestigationsParams;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListParams;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\Registration;
 use Businessradar\Core\Contracts\BaseResponse;
@@ -67,6 +69,21 @@ interface CompaniesRawContract
      */
     public function list(
         array|CompanyListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|CompanyCreateFeedbackParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CompanyNewFeedbackResponse>
+     *
+     * @throws APIException
+     */
+    public function createFeedback(
+        array|CompanyCreateFeedbackParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
