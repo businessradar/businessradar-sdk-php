@@ -46,7 +46,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Filter by article Category IDs (UUIDs).
+     * Filter by one or more article Category IDs (UUIDs).
      *
      * @var list<string>|null $category
      */
@@ -244,7 +244,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     }
 
     /**
-     * Filter by article Category IDs (UUIDs).
+     * Filter by one or more article Category IDs (UUIDs).
      *
      * @param list<string> $category
      */
