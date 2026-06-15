@@ -11,6 +11,7 @@ use Businessradar\Services\CompaniesService;
 use Businessradar\Services\ComplianceService;
 use Businessradar\Services\NewsService;
 use Businessradar\Services\PortfoliosService;
+use Businessradar\Services\WebhooksService;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 
@@ -41,6 +42,11 @@ class Client extends BaseClient
      * @api
      */
     public PortfoliosService $portfolios;
+
+    /**
+     * @api
+     */
+    public WebhooksService $webhooks;
 
     /**
      * @param RequestOpts|null $requestOptions
@@ -104,6 +110,7 @@ class Client extends BaseClient
         $this->companies = new CompaniesService($this);
         $this->compliance = new ComplianceService($this);
         $this->portfolios = new PortfoliosService($this);
+        $this->webhooks = new WebhooksService($this);
     }
 
     /** @return array<string,string> */
