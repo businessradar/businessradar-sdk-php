@@ -30,7 +30,12 @@ final class DeliveriesRawService implements DeliveriesRawContract
     /**
      * @api
      *
-     * List delivery history for a specific webhook.
+     * List deliveries newest first.
+     *
+     * The default cursor pagination ignores the queryset ordering and applies
+     * its own ``ordering`` attribute, so set it on the paginator here. The
+     * ``-id`` tiebreaker keeps cursor paging stable when deliveries share a
+     * ``created_at`` timestamp.
      *
      * @param array{nextKey?: string}|DeliveryListParams $params
      * @param RequestOpts|null $requestOptions
