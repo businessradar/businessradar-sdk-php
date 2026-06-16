@@ -46,6 +46,9 @@ final class Entity implements BaseModel
     #[Optional(nullable: true)]
     public ?string $country;
 
+    /**
+     * Date of birth. Accepts a full or partial date in YYYY, YYYY-MM or YYYY-MM-DD format (e.g. when only the year is known).
+     */
     #[Optional('date_of_birth', nullable: true)]
     public ?string $dateOfBirth;
 
@@ -148,6 +151,9 @@ final class Entity implements BaseModel
         return $self;
     }
 
+    /**
+     * Date of birth. Accepts a full or partial date in YYYY, YYYY-MM or YYYY-MM-DD format (e.g. when only the year is known).
+     */
     public function withDateOfBirth(?string $dateOfBirth): self
     {
         $self = clone $this;
