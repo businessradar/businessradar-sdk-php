@@ -34,7 +34,12 @@ final class DeliveriesService implements DeliveriesContract
     /**
      * @api
      *
-     * List delivery history for a specific webhook.
+     * List deliveries newest first.
+     *
+     * The default cursor pagination ignores the queryset ordering and applies
+     * its own ``ordering`` attribute, so set it on the paginator here. The
+     * ``-id`` tiebreaker keeps cursor paging stable when deliveries share a
+     * ``created_at`` timestamp.
      *
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param RequestOpts|null $requestOptions
@@ -63,6 +68,7 @@ final class DeliveriesService implements DeliveriesContract
      *
      * @param EventType|value-of<EventType> $eventType * `compliance_check.status_changed` - Compliance Check Status Changed
      * * `compliance_check.status_completed` - Compliance Check Status Completed
+     * * `compliance_check.results.new` - Compliance Check Results New
      * * `company_registration.status_changed` - Company Registration Status Changed
      * * `company_registration.status_registered` - Company Registration Status Registered
      * @param RequestOpts|null $requestOptions

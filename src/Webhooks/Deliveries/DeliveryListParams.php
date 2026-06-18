@@ -10,7 +10,12 @@ use Businessradar\Core\Concerns\SdkParams;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
- * List delivery history for a specific webhook.
+ * List deliveries newest first.
+ *
+ * The default cursor pagination ignores the queryset ordering and applies
+ * its own ``ordering`` attribute, so set it on the paginator here. The
+ * ``-id`` tiebreaker keeps cursor paging stable when deliveries share a
+ * ``created_at`` timestamp.
  *
  * @see Businessradar\Services\Webhooks\DeliveriesService::list()
  *
