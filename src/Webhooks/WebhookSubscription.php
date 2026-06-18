@@ -22,6 +22,7 @@ final class WebhookSubscription implements BaseModel
     /**
      * * `compliance_check.status_changed` - Compliance Check Status Changed
      * * `compliance_check.status_completed` - Compliance Check Status Completed
+     * * `compliance_check.results.new` - Compliance Check Results New
      * * `company_registration.status_changed` - Company Registration Status Changed
      * * `company_registration.status_registered` - Company Registration Status Registered.
      *
@@ -74,6 +75,7 @@ final class WebhookSubscription implements BaseModel
     /**
      * * `compliance_check.status_changed` - Compliance Check Status Changed
      * * `compliance_check.status_completed` - Compliance Check Status Completed
+     * * `compliance_check.results.new` - Compliance Check Results New
      * * `company_registration.status_changed` - Company Registration Status Changed
      * * `company_registration.status_registered` - Company Registration Status Registered.
      *
