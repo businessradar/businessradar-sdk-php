@@ -125,6 +125,7 @@ namespace Businessradar\Companies;
  * * `KI` - Kiribati
  * * `KP` - Korea (the Democratic People's Republic of)
  * * `KR` - Korea (the Republic of)
+ * * `XK` - Kosovo
  * * `KW` - Kuwait
  * * `KG` - Kyrgyzstan
  * * `LA` - Lao People's Democratic Republic
@@ -496,6 +497,8 @@ enum CountryEnum: string
     case KP = 'KP';
 
     case KR = 'KR';
+
+    case XK = 'XK';
 
     case KW = 'KW';
 
