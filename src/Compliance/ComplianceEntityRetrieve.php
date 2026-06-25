@@ -47,7 +47,8 @@ final class ComplianceEntityRetrieve implements BaseModel
 
     /**
      * * `individual` - Individual
-     * * `company` - Company.
+     * * `company` - Company
+     * * `vessel` - Vessel.
      *
      * @var value-of<EntityType> $entityType
      */
@@ -201,7 +202,8 @@ final class ComplianceEntityRetrieve implements BaseModel
 
     /**
      * * `individual` - Individual
-     * * `company` - Company.
+     * * `company` - Company
+     * * `vessel` - Vessel.
      *
      * @param EntityType|value-of<EntityType> $entityType
      */

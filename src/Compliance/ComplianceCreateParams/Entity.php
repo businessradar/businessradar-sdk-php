@@ -54,7 +54,8 @@ final class Entity implements BaseModel
 
     /**
      * * `individual` - Individual
-     * * `company` - Company.
+     * * `company` - Company
+     * * `vessel` - Vessel.
      *
      * @var value-of<EntityType>|null $entityType
      */
@@ -164,7 +165,8 @@ final class Entity implements BaseModel
 
     /**
      * * `individual` - Individual
-     * * `company` - Company.
+     * * `company` - Company
+     * * `vessel` - Vessel.
      *
      * @param EntityType|value-of<EntityType> $entityType
      */

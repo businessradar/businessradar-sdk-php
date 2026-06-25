@@ -6,11 +6,14 @@ namespace Businessradar\Compliance\ComplianceEntityRetrieve;
 
 /**
  * * `individual` - Individual
- * * `company` - Company.
+ * * `company` - Company
+ * * `vessel` - Vessel.
  */
 enum EntityType: string
 {
     case INDIVIDUAL = 'individual';
 
     case COMPANY = 'company';
+
+    case VESSEL = 'vessel';
 }
