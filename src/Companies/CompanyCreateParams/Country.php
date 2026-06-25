@@ -246,6 +246,8 @@ enum Country: string
 
     case KR = 'KR';
 
+    case XK = 'XK';
+
     case KW = 'KW';
 
     case KG = 'KG';
