@@ -54,7 +54,12 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->create(
-            subscriptions: [['eventType' => 'compliance_check.status_changed']],
+            subscriptions: [
+                [
+                    'eventType' => 'compliance_check.status_changed',
+                    'portfolio' => '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+                ],
+            ],
             url: 'https://example.com',
             enabled: true,
         );
@@ -104,7 +109,12 @@ final class WebhooksTest extends TestCase
 
         $result = $this->client->webhooks->update(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            subscriptions: [['eventType' => 'compliance_check.status_changed']],
+            subscriptions: [
+                [
+                    'eventType' => 'compliance_check.status_changed',
+                    'portfolio' => '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+                ],
+            ],
             url: 'https://example.com',
             enabled: true,
         );

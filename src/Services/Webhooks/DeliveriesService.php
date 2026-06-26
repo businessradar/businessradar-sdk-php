@@ -71,6 +71,7 @@ final class DeliveriesService implements DeliveriesContract
      * * `compliance_check.results.new` - Compliance Check Results New
      * * `company_registration.status_changed` - Company Registration Status Changed
      * * `company_registration.status_registered` - Company Registration Status Registered
+     * * `company.updated` - Company Updated
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

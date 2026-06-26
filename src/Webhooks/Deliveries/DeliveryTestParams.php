@@ -30,7 +30,8 @@ final class DeliveryTestParams implements BaseModel
      * * `compliance_check.status_completed` - Compliance Check Status Completed
      * * `compliance_check.results.new` - Compliance Check Results New
      * * `company_registration.status_changed` - Company Registration Status Changed
-     * * `company_registration.status_registered` - Company Registration Status Registered.
+     * * `company_registration.status_registered` - Company Registration Status Registered
+     * * `company.updated` - Company Updated.
      *
      * @var value-of<EventType>|null $eventType
      */
@@ -63,7 +64,8 @@ final class DeliveryTestParams implements BaseModel
      * * `compliance_check.status_completed` - Compliance Check Status Completed
      * * `compliance_check.results.new` - Compliance Check Results New
      * * `company_registration.status_changed` - Company Registration Status Changed
-     * * `company_registration.status_registered` - Company Registration Status Registered.
+     * * `company_registration.status_registered` - Company Registration Status Registered
+     * * `company.updated` - Company Updated.
      *
      * @param EventType|value-of<EventType> $eventType
      */

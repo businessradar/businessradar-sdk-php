@@ -41,6 +41,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * * `compliance_check.results.new` - Compliance Check Results New
      * * `company_registration.status_changed` - Company Registration Status Changed
      * * `company_registration.status_registered` - Company Registration Status Registered
+     * * `company.updated` - Company Updated
+     * @param string|null $portfolio Portfolio external_id. Required for portfolio-scoped events (e.g. company.updated); must be omitted for all other events.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -48,9 +50,12 @@ final class SubscriptionsService implements SubscriptionsContract
     public function create(
         string $webhookExternalID,
         EventType|string $eventType,
+        ?string $portfolio = null,
         RequestOptions|array|null $requestOptions = null,
     ): WebhookSubscription {
-        $params = Util::removeNulls(['eventType' => $eventType]);
+        $params = Util::removeNulls(
+            ['eventType' => $eventType, 'portfolio' => $portfolio]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create($webhookExternalID, params: $params, requestOptions: $requestOptions);
