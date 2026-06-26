@@ -33,7 +33,9 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * List and add subscriptions on a specific webhook.
      *
-     * @param array{eventType: value-of<EventType>}|SubscriptionCreateParams $params
+     * @param array{
+     *   eventType: value-of<EventType>, portfolio?: string|null
+     * }|SubscriptionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookSubscription>
