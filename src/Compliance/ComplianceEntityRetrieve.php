@@ -23,11 +23,11 @@ use Businessradar\Core\Contracts\BaseModel;
  *   externalID: string,
  *   name: string,
  *   sanctionMonitoringEnabled: bool,
- *   status: Status|value-of<Status>,
  *   ubo: null|Ubo|UboShape,
  *   country?: string|null,
  *   dateOfBirth?: string|null,
  *   gender?: null|Gender|value-of<Gender>,
+ *   status?: null|Status|value-of<Status>,
  * }
  */
 final class ComplianceEntityRetrieve implements BaseModel
@@ -64,19 +64,6 @@ final class ComplianceEntityRetrieve implements BaseModel
     #[Required('sanction_monitoring_enabled')]
     public bool $sanctionMonitoringEnabled;
 
-    /**
-     * * `on_hold` - On Hold
-     * * `queued` - Queued
-     * * `in_progress` - In Progress
-     * * `completed` - Completed
-     * * `skipped` - Skipped
-     * * `failed` - Failed.
-     *
-     * @var value-of<Status> $status
-     */
-    #[Required(enum: Status::class)]
-    public string $status;
-
     #[Required]
     public ?Ubo $ubo;
 
@@ -91,6 +78,19 @@ final class ComplianceEntityRetrieve implements BaseModel
     public ?string $gender;
 
     /**
+     * * `on_hold` - On Hold
+     * * `queued` - Queued
+     * * `in_progress` - In Progress
+     * * `completed` - Completed
+     * * `skipped` - Skipped
+     * * `failed` - Failed.
+     *
+     * @var value-of<Status>|null $status
+     */
+    #[Optional(enum: Status::class)]
+    public ?string $status;
+
+    /**
      * `new ComplianceEntityRetrieve()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -103,7 +103,6 @@ final class ComplianceEntityRetrieve implements BaseModel
      *   externalID: ...,
      *   name: ...,
      *   sanctionMonitoringEnabled: ...,
-     *   status: ...,
      *   ubo: ...,
      * )
      * ```
@@ -119,7 +118,6 @@ final class ComplianceEntityRetrieve implements BaseModel
      *   ->withExternalID(...)
      *   ->withName(...)
      *   ->withSanctionMonitoringEnabled(...)
-     *   ->withStatus(...)
      *   ->withUbo(...)
      * ```
      */
@@ -135,9 +133,9 @@ final class ComplianceEntityRetrieve implements BaseModel
      *
      * @param list<string> $aliases
      * @param EntityType|value-of<EntityType> $entityType
-     * @param Status|value-of<Status> $status
      * @param Ubo|UboShape|null $ubo
      * @param Gender|value-of<Gender>|null $gender
+     * @param Status|value-of<Status>|null $status
      */
     public static function with(
         bool $adverseMediaMonitoringEnabled,
@@ -147,11 +145,11 @@ final class ComplianceEntityRetrieve implements BaseModel
         string $externalID,
         string $name,
         bool $sanctionMonitoringEnabled,
-        Status|string $status,
         Ubo|array|null $ubo,
         ?string $country = null,
         ?string $dateOfBirth = null,
         Gender|string|null $gender = null,
+        Status|string|null $status = null,
     ): self {
         $self = new self;
 
@@ -162,12 +160,12 @@ final class ComplianceEntityRetrieve implements BaseModel
         $self['externalID'] = $externalID;
         $self['name'] = $name;
         $self['sanctionMonitoringEnabled'] = $sanctionMonitoringEnabled;
-        $self['status'] = $status;
         $self['ubo'] = $ubo;
 
         null !== $country && $self['country'] = $country;
         null !== $dateOfBirth && $self['dateOfBirth'] = $dateOfBirth;
         null !== $gender && $self['gender'] = $gender;
+        null !== $status && $self['status'] = $status;
 
         return $self;
     }
@@ -241,24 +239,6 @@ final class ComplianceEntityRetrieve implements BaseModel
     }
 
     /**
-     * * `on_hold` - On Hold
-     * * `queued` - Queued
-     * * `in_progress` - In Progress
-     * * `completed` - Completed
-     * * `skipped` - Skipped
-     * * `failed` - Failed.
-     *
-     * @param Status|value-of<Status> $status
-     */
-    public function withStatus(Status|string $status): self
-    {
-        $self = clone $this;
-        $self['status'] = $status;
-
-        return $self;
-    }
-
-    /**
      * @param Ubo|UboShape|null $ubo
      */
     public function withUbo(Ubo|array|null $ubo): self
@@ -292,6 +272,24 @@ final class ComplianceEntityRetrieve implements BaseModel
     {
         $self = clone $this;
         $self['gender'] = $gender;
+
+        return $self;
+    }
+
+    /**
+     * * `on_hold` - On Hold
+     * * `queued` - Queued
+     * * `in_progress` - In Progress
+     * * `completed` - Completed
+     * * `skipped` - Skipped
+     * * `failed` - Failed.
+     *
+     * @param Status|value-of<Status> $status
+     */
+    public function withStatus(Status|string $status): self
+    {
+        $self = clone $this;
+        $self['status'] = $status;
 
         return $self;
     }
