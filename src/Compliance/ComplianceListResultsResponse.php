@@ -6,6 +6,8 @@ namespace Businessradar\Compliance;
 
 use Businessradar\Compliance\ComplianceListResultsResponse\Address;
 use Businessradar\Compliance\ComplianceListResultsResponse\Language;
+use Businessradar\Compliance\ComplianceListResultsResponse\PepRelationship;
+use Businessradar\Compliance\ComplianceListResultsResponse\PepTier;
 use Businessradar\Compliance\ComplianceListResultsResponse\ResultType;
 use Businessradar\Compliance\ComplianceListResultsResponse\Source;
 use Businessradar\Compliance\ComplianceListResultsResponse\Tag;
@@ -40,6 +42,9 @@ use Businessradar\Core\Contracts\BaseModel;
  *   formattedTitleEn?: string|null,
  *   image?: string|null,
  *   language?: null|Language|value-of<Language>,
+ *   pepRelatedTo?: string|null,
+ *   pepRelationship?: null|PepRelationship|value-of<PepRelationship>,
+ *   pepTier?: null|PepTier|value-of<PepTier>,
  *   sourceDate?: \DateTimeInterface|null,
  *   sourceName?: string|null,
  *   text?: string|null,
@@ -118,6 +123,37 @@ final class ComplianceListResultsResponse implements BaseModel
     #[Optional(enum: Language::class, nullable: true)]
     public ?string $language;
 
+    /**
+     * Name of the PEP this person is related to (family / associate only).
+     */
+    #[Optional('pep_related_to', nullable: true)]
+    public ?string $pepRelatedTo;
+
+    /**
+     * How this person relates to the PEP status: self, family or associate.
+     *
+     * * `SELF` - Self
+     * * `FAMILY` - Family member
+     * * `ASSOCIATE` - Close associate
+     *
+     * @var value-of<PepRelationship>|null $pepRelationship
+     */
+    #[Optional('pep_relationship', enum: PepRelationship::class, nullable: true)]
+    public ?string $pepRelationship;
+
+    /**
+     * PEP tier of this match (national / regional / local / international).
+     *
+     * * `TIER_1` - Tier 1 (national)
+     * * `TIER_2` - Tier 2 (regional)
+     * * `TIER_3` - Tier 3 (local / SOE)
+     * * `INTERNATIONAL_ORG` - International organization
+     *
+     * @var value-of<PepTier>|null $pepTier
+     */
+    #[Optional('pep_tier', enum: PepTier::class, nullable: true)]
+    public ?string $pepTier;
+
     #[Optional('source_date', nullable: true)]
     public ?\DateTimeInterface $sourceDate;
 
@@ -190,6 +226,8 @@ final class ComplianceListResultsResponse implements BaseModel
      * @param list<Source|SourceShape> $sources
      * @param list<Tag|TagShape> $tags
      * @param Language|value-of<Language>|null $language
+     * @param PepRelationship|value-of<PepRelationship>|null $pepRelationship
+     * @param PepTier|value-of<PepTier>|null $pepTier
      */
     public static function with(
         array $addresses,
@@ -209,6 +247,9 @@ final class ComplianceListResultsResponse implements BaseModel
         ?string $formattedTitleEn = null,
         ?string $image = null,
         Language|string|null $language = null,
+        ?string $pepRelatedTo = null,
+        PepRelationship|string|null $pepRelationship = null,
+        PepTier|string|null $pepTier = null,
         ?\DateTimeInterface $sourceDate = null,
         ?string $sourceName = null,
         ?string $text = null,
@@ -237,6 +278,9 @@ final class ComplianceListResultsResponse implements BaseModel
         null !== $formattedTitleEn && $self['formattedTitleEn'] = $formattedTitleEn;
         null !== $image && $self['image'] = $image;
         null !== $language && $self['language'] = $language;
+        null !== $pepRelatedTo && $self['pepRelatedTo'] = $pepRelatedTo;
+        null !== $pepRelationship && $self['pepRelationship'] = $pepRelationship;
+        null !== $pepTier && $self['pepTier'] = $pepTier;
         null !== $sourceDate && $self['sourceDate'] = $sourceDate;
         null !== $sourceName && $self['sourceName'] = $sourceName;
         null !== $text && $self['text'] = $text;
@@ -406,6 +450,53 @@ final class ComplianceListResultsResponse implements BaseModel
     {
         $self = clone $this;
         $self['language'] = $language;
+
+        return $self;
+    }
+
+    /**
+     * Name of the PEP this person is related to (family / associate only).
+     */
+    public function withPepRelatedTo(?string $pepRelatedTo): self
+    {
+        $self = clone $this;
+        $self['pepRelatedTo'] = $pepRelatedTo;
+
+        return $self;
+    }
+
+    /**
+     * How this person relates to the PEP status: self, family or associate.
+     *
+     * * `SELF` - Self
+     * * `FAMILY` - Family member
+     * * `ASSOCIATE` - Close associate
+     *
+     * @param PepRelationship|value-of<PepRelationship>|null $pepRelationship
+     */
+    public function withPepRelationship(
+        PepRelationship|string|null $pepRelationship
+    ): self {
+        $self = clone $this;
+        $self['pepRelationship'] = $pepRelationship;
+
+        return $self;
+    }
+
+    /**
+     * PEP tier of this match (national / regional / local / international).
+     *
+     * * `TIER_1` - Tier 1 (national)
+     * * `TIER_2` - Tier 2 (regional)
+     * * `TIER_3` - Tier 3 (local / SOE)
+     * * `INTERNATIONAL_ORG` - International organization
+     *
+     * @param PepTier|value-of<PepTier>|null $pepTier
+     */
+    public function withPepTier(PepTier|string|null $pepTier): self
+    {
+        $self = clone $this;
+        $self['pepTier'] = $pepTier;
 
         return $self;
     }
