@@ -41,6 +41,7 @@ final class ArticleExport implements BaseModel
      * * `COMPANIES` - Companies
      * * `REGISTRATIONS` - Registrations
      * * `COMPLIANCE` - Compliance
+     * * `COMPLIANCE_CHANGELOG` - Compliance changelog
      * * `BILLING` - Billing
      * * `KEY_EVENTS` - Key Events.
      *
@@ -182,6 +183,7 @@ final class ArticleExport implements BaseModel
      * * `COMPANIES` - Companies
      * * `REGISTRATIONS` - Registrations
      * * `COMPLIANCE` - Compliance
+     * * `COMPLIANCE_CHANGELOG` - Compliance changelog
      * * `BILLING` - Billing
      * * `KEY_EVENTS` - Key Events.
      *

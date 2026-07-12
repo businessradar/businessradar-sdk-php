@@ -9,6 +9,7 @@ use Businessradar\Compliance\ComplianceListResultsResponse\Language;
 use Businessradar\Compliance\ComplianceListResultsResponse\PepRelationship;
 use Businessradar\Compliance\ComplianceListResultsResponse\PepTier;
 use Businessradar\Compliance\ComplianceListResultsResponse\ResultType;
+use Businessradar\Compliance\ComplianceListResultsResponse\SoeRelationshipType;
 use Businessradar\Compliance\ComplianceListResultsResponse\Source;
 use Businessradar\Compliance\ComplianceListResultsResponse\Tag;
 use Businessradar\Core\Attributes\Optional;
@@ -45,6 +46,9 @@ use Businessradar\Core\Contracts\BaseModel;
  *   pepRelatedTo?: string|null,
  *   pepRelationship?: null|PepRelationship|value-of<PepRelationship>,
  *   pepTier?: null|PepTier|value-of<PepTier>,
+ *   soeOwnershipPercentage?: float|null,
+ *   soeParentEntity?: string|null,
+ *   soeRelationshipType?: null|SoeRelationshipType|value-of<SoeRelationshipType>,
  *   sourceDate?: \DateTimeInterface|null,
  *   sourceName?: string|null,
  *   text?: string|null,
@@ -154,6 +158,36 @@ final class ComplianceListResultsResponse implements BaseModel
     #[Optional('pep_tier', enum: PepTier::class, nullable: true)]
     public ?string $pepTier;
 
+    /**
+     * Percentage of government ownership, when reported.
+     */
+    #[Optional('soe_ownership_percentage', nullable: true)]
+    public ?float $soeOwnershipPercentage;
+
+    /**
+     * Immediate parent or controlling government entity.
+     */
+    #[Optional('soe_parent_entity', nullable: true)]
+    public ?string $soeParentEntity;
+
+    /**
+     * Nature of this match's government relationship (ownership level or control without ownership).
+     *
+     * * `WHOLLY_OWNED` - Wholly state-owned
+     * * `MAJORITY_OWNED` - Majority state-owned
+     * * `MINORITY_OWNED` - Minority state-owned
+     * * `STATE_CONTROLLED` - State-controlled
+     * * `GOVERNMENT_LINKED` - Government-linked
+     *
+     * @var value-of<SoeRelationshipType>|null $soeRelationshipType
+     */
+    #[Optional(
+        'soe_relationship_type',
+        enum: SoeRelationshipType::class,
+        nullable: true
+    )]
+    public ?string $soeRelationshipType;
+
     #[Optional('source_date', nullable: true)]
     public ?\DateTimeInterface $sourceDate;
 
@@ -228,6 +262,7 @@ final class ComplianceListResultsResponse implements BaseModel
      * @param Language|value-of<Language>|null $language
      * @param PepRelationship|value-of<PepRelationship>|null $pepRelationship
      * @param PepTier|value-of<PepTier>|null $pepTier
+     * @param SoeRelationshipType|value-of<SoeRelationshipType>|null $soeRelationshipType
      */
     public static function with(
         array $addresses,
@@ -250,6 +285,9 @@ final class ComplianceListResultsResponse implements BaseModel
         ?string $pepRelatedTo = null,
         PepRelationship|string|null $pepRelationship = null,
         PepTier|string|null $pepTier = null,
+        ?float $soeOwnershipPercentage = null,
+        ?string $soeParentEntity = null,
+        SoeRelationshipType|string|null $soeRelationshipType = null,
         ?\DateTimeInterface $sourceDate = null,
         ?string $sourceName = null,
         ?string $text = null,
@@ -281,6 +319,9 @@ final class ComplianceListResultsResponse implements BaseModel
         null !== $pepRelatedTo && $self['pepRelatedTo'] = $pepRelatedTo;
         null !== $pepRelationship && $self['pepRelationship'] = $pepRelationship;
         null !== $pepTier && $self['pepTier'] = $pepTier;
+        null !== $soeOwnershipPercentage && $self['soeOwnershipPercentage'] = $soeOwnershipPercentage;
+        null !== $soeParentEntity && $self['soeParentEntity'] = $soeParentEntity;
+        null !== $soeRelationshipType && $self['soeRelationshipType'] = $soeRelationshipType;
         null !== $sourceDate && $self['sourceDate'] = $sourceDate;
         null !== $sourceName && $self['sourceName'] = $sourceName;
         null !== $text && $self['text'] = $text;
@@ -497,6 +538,49 @@ final class ComplianceListResultsResponse implements BaseModel
     {
         $self = clone $this;
         $self['pepTier'] = $pepTier;
+
+        return $self;
+    }
+
+    /**
+     * Percentage of government ownership, when reported.
+     */
+    public function withSoeOwnershipPercentage(
+        ?float $soeOwnershipPercentage
+    ): self {
+        $self = clone $this;
+        $self['soeOwnershipPercentage'] = $soeOwnershipPercentage;
+
+        return $self;
+    }
+
+    /**
+     * Immediate parent or controlling government entity.
+     */
+    public function withSoeParentEntity(?string $soeParentEntity): self
+    {
+        $self = clone $this;
+        $self['soeParentEntity'] = $soeParentEntity;
+
+        return $self;
+    }
+
+    /**
+     * Nature of this match's government relationship (ownership level or control without ownership).
+     *
+     * * `WHOLLY_OWNED` - Wholly state-owned
+     * * `MAJORITY_OWNED` - Majority state-owned
+     * * `MINORITY_OWNED` - Minority state-owned
+     * * `STATE_CONTROLLED` - State-controlled
+     * * `GOVERNMENT_LINKED` - Government-linked
+     *
+     * @param SoeRelationshipType|value-of<SoeRelationshipType>|null $soeRelationshipType
+     */
+    public function withSoeRelationshipType(
+        SoeRelationshipType|string|null $soeRelationshipType
+    ): self {
+        $self = clone $this;
+        $self['soeRelationshipType'] = $soeRelationshipType;
 
         return $self;
     }
