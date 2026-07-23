@@ -61,12 +61,12 @@ final class ComplianceService implements ComplianceContract
      * To check the progress and/or retrieve the final result, you can use the [GET
      * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
      *
-     * @param bool $adverseMediaMonitoringEnabled if enabled, adverse media monitoring will be activated for all system-created entities (company, directors, UBOs)
+     * @param bool $adverseMediaMonitoringEnabled Deprecated: monitoring is now derived from screening. This flag (OR'd with sanction_monitoring_enabled) sets the check's monitoring master switch; per-type coverage follows which screenings run.
      * @param bool $directorsScreeningEnabled if directors should be screened
      * @param list<Entity|EntityShape> $entities
      * @param string|null $name custom name for this compliance check
      * @param float|null $ownershipScreeningThreshold the threshold for ultimate ownership to enable for screening
-     * @param bool $sanctionMonitoringEnabled if enabled, sanctions monitoring will be activated for all system-created entities (company, directors, UBOs)
+     * @param bool $sanctionMonitoringEnabled Deprecated: monitoring is now derived from screening. This flag (OR'd with adverse_media_monitoring_enabled) sets the check's monitoring master switch; per-type coverage follows which screenings run.
      * @param bool $uboScreeningEnabled if enabled, UBOs discovered for the company will be screened
      * @param RequestOpts|null $requestOptions
      *
