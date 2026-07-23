@@ -51,7 +51,7 @@ final class ComplianceCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * If enabled, adverse media monitoring will be activated for all system-created entities (company, directors, UBOs).
+     * Deprecated: monitoring is now derived from screening. This flag (OR'd with sanction_monitoring_enabled) sets the check's monitoring master switch; per-type coverage follows which screenings run.
      */
     #[Optional('adverse_media_monitoring_enabled')]
     public ?bool $adverseMediaMonitoringEnabled;
@@ -82,7 +82,7 @@ final class ComplianceCreateParams implements BaseModel
     public ?float $ownershipScreeningThreshold;
 
     /**
-     * If enabled, sanctions monitoring will be activated for all system-created entities (company, directors, UBOs).
+     * Deprecated: monitoring is now derived from screening. This flag (OR'd with adverse_media_monitoring_enabled) sets the check's monitoring master switch; per-type coverage follows which screenings run.
      */
     #[Optional('sanction_monitoring_enabled')]
     public ?bool $sanctionMonitoringEnabled;
@@ -130,7 +130,7 @@ final class ComplianceCreateParams implements BaseModel
     }
 
     /**
-     * If enabled, adverse media monitoring will be activated for all system-created entities (company, directors, UBOs).
+     * Deprecated: monitoring is now derived from screening. This flag (OR'd with sanction_monitoring_enabled) sets the check's monitoring master switch; per-type coverage follows which screenings run.
      */
     public function withAdverseMediaMonitoringEnabled(
         bool $adverseMediaMonitoringEnabled
@@ -196,7 +196,7 @@ final class ComplianceCreateParams implements BaseModel
     }
 
     /**
-     * If enabled, sanctions monitoring will be activated for all system-created entities (company, directors, UBOs).
+     * Deprecated: monitoring is now derived from screening. This flag (OR'd with adverse_media_monitoring_enabled) sets the check's monitoring master switch; per-type coverage follows which screenings run.
      */
     public function withSanctionMonitoringEnabled(
         bool $sanctionMonitoringEnabled
