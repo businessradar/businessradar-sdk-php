@@ -43,7 +43,7 @@ final class ComplianceListResultsParams implements BaseModel
     public ?string $entity;
 
     /**
-     * Filter out automated false positive rated results.
+     * Filter out automated false positive rated results. While a check is still running, only AI-validated results are returned, so the result count grows monotonically. Set to `false` to get the raw unfiltered set, including results that have not been validated yet.
      */
     #[Optional]
     public ?bool $excludeAutomatedFalsePositives;
@@ -132,7 +132,7 @@ final class ComplianceListResultsParams implements BaseModel
     }
 
     /**
-     * Filter out automated false positive rated results.
+     * Filter out automated false positive rated results. While a check is still running, only AI-validated results are returned, so the result count grows monotonically. Set to `false` to get the raw unfiltered set, including results that have not been validated yet.
      */
     public function withExcludeAutomatedFalsePositives(
         bool $excludeAutomatedFalsePositives

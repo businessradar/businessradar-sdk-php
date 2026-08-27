@@ -101,7 +101,7 @@ interface ComplianceContract
      * @api
      *
      * @param string $entity Filter by entity external ID
-     * @param bool $excludeAutomatedFalsePositives Filter out automated false positive rated results
+     * @param bool $excludeAutomatedFalsePositives Filter out automated false positive rated results. While a check is still running, only AI-validated results are returned, so the result count grows monotonically. Set to `false` to get the raw unfiltered set, including results that have not been validated yet.
      * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param \Businessradar\Compliance\ComplianceListResultsParams\Order|value-of<\Businessradar\Compliance\ComplianceListResultsParams\Order> $order Sorting order
