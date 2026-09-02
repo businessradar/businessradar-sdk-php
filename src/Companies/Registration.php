@@ -31,6 +31,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   dunsNumber?: string|null,
  *   primaryName?: string|null,
  *   registrationNumber?: string|null,
+ *   submitInvestigationWhenNotIdentified?: bool|null,
  * }
  */
 final class Registration implements BaseModel
@@ -112,6 +113,12 @@ final class Registration implements BaseModel
     public ?string $registrationNumber;
 
     /**
+     * With this option enabled a missing company investigation is submitted automatically when the registration cannot be identified, instead of failing with company not found.
+     */
+    #[Optional('submit_investigation_when_not_identified')]
+    public ?bool $submitInvestigationWhenNotIdentified;
+
+    /**
      * `new Registration()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -158,6 +165,7 @@ final class Registration implements BaseModel
         ?string $dunsNumber = null,
         ?string $primaryName = null,
         ?string $registrationNumber = null,
+        ?bool $submitInvestigationWhenNotIdentified = null,
     ): self {
         $self = new self;
 
@@ -173,6 +181,7 @@ final class Registration implements BaseModel
         null !== $dunsNumber && $self['dunsNumber'] = $dunsNumber;
         null !== $primaryName && $self['primaryName'] = $primaryName;
         null !== $registrationNumber && $self['registrationNumber'] = $registrationNumber;
+        null !== $submitInvestigationWhenNotIdentified && $self['submitInvestigationWhenNotIdentified'] = $submitInvestigationWhenNotIdentified;
 
         return $self;
     }
@@ -306,6 +315,18 @@ final class Registration implements BaseModel
     {
         $self = clone $this;
         $self['registrationNumber'] = $registrationNumber;
+
+        return $self;
+    }
+
+    /**
+     * With this option enabled a missing company investigation is submitted automatically when the registration cannot be identified, instead of failing with company not found.
+     */
+    public function withSubmitInvestigationWhenNotIdentified(
+        bool $submitInvestigationWhenNotIdentified
+    ): self {
+        $self = clone $this;
+        $self['submitInvestigationWhenNotIdentified'] = $submitInvestigationWhenNotIdentified;
 
         return $self;
     }
