@@ -32,6 +32,7 @@ use Businessradar\Portfolios\Companies\CompanyCreateParams\Country;
  *   dunsNumber?: string|null,
  *   primaryName?: string|null,
  *   registrationNumber?: string|null,
+ *   submitInvestigationWhenNotIdentified?: bool|null,
  * }
  */
 final class CompanyCreateParams implements BaseModel
@@ -67,6 +68,12 @@ final class CompanyCreateParams implements BaseModel
     #[Optional('registration_number', nullable: true)]
     public ?string $registrationNumber;
 
+    /**
+     * With this option enabled a missing company investigation is submitted automatically when the registration cannot be identified, instead of failing with company not found.
+     */
+    #[Optional('submit_investigation_when_not_identified')]
+    public ?bool $submitInvestigationWhenNotIdentified;
+
     public function __construct()
     {
         $this->initialize();
@@ -87,6 +94,7 @@ final class CompanyCreateParams implements BaseModel
         ?string $dunsNumber = null,
         ?string $primaryName = null,
         ?string $registrationNumber = null,
+        ?bool $submitInvestigationWhenNotIdentified = null,
     ): self {
         $self = new self;
 
@@ -96,6 +104,7 @@ final class CompanyCreateParams implements BaseModel
         null !== $dunsNumber && $self['dunsNumber'] = $dunsNumber;
         null !== $primaryName && $self['primaryName'] = $primaryName;
         null !== $registrationNumber && $self['registrationNumber'] = $registrationNumber;
+        null !== $submitInvestigationWhenNotIdentified && $self['submitInvestigationWhenNotIdentified'] = $submitInvestigationWhenNotIdentified;
 
         return $self;
     }
@@ -158,6 +167,18 @@ final class CompanyCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['registrationNumber'] = $registrationNumber;
+
+        return $self;
+    }
+
+    /**
+     * With this option enabled a missing company investigation is submitted automatically when the registration cannot be identified, instead of failing with company not found.
+     */
+    public function withSubmitInvestigationWhenNotIdentified(
+        bool $submitInvestigationWhenNotIdentified
+    ): self {
+        $self = clone $this;
+        $self['submitInvestigationWhenNotIdentified'] = $submitInvestigationWhenNotIdentified;
 
         return $self;
     }

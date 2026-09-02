@@ -34,6 +34,7 @@ interface CompaniesContract
      * A lightweight data structure for company identification (UUID, DUNS, Name, Country)
      * @param Country|value-of<Country>|null $country
      * @param string|null $customerReference customer reference for the client to understand relationship
+     * @param bool $submitInvestigationWhenNotIdentified with this option enabled a missing company investigation is submitted automatically when the registration cannot be identified, instead of failing with company not found
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -45,6 +46,7 @@ interface CompaniesContract
         ?string $dunsNumber = null,
         ?string $primaryName = null,
         ?string $registrationNumber = null,
+        ?bool $submitInvestigationWhenNotIdentified = null,
         RequestOptions|array|null $requestOptions = null,
     ): Registration;
 

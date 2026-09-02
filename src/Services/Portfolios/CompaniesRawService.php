@@ -50,6 +50,7 @@ final class CompaniesRawService implements CompaniesRawContract
      *   dunsNumber?: string|null,
      *   primaryName?: string|null,
      *   registrationNumber?: string|null,
+     *   submitInvestigationWhenNotIdentified?: bool,
      * }|CompanyCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
