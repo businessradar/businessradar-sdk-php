@@ -8,6 +8,7 @@ use Businessradar\Companies\CompanyGetResponse;
 use Businessradar\Companies\CompanyListAttributeChangesResponse;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyMatchResponse;
 use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CountryEnum;
@@ -207,6 +208,19 @@ final class CompaniesTest extends TestCase
                 $item
             );
         }
+    }
+
+    #[Test]
+    public function testMatch(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Mock server tests are disabled');
+        }
+
+        $result = $this->client->companies->match();
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CompanyMatchResponse::class, $result);
     }
 
     #[Test]

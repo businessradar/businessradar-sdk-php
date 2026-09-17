@@ -12,6 +12,7 @@ use Businessradar\Companies\CompanyGetResponse;
 use Businessradar\Companies\CompanyListAttributeChangesResponse;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyMatchResponse;
 use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CountryEnum;
@@ -595,6 +596,102 @@ final class CompaniesService implements CompaniesContract
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listMissingCompanyInvestigations(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * ### Match a Single Company
+     *
+     * Resolve a set of identifying details to the single best-matching company.
+     *
+     * Provide as many identifying details as you have. At least one of `name`,
+     * `duns_number`, `registration_number` or `customer_reference` is required, and a
+     * `country` must accompany a `name` or `registration_number` lookup. More fields
+     * (address, telephone, url, email) yield a more confident match.
+     *
+     * Matching happens in two stages:
+     *
+     * - **Internal first.** A `customer_reference` mapped to one of your portfolio
+     * companies, or a `duns_number` we already track, returns that Business Radar
+     * company immediately — no Dun & Bradstreet lookup is performed.
+     *
+     * - **Dun & Bradstreet fallback.** Otherwise the details are matched against
+     * Dun & Bradstreet's Cleanse Match API and the single best candidate is
+     * returned, even if the company is not yet registered in Business Radar.
+     *
+     * The result is a company object. When the company is already tracked in
+     * Business Radar its `external_id` is populated; when it only exists at Dun &
+     * Bradstreet the `external_id` is `null` and you can register it via [POST
+     * /companies](/ext/v3/#/ext/ext_v3_companies_create) using the returned
+     * `duns_number`.
+     *
+     * Returns `404` when no company can be matched.
+     *
+     * @param string $addressCounty county
+     * @param string $addressLocality city / locality
+     * @param string $addressRegion region / state / province
+     * @param int $confidenceLowerLevelThresholdValue minimum Dun & Bradstreet confidence code (1-10)
+     * @param string $country ISO 2-letter Country Code (e.g., NL, US).
+     * @param string $customerReference your own reference linking to a tracked company
+     * @param string $dunsNumber 9-digit Dun And Bradstreet Number to match
+     * @param string $email company email address
+     * @param string $name company name to match
+     * @param string $postalCode postal / ZIP code
+     * @param string $registrationNumber local Registration Number
+     * @param string $registrationNumberType type of the registration number
+     * @param string $streetAddressLine1 first line of the street address
+     * @param string $streetAddressLine2 second line of the street address
+     * @param string $telephoneNumber telephone number
+     * @param string $url company website URL
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function match(
+        ?string $addressCounty = null,
+        ?string $addressLocality = null,
+        ?string $addressRegion = null,
+        ?int $confidenceLowerLevelThresholdValue = null,
+        ?string $country = null,
+        ?string $customerReference = null,
+        ?string $dunsNumber = null,
+        ?string $email = null,
+        ?string $name = null,
+        ?string $postalCode = null,
+        ?string $registrationNumber = null,
+        ?string $registrationNumberType = null,
+        ?string $streetAddressLine1 = null,
+        ?string $streetAddressLine2 = null,
+        ?string $telephoneNumber = null,
+        ?string $url = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): CompanyMatchResponse {
+        $params = Util::removeNulls(
+            [
+                'addressCounty' => $addressCounty,
+                'addressLocality' => $addressLocality,
+                'addressRegion' => $addressRegion,
+                'confidenceLowerLevelThresholdValue' => $confidenceLowerLevelThresholdValue,
+                'country' => $country,
+                'customerReference' => $customerReference,
+                'dunsNumber' => $dunsNumber,
+                'email' => $email,
+                'name' => $name,
+                'postalCode' => $postalCode,
+                'registrationNumber' => $registrationNumber,
+                'registrationNumberType' => $registrationNumberType,
+                'streetAddressLine1' => $streetAddressLine1,
+                'streetAddressLine2' => $streetAddressLine2,
+                'telephoneNumber' => $telephoneNumber,
+                'url' => $url,
+            ],
+        );
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->match(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

@@ -11,6 +11,7 @@ use Businessradar\Companies\CompanyGetResponse;
 use Businessradar\Companies\CompanyListAttributeChangesResponse;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyMatchResponse;
 use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CountryEnum;
@@ -430,6 +431,49 @@ interface CompaniesContract
         ?string $nextKey = null,
         RequestOptions|array|null $requestOptions = null
     ): NextKey;
+
+    /**
+     * @api
+     *
+     * @param string $addressCounty county
+     * @param string $addressLocality city / locality
+     * @param string $addressRegion region / state / province
+     * @param int $confidenceLowerLevelThresholdValue minimum Dun & Bradstreet confidence code (1-10)
+     * @param string $country ISO 2-letter Country Code (e.g., NL, US).
+     * @param string $customerReference your own reference linking to a tracked company
+     * @param string $dunsNumber 9-digit Dun And Bradstreet Number to match
+     * @param string $email company email address
+     * @param string $name company name to match
+     * @param string $postalCode postal / ZIP code
+     * @param string $registrationNumber local Registration Number
+     * @param string $registrationNumberType type of the registration number
+     * @param string $streetAddressLine1 first line of the street address
+     * @param string $streetAddressLine2 second line of the street address
+     * @param string $telephoneNumber telephone number
+     * @param string $url company website URL
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function match(
+        ?string $addressCounty = null,
+        ?string $addressLocality = null,
+        ?string $addressRegion = null,
+        ?int $confidenceLowerLevelThresholdValue = null,
+        ?string $country = null,
+        ?string $customerReference = null,
+        ?string $dunsNumber = null,
+        ?string $email = null,
+        ?string $name = null,
+        ?string $postalCode = null,
+        ?string $registrationNumber = null,
+        ?string $registrationNumberType = null,
+        ?string $streetAddressLine1 = null,
+        ?string $streetAddressLine2 = null,
+        ?string $telephoneNumber = null,
+        ?string $url = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): CompanyMatchResponse;
 
     /**
      * @api
