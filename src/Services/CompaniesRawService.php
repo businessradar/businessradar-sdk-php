@@ -18,6 +18,8 @@ use Businessradar\Companies\CompanyListMissingCompanyInvestigationsParams;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListParams;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyMatchParams;
+use Businessradar\Companies\CompanyMatchResponse;
 use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\CountryEnum;
@@ -351,6 +353,95 @@ final class CompaniesRawService implements CompaniesRawContract
             options: $options,
             convert: CompanyListMissingCompanyInvestigationsResponse::class,
             page: NextKey::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * ### Match a Single Company
+     *
+     * Resolve a set of identifying details to the single best-matching company.
+     *
+     * Provide as many identifying details as you have. At least one of `name`,
+     * `duns_number`, `registration_number` or `customer_reference` is required, and a
+     * `country` must accompany a `name` or `registration_number` lookup. More fields
+     * (address, telephone, url, email) yield a more confident match.
+     *
+     * Matching happens in two stages:
+     *
+     * - **Internal first.** A `customer_reference` mapped to one of your portfolio
+     * companies, or a `duns_number` we already track, returns that Business Radar
+     * company immediately — no Dun & Bradstreet lookup is performed.
+     *
+     * - **Dun & Bradstreet fallback.** Otherwise the details are matched against
+     * Dun & Bradstreet's Cleanse Match API and the single best candidate is
+     * returned, even if the company is not yet registered in Business Radar.
+     *
+     * The result is a company object. When the company is already tracked in
+     * Business Radar its `external_id` is populated; when it only exists at Dun &
+     * Bradstreet the `external_id` is `null` and you can register it via [POST
+     * /companies](/ext/v3/#/ext/ext_v3_companies_create) using the returned
+     * `duns_number`.
+     *
+     * Returns `404` when no company can be matched.
+     *
+     * @param array{
+     *   addressCounty?: string,
+     *   addressLocality?: string,
+     *   addressRegion?: string,
+     *   confidenceLowerLevelThresholdValue?: int,
+     *   country?: string,
+     *   customerReference?: string,
+     *   dunsNumber?: string,
+     *   email?: string,
+     *   name?: string,
+     *   postalCode?: string,
+     *   registrationNumber?: string,
+     *   registrationNumberType?: string,
+     *   streetAddressLine1?: string,
+     *   streetAddressLine2?: string,
+     *   telephoneNumber?: string,
+     *   url?: string,
+     * }|CompanyMatchParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CompanyMatchResponse>
+     *
+     * @throws APIException
+     */
+    public function match(
+        array|CompanyMatchParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = CompanyMatchParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: 'ext/v3/companies/match/',
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'addressCounty' => 'address_county',
+                    'addressLocality' => 'address_locality',
+                    'addressRegion' => 'address_region',
+                    'confidenceLowerLevelThresholdValue' => 'confidence_lower_level_threshold_value',
+                    'customerReference' => 'customer_reference',
+                    'dunsNumber' => 'duns_number',
+                    'postalCode' => 'postal_code',
+                    'registrationNumber' => 'registration_number',
+                    'registrationNumberType' => 'registration_number_type',
+                    'streetAddressLine1' => 'street_address_line1',
+                    'streetAddressLine2' => 'street_address_line2',
+                    'telephoneNumber' => 'telephone_number',
+                ],
+            ),
+            options: $options,
+            convert: CompanyMatchResponse::class,
         );
     }
 

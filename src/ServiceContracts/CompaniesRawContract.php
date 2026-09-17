@@ -15,6 +15,8 @@ use Businessradar\Companies\CompanyListMissingCompanyInvestigationsParams;
 use Businessradar\Companies\CompanyListMissingCompanyInvestigationsResponse;
 use Businessradar\Companies\CompanyListParams;
 use Businessradar\Companies\CompanyListResponse;
+use Businessradar\Companies\CompanyMatchParams;
+use Businessradar\Companies\CompanyMatchResponse;
 use Businessradar\Companies\CompanyNewFeedbackResponse;
 use Businessradar\Companies\CompanyNewMissingCompanyInvestigationResponse;
 use Businessradar\Companies\Registration;
@@ -129,6 +131,21 @@ interface CompaniesRawContract
      */
     public function listMissingCompanyInvestigations(
         array|CompanyListMissingCompanyInvestigationsParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|CompanyMatchParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CompanyMatchResponse>
+     *
+     * @throws APIException
+     */
+    public function match(
+        array|CompanyMatchParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
