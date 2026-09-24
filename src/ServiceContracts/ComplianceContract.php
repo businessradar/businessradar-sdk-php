@@ -12,6 +12,7 @@ use Businessradar\Compliance\ComplianceListParams\Sorting;
 use Businessradar\Compliance\ComplianceListParams\Status;
 use Businessradar\Compliance\ComplianceListResponse;
 use Businessradar\Compliance\ComplianceListResultsParams\ResultType;
+use Businessradar\Compliance\ComplianceListResultsParams\SourceType;
 use Businessradar\Compliance\ComplianceListResultsResponse;
 use Businessradar\Compliance\ComplianceNewResponse;
 use Businessradar\Core\Exceptions\APIException;
@@ -107,6 +108,7 @@ interface ComplianceContract
      * @param \Businessradar\Compliance\ComplianceListResultsParams\Order|value-of<\Businessradar\Compliance\ComplianceListResultsParams\Order> $order Sorting order
      * @param ResultType|value-of<ResultType> $resultType Filter by result type
      * @param \Businessradar\Compliance\ComplianceListResultsParams\Sorting|value-of<\Businessradar\Compliance\ComplianceListResultsParams\Sorting> $sorting Sorting field
+     * @param SourceType|value-of<SourceType> $sourceType Filter adverse media results by sub-source (news / icij / enforcement)
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<ComplianceListResultsResponse>
@@ -122,6 +124,7 @@ interface ComplianceContract
         \Businessradar\Compliance\ComplianceListResultsParams\Order|string $order = 'desc',
         ResultType|string|null $resultType = null,
         \Businessradar\Compliance\ComplianceListResultsParams\Sorting|string $sorting = 'created_at',
+        SourceType|string|null $sourceType = null,
         RequestOptions|array|null $requestOptions = null,
     ): NextKey;
 }
