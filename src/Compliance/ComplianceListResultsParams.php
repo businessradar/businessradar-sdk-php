@@ -7,6 +7,7 @@ namespace Businessradar\Compliance;
 use Businessradar\Compliance\ComplianceListResultsParams\Order;
 use Businessradar\Compliance\ComplianceListResultsParams\ResultType;
 use Businessradar\Compliance\ComplianceListResultsParams\Sorting;
+use Businessradar\Compliance\ComplianceListResultsParams\SourceType;
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Concerns\SdkParams;
@@ -28,6 +29,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   order?: null|Order|value-of<Order>,
  *   resultType?: null|ResultType|value-of<ResultType>,
  *   sorting?: null|Sorting|value-of<Sorting>,
+ *   sourceType?: null|SourceType|value-of<SourceType>,
  * }
  */
 final class ComplianceListResultsParams implements BaseModel
@@ -84,6 +86,14 @@ final class ComplianceListResultsParams implements BaseModel
     #[Optional(enum: Sorting::class)]
     public ?string $sorting;
 
+    /**
+     * Filter adverse media results by sub-source (news / icij / enforcement).
+     *
+     * @var value-of<SourceType>|null $sourceType
+     */
+    #[Optional(enum: SourceType::class)]
+    public ?string $sourceType;
+
     public function __construct()
     {
         $this->initialize();
@@ -97,6 +107,7 @@ final class ComplianceListResultsParams implements BaseModel
      * @param Order|value-of<Order>|null $order
      * @param ResultType|value-of<ResultType>|null $resultType
      * @param Sorting|value-of<Sorting>|null $sorting
+     * @param SourceType|value-of<SourceType>|null $sourceType
      */
     public static function with(
         ?string $entity = null,
@@ -106,6 +117,7 @@ final class ComplianceListResultsParams implements BaseModel
         Order|string|null $order = null,
         ResultType|string|null $resultType = null,
         Sorting|string|null $sorting = null,
+        SourceType|string|null $sourceType = null,
     ): self {
         $self = new self;
 
@@ -116,6 +128,7 @@ final class ComplianceListResultsParams implements BaseModel
         null !== $order && $self['order'] = $order;
         null !== $resultType && $self['resultType'] = $resultType;
         null !== $sorting && $self['sorting'] = $sorting;
+        null !== $sourceType && $self['sourceType'] = $sourceType;
 
         return $self;
     }
@@ -200,6 +213,19 @@ final class ComplianceListResultsParams implements BaseModel
     {
         $self = clone $this;
         $self['sorting'] = $sorting;
+
+        return $self;
+    }
+
+    /**
+     * Filter adverse media results by sub-source (news / icij / enforcement).
+     *
+     * @param SourceType|value-of<SourceType> $sourceType
+     */
+    public function withSourceType(SourceType|string $sourceType): self
+    {
+        $self = clone $this;
+        $self['sourceType'] = $sourceType;
 
         return $self;
     }

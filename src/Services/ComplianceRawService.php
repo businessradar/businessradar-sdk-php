@@ -16,6 +16,7 @@ use Businessradar\Compliance\ComplianceListParams\Status;
 use Businessradar\Compliance\ComplianceListResponse;
 use Businessradar\Compliance\ComplianceListResultsParams;
 use Businessradar\Compliance\ComplianceListResultsParams\ResultType;
+use Businessradar\Compliance\ComplianceListResultsParams\SourceType;
 use Businessradar\Compliance\ComplianceListResultsResponse;
 use Businessradar\Compliance\ComplianceNewResponse;
 use Businessradar\Core\Contracts\BaseResponse;
@@ -206,6 +207,7 @@ final class ComplianceRawService implements ComplianceRawContract
      *   order?: ComplianceListResultsParams\Order|value-of<ComplianceListResultsParams\Order>,
      *   resultType?: ResultType|value-of<ResultType>,
      *   sorting?: ComplianceListResultsParams\Sorting|value-of<ComplianceListResultsParams\Sorting>,
+     *   sourceType?: SourceType|value-of<SourceType>,
      * }|ComplianceListResultsParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -234,6 +236,7 @@ final class ComplianceRawService implements ComplianceRawContract
                     'minConfidence' => 'min_confidence',
                     'nextKey' => 'next_key',
                     'resultType' => 'result_type',
+                    'sourceType' => 'source_type',
                 ],
             ),
             options: $options,

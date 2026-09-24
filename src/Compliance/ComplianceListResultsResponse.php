@@ -11,6 +11,7 @@ use Businessradar\Compliance\ComplianceListResultsResponse\PepTier;
 use Businessradar\Compliance\ComplianceListResultsResponse\ResultType;
 use Businessradar\Compliance\ComplianceListResultsResponse\SoeRelationshipType;
 use Businessradar\Compliance\ComplianceListResultsResponse\Source;
+use Businessradar\Compliance\ComplianceListResultsResponse\SourceType;
 use Businessradar\Compliance\ComplianceListResultsResponse\Tag;
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Attributes\Required;
@@ -51,6 +52,8 @@ use Businessradar\Core\Contracts\BaseModel;
  *   soeRelationshipType?: null|SoeRelationshipType|value-of<SoeRelationshipType>,
  *   sourceDate?: \DateTimeInterface|null,
  *   sourceName?: string|null,
+ *   sourceType?: null|SourceType|value-of<SourceType>,
+ *   structured?: mixed,
  *   text?: string|null,
  *   textEn?: string|null,
  *   title?: string|null,
@@ -194,6 +197,22 @@ final class ComplianceListResultsResponse implements BaseModel
     #[Optional('source_name', nullable: true)]
     public ?string $sourceName;
 
+    /**
+     * * `news` - News
+     * * `icij` - ICIJ
+     * * `enforcement` - Enforcement.
+     *
+     * @var value-of<SourceType>|null $sourceType
+     */
+    #[Optional('source_type', enum: SourceType::class)]
+    public ?string $sourceType;
+
+    /**
+     * Generic entity_document/v1 payload (enforcement/sanctions listings).
+     */
+    #[Optional]
+    public mixed $structured;
+
     #[Optional(nullable: true)]
     public ?string $text;
 
@@ -263,6 +282,7 @@ final class ComplianceListResultsResponse implements BaseModel
      * @param PepRelationship|value-of<PepRelationship>|null $pepRelationship
      * @param PepTier|value-of<PepTier>|null $pepTier
      * @param SoeRelationshipType|value-of<SoeRelationshipType>|null $soeRelationshipType
+     * @param SourceType|value-of<SourceType>|null $sourceType
      */
     public static function with(
         array $addresses,
@@ -290,6 +310,8 @@ final class ComplianceListResultsResponse implements BaseModel
         SoeRelationshipType|string|null $soeRelationshipType = null,
         ?\DateTimeInterface $sourceDate = null,
         ?string $sourceName = null,
+        SourceType|string|null $sourceType = null,
+        mixed $structured = null,
         ?string $text = null,
         ?string $textEn = null,
         ?string $title = null,
@@ -324,6 +346,8 @@ final class ComplianceListResultsResponse implements BaseModel
         null !== $soeRelationshipType && $self['soeRelationshipType'] = $soeRelationshipType;
         null !== $sourceDate && $self['sourceDate'] = $sourceDate;
         null !== $sourceName && $self['sourceName'] = $sourceName;
+        null !== $sourceType && $self['sourceType'] = $sourceType;
+        null !== $structured && $self['structured'] = $structured;
         null !== $text && $self['text'] = $text;
         null !== $textEn && $self['textEn'] = $textEn;
         null !== $title && $self['title'] = $title;
@@ -597,6 +621,32 @@ final class ComplianceListResultsResponse implements BaseModel
     {
         $self = clone $this;
         $self['sourceName'] = $sourceName;
+
+        return $self;
+    }
+
+    /**
+     * * `news` - News
+     * * `icij` - ICIJ
+     * * `enforcement` - Enforcement.
+     *
+     * @param SourceType|value-of<SourceType> $sourceType
+     */
+    public function withSourceType(SourceType|string $sourceType): self
+    {
+        $self = clone $this;
+        $self['sourceType'] = $sourceType;
+
+        return $self;
+    }
+
+    /**
+     * Generic entity_document/v1 payload (enforcement/sanctions listings).
+     */
+    public function withStructured(mixed $structured): self
+    {
+        $self = clone $this;
+        $self['structured'] = $structured;
 
         return $self;
     }
