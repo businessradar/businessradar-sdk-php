@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.0](https://github.com/businessradar/businessradar-sdk-php/compare/v0.5.1...v0.6.0) (2026-09-25)
+
+
+### Features
+
+* sync API from production ([#18](https://github.com/businessradar/businessradar-sdk-php/issues/18)) ([a9f442f](https://github.com/businessradar/businessradar-sdk-php/commit/a9f442f229f57ee3196add4ca7f01b84f91c79dc))
+* sync API from production ([#20](https://github.com/businessradar/businessradar-sdk-php/issues/20)) ([ac8ef6c](https://github.com/businessradar/businessradar-sdk-php/commit/ac8ef6cc92e29c0fc7e82d8cb5fb320dd7f2a955))
+* sync API from production ([#21](https://github.com/businessradar/businessradar-sdk-php/issues/21)) ([4c0a087](https://github.com/businessradar/businessradar-sdk-php/commit/4c0a087cc5805f09a7c17b250cafc3bacad469df))
+* sync API from production ([#22](https://github.com/businessradar/businessradar-sdk-php/issues/22)) ([e151f97](https://github.com/businessradar/businessradar-sdk-php/commit/e151f977d89702c6ad70f1f72aab516abfb26f5f))
+* sync API from production ([#23](https://github.com/businessradar/businessradar-sdk-php/issues/23)) ([ee9fb40](https://github.com/businessradar/businessradar-sdk-php/commit/ee9fb4013d01f8959fe793630a8273cb9d4b302c))
+* sync API from production ([#24](https://github.com/businessradar/businessradar-sdk-php/issues/24)) ([aa123b0](https://github.com/businessradar/businessradar-sdk-php/commit/aa123b021c0e59ab297aa323839652d2838a1342))
+
 ## 0.5.1 (2026-06-09)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/businessradar/businessradar-sdk-php/compare/v0.5.0...v0.5.1)
