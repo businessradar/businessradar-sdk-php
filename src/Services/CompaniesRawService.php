@@ -138,6 +138,7 @@ final class CompaniesRawService implements CompaniesRawContract
      * @param array{
      *   country?: list<string>,
      *   dunsNumber?: list<string>,
+     *   isListed?: bool,
      *   nextKey?: string,
      *   portfolioID?: list<string>,
      *   query?: string,
@@ -167,6 +168,7 @@ final class CompaniesRawService implements CompaniesRawContract
                 $parsed,
                 [
                     'dunsNumber' => 'duns_number',
+                    'isListed' => 'is_listed',
                     'nextKey' => 'next_key',
                     'portfolioID' => 'portfolio_id',
                     'registrationNumber' => 'registration_number',
