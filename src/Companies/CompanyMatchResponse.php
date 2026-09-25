@@ -35,6 +35,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   socialLogo: string|null,
  *   websiteIconURL: string|null,
  *   isOutOfBusiness?: bool|null,
+ *   tickerSymbol?: string|null,
  * }
  */
 final class CompanyMatchResponse implements BaseModel
@@ -83,6 +84,9 @@ final class CompanyMatchResponse implements BaseModel
 
     #[Optional('is_out_of_business', nullable: true)]
     public ?bool $isOutOfBusiness;
+
+    #[Optional('ticker_symbol', nullable: true)]
+    public ?string $tickerSymbol;
 
     /**
      * `new CompanyMatchResponse()` is missing required properties by the API.
@@ -146,6 +150,7 @@ final class CompanyMatchResponse implements BaseModel
         ?string $socialLogo,
         ?string $websiteIconURL,
         ?bool $isOutOfBusiness = null,
+        ?string $tickerSymbol = null,
     ): self {
         $self = new self;
 
@@ -162,6 +167,7 @@ final class CompanyMatchResponse implements BaseModel
         $self['websiteIconURL'] = $websiteIconURL;
 
         null !== $isOutOfBusiness && $self['isOutOfBusiness'] = $isOutOfBusiness;
+        null !== $tickerSymbol && $self['tickerSymbol'] = $tickerSymbol;
 
         return $self;
     }
@@ -261,6 +267,14 @@ final class CompanyMatchResponse implements BaseModel
     {
         $self = clone $this;
         $self['isOutOfBusiness'] = $isOutOfBusiness;
+
+        return $self;
+    }
+
+    public function withTickerSymbol(?string $tickerSymbol): self
+    {
+        $self = clone $this;
+        $self['tickerSymbol'] = $tickerSymbol;
 
         return $self;
     }

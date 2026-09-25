@@ -28,6 +28,7 @@ use Businessradar\Core\Contracts\BaseModel;
  * @phpstan-type CompanyListParamsShape = array{
  *   country?: list<string>|null,
  *   dunsNumber?: list<string>|null,
+ *   isListed?: bool|null,
  *   nextKey?: string|null,
  *   portfolioID?: list<string>|null,
  *   query?: string|null,
@@ -56,6 +57,12 @@ final class CompanyListParams implements BaseModel
      */
     #[Optional(list: 'string')]
     public ?array $dunsNumber;
+
+    /**
+     * Filter on publicly listed companies (has a `ticker_symbol`).
+     */
+    #[Optional]
+    public ?bool $isListed;
 
     /**
      * A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
@@ -109,6 +116,7 @@ final class CompanyListParams implements BaseModel
     public static function with(
         ?array $country = null,
         ?array $dunsNumber = null,
+        ?bool $isListed = null,
         ?string $nextKey = null,
         ?array $portfolioID = null,
         ?string $query = null,
@@ -119,6 +127,7 @@ final class CompanyListParams implements BaseModel
 
         null !== $country && $self['country'] = $country;
         null !== $dunsNumber && $self['dunsNumber'] = $dunsNumber;
+        null !== $isListed && $self['isListed'] = $isListed;
         null !== $nextKey && $self['nextKey'] = $nextKey;
         null !== $portfolioID && $self['portfolioID'] = $portfolioID;
         null !== $query && $self['query'] = $query;
@@ -150,6 +159,17 @@ final class CompanyListParams implements BaseModel
     {
         $self = clone $this;
         $self['dunsNumber'] = $dunsNumber;
+
+        return $self;
+    }
+
+    /**
+     * Filter on publicly listed companies (has a `ticker_symbol`).
+     */
+    public function withIsListed(bool $isListed): self
+    {
+        $self = clone $this;
+        $self['isListed'] = $isListed;
 
         return $self;
     }

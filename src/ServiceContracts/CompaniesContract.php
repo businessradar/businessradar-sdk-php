@@ -68,6 +68,7 @@ interface CompaniesContract
      *
      * @param list<string> $country ISO 2-letter Country Code (e.g., NL, US)
      * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number (can be multiple)
+     * @param bool $isListed Filter on publicly listed companies (has a `ticker_symbol`)
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param list<string> $portfolioID Filter companies belonging to specific Portfolio IDs (UUID)
      * @param string $query custom search query to text search all companies
@@ -82,6 +83,7 @@ interface CompaniesContract
     public function list(
         ?array $country = null,
         ?array $dunsNumber = null,
+        ?bool $isListed = null,
         ?string $nextKey = null,
         ?array $portfolioID = null,
         ?string $query = null,
