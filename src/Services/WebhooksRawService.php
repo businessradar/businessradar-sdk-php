@@ -131,7 +131,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * List and create webhooks for the active profile.
      *
-     * @param array{nextKey?: string}|WebhookListParams $params
+     * @param array{nextKey?: string, pageSize?: int}|WebhookListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<NextKey<Webhook>>
@@ -151,7 +151,10 @@ final class WebhooksRawService implements WebhooksRawContract
         return $this->client->request(
             method: 'get',
             path: 'ext/v3/webhooks/',
-            query: Util::array_transform_keys($parsed, ['nextKey' => 'next_key']),
+            query: Util::array_transform_keys(
+                $parsed,
+                ['nextKey' => 'next_key', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: Webhook::class,
             page: NextKey::class,

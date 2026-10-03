@@ -21,6 +21,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   maxCreatedAt?: \DateTimeInterface|null,
  *   minCreatedAt?: \DateTimeInterface|null,
  *   nextKey?: string|null,
+ *   pageSize?: int|null,
  * }
  */
 final class CompanyListAttributeChangesParams implements BaseModel
@@ -47,6 +48,12 @@ final class CompanyListAttributeChangesParams implements BaseModel
     #[Optional]
     public ?string $nextKey;
 
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    #[Optional]
+    public ?int $pageSize;
+
     public function __construct()
     {
         $this->initialize();
@@ -61,12 +68,14 @@ final class CompanyListAttributeChangesParams implements BaseModel
         ?\DateTimeInterface $maxCreatedAt = null,
         ?\DateTimeInterface $minCreatedAt = null,
         ?string $nextKey = null,
+        ?int $pageSize = null,
     ): self {
         $self = new self;
 
         null !== $maxCreatedAt && $self['maxCreatedAt'] = $maxCreatedAt;
         null !== $minCreatedAt && $self['minCreatedAt'] = $minCreatedAt;
         null !== $nextKey && $self['nextKey'] = $nextKey;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
 
         return $self;
     }
@@ -100,6 +109,17 @@ final class CompanyListAttributeChangesParams implements BaseModel
     {
         $self = clone $this;
         $self['nextKey'] = $nextKey;
+
+        return $self;
+    }
+
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    public function withPageSize(int $pageSize): self
+    {
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
         return $self;
     }

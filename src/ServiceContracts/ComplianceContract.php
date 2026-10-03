@@ -72,6 +72,7 @@ interface ComplianceContract
      * @param \DateTimeInterface $createdAtLte filter checks created at or before this time
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param Order|value-of<Order> $order sorting order
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param \DateTimeInterface $resultsChangedAtGte filter checks with results changed at or after this time
      * @param \DateTimeInterface $resultsChangedAtLte filter checks with results changed at or before this time
      * @param bool $sanctionMonitoringEnabled filter checks that have entities with sanction monitoring enabled (pending or active)
@@ -90,6 +91,7 @@ interface ComplianceContract
         ?\DateTimeInterface $createdAtLte = null,
         ?string $nextKey = null,
         Order|string $order = 'desc',
+        ?int $pageSize = null,
         ?\DateTimeInterface $resultsChangedAtGte = null,
         ?\DateTimeInterface $resultsChangedAtLte = null,
         ?bool $sanctionMonitoringEnabled = null,
@@ -106,6 +108,7 @@ interface ComplianceContract
      * @param float $minConfidence Filter by minimum confidence score (0.0 - 1.0)
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param \Businessradar\Compliance\ComplianceListResultsParams\Order|value-of<\Businessradar\Compliance\ComplianceListResultsParams\Order> $order Sorting order
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param ResultType|value-of<ResultType> $resultType Filter by result type
      * @param \Businessradar\Compliance\ComplianceListResultsParams\Sorting|value-of<\Businessradar\Compliance\ComplianceListResultsParams\Sorting> $sorting Sorting field
      * @param SourceType|value-of<SourceType> $sourceType Filter adverse media results by sub-source (news / icij / enforcement)
@@ -122,6 +125,7 @@ interface ComplianceContract
         ?float $minConfidence = null,
         ?string $nextKey = null,
         \Businessradar\Compliance\ComplianceListResultsParams\Order|string $order = 'desc',
+        ?int $pageSize = null,
         ResultType|string|null $resultType = null,
         \Businessradar\Compliance\ComplianceListResultsParams\Sorting|string $sorting = 'created_at',
         SourceType|string|null $sourceType = null,

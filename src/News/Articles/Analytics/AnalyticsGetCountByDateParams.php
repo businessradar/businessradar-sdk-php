@@ -32,6 +32,7 @@ use Businessradar\News\Articles\Analytics\AnalyticsGetCountByDateParams\Interval
  *   maxPublicationDate?: \DateTimeInterface|null,
  *   minCreationDate?: \DateTimeInterface|null,
  *   minPublicationDate?: \DateTimeInterface|null,
+ *   pageSize?: int|null,
  *   portfolioID?: list<string>|null,
  *   query?: string|null,
  *   registrationNumber?: list<string>|null,
@@ -144,6 +145,12 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     public ?\DateTimeInterface $minPublicationDate;
 
     /**
+     * Number of results per page. Default 30, max 100.
+     */
+    #[Optional]
+    public ?int $pageSize;
+
+    /**
      * Filter articles related to companies in specific Portfolios (UUIDs).
      *
      * @var list<string>|null $portfolioID
@@ -212,6 +219,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
         ?\DateTimeInterface $maxPublicationDate = null,
         ?\DateTimeInterface $minCreationDate = null,
         ?\DateTimeInterface $minPublicationDate = null,
+        ?int $pageSize = null,
         ?array $portfolioID = null,
         ?string $query = null,
         ?array $registrationNumber = null,
@@ -234,6 +242,7 @@ final class AnalyticsGetCountByDateParams implements BaseModel
         null !== $maxPublicationDate && $self['maxPublicationDate'] = $maxPublicationDate;
         null !== $minCreationDate && $self['minCreationDate'] = $minCreationDate;
         null !== $minPublicationDate && $self['minPublicationDate'] = $minPublicationDate;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $portfolioID && $self['portfolioID'] = $portfolioID;
         null !== $query && $self['query'] = $query;
         null !== $registrationNumber && $self['registrationNumber'] = $registrationNumber;
@@ -413,6 +422,17 @@ final class AnalyticsGetCountByDateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['minPublicationDate'] = $minPublicationDate;
+
+        return $self;
+    }
+
+    /**
+     * Number of results per page. Default 30, max 100.
+     */
+    public function withPageSize(int $pageSize): self
+    {
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
         return $self;
     }

@@ -42,6 +42,15 @@ final class ArticlesRawService implements ArticlesRawContract
      * Retrieve articles matching the specified search criteria. Advanced queries and
      * incremental checks (using publication/creation dates) are supported.
      *
+     * Return `results`, `total_results`, and a `next_key` for continuation.
+     * `page_size` defaults to 30 and accepts integers from 1 through 100.
+     * Invalid page sizes, filters, or undecodable cursors raise `ValidationError`
+     * (400). Company-specific filters also enforce available company credits,
+     * raising `CreditsExhausted` (403) when blocked.
+     *
+     * Query parse and tokenizer errors from OpenSearch become
+     * `InvalidArticleFiltersError` (400); other search errors propagate.
+     *
      * @param array{
      *   category?: list<string>,
      *   company?: list<string>,
@@ -57,6 +66,7 @@ final class ArticlesRawService implements ArticlesRawContract
      *   minCreationDate?: \DateTimeInterface,
      *   minPublicationDate?: \DateTimeInterface,
      *   nextKey?: string,
+     *   pageSize?: int,
      *   portfolioID?: list<string>,
      *   query?: string,
      *   registrationNumber?: list<string>,
@@ -97,6 +107,7 @@ final class ArticlesRawService implements ArticlesRawContract
                     'minCreationDate' => 'min_creation_date',
                     'minPublicationDate' => 'min_publication_date',
                     'nextKey' => 'next_key',
+                    'pageSize' => 'page_size',
                     'portfolioID' => 'portfolio_id',
                     'registrationNumber' => 'registration_number',
                     'savedArticleFilterID' => 'saved_article_filter_id',
@@ -157,7 +168,9 @@ final class ArticlesRawService implements ArticlesRawContract
      * can be applied to article search requests using the `saved_article_filter_id`
      * parameter.
      *
-     * @param array{nextKey?: string}|ArticleListSavedArticleFiltersParams $params
+     * @param array{
+     *   nextKey?: string, pageSize?: int
+     * }|ArticleListSavedArticleFiltersParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<NextKey<ArticleListSavedArticleFiltersResponse>>
@@ -177,7 +190,10 @@ final class ArticlesRawService implements ArticlesRawContract
         return $this->client->request(
             method: 'get',
             path: 'ext/v3/saved_article_filters',
-            query: Util::array_transform_keys($parsed, ['nextKey' => 'next_key']),
+            query: Util::array_transform_keys(
+                $parsed,
+                ['nextKey' => 'next_key', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: ArticleListSavedArticleFiltersResponse::class,
             page: NextKey::class,

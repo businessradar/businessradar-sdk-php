@@ -73,7 +73,7 @@ final class PortfoliosRawService implements PortfoliosRawContract
      * Manage collections of companies. This view allows you to list existing portfolios
      * associated with your profile or create new ones.
      *
-     * @param array{nextKey?: string}|PortfolioListParams $params
+     * @param array{nextKey?: string, pageSize?: int}|PortfolioListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<NextKey<Portfolio>>
@@ -93,7 +93,10 @@ final class PortfoliosRawService implements PortfoliosRawContract
         return $this->client->request(
             method: 'get',
             path: 'ext/v3/portfolios',
-            query: Util::array_transform_keys($parsed, ['nextKey' => 'next_key']),
+            query: Util::array_transform_keys(
+                $parsed,
+                ['nextKey' => 'next_key', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: Portfolio::class,
             page: NextKey::class,

@@ -36,6 +36,7 @@ interface ArticlesContract
      * @param \DateTimeInterface $minCreationDate filter articles added to our database at or after this date/time
      * @param \DateTimeInterface $minPublicationDate filter articles published at or after this date/time
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 30, max 100.
      * @param list<string> $portfolioID filter articles related to companies in specific Portfolios (UUIDs)
      * @param string $query full-text search query for filtering articles by content
      * @param list<string> $registrationNumber filter by local company registration numbers
@@ -64,6 +65,7 @@ interface ArticlesContract
         ?\DateTimeInterface $minCreationDate = null,
         ?\DateTimeInterface $minPublicationDate = null,
         ?string $nextKey = null,
+        ?int $pageSize = null,
         ?array $portfolioID = null,
         ?string $query = null,
         ?array $registrationNumber = null,
@@ -96,6 +98,7 @@ interface ArticlesContract
      * @api
      *
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<ArticleListSavedArticleFiltersResponse>
@@ -104,7 +107,8 @@ interface ArticlesContract
      */
     public function listSavedArticleFilters(
         ?string $nextKey = null,
-        RequestOptions|array|null $requestOptions = null
+        ?int $pageSize = null,
+        RequestOptions|array|null $requestOptions = null,
     ): NextKey;
 
     /**

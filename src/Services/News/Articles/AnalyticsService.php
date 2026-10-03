@@ -51,6 +51,7 @@ final class AnalyticsService implements AnalyticsContract
      * @param \DateTimeInterface $maxPublicationDate filter articles published at or before this date/time
      * @param \DateTimeInterface $minCreationDate filter articles added to our database at or after this date/time
      * @param \DateTimeInterface $minPublicationDate filter articles published at or after this date/time
+     * @param int $pageSize Number of results per page. Default 30, max 100.
      * @param list<string> $portfolioID filter articles related to companies in specific Portfolios (UUIDs)
      * @param string $query full-text search query for filtering articles by content
      * @param list<string> $registrationNumber filter by local company registration numbers
@@ -77,6 +78,7 @@ final class AnalyticsService implements AnalyticsContract
         ?\DateTimeInterface $maxPublicationDate = null,
         ?\DateTimeInterface $minCreationDate = null,
         ?\DateTimeInterface $minPublicationDate = null,
+        ?int $pageSize = null,
         ?array $portfolioID = null,
         ?string $query = null,
         ?array $registrationNumber = null,
@@ -100,6 +102,7 @@ final class AnalyticsService implements AnalyticsContract
                 'maxPublicationDate' => $maxPublicationDate,
                 'minCreationDate' => $minCreationDate,
                 'minPublicationDate' => $minPublicationDate,
+                'pageSize' => $pageSize,
                 'portfolioID' => $portfolioID,
                 'query' => $query,
                 'registrationNumber' => $registrationNumber,

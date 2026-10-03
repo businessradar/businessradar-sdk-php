@@ -67,7 +67,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * List and add subscriptions on a specific webhook.
      *
-     * @param array{nextKey?: string}|SubscriptionListParams $params
+     * @param array{nextKey?: string, pageSize?: int}|SubscriptionListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<NextKey<WebhookSubscription>>
@@ -88,7 +88,10 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
         return $this->client->request(
             method: 'get',
             path: ['ext/v3/webhooks/%1$s/subscriptions/', $webhookExternalID],
-            query: Util::array_transform_keys($parsed, ['nextKey' => 'next_key']),
+            query: Util::array_transform_keys(
+                $parsed,
+                ['nextKey' => 'next_key', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: WebhookSubscription::class,
             page: NextKey::class,
