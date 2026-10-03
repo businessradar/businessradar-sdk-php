@@ -125,6 +125,7 @@ final class WebhooksService implements WebhooksContract
      * List and create webhooks for the active profile.
      *
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<Webhook>
@@ -133,9 +134,12 @@ final class WebhooksService implements WebhooksContract
      */
     public function list(
         ?string $nextKey = null,
-        RequestOptions|array|null $requestOptions = null
+        ?int $pageSize = null,
+        RequestOptions|array|null $requestOptions = null,
     ): NextKey {
-        $params = Util::removeNulls(['nextKey' => $nextKey]);
+        $params = Util::removeNulls(
+            ['nextKey' => $nextKey, 'pageSize' => $pageSize]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

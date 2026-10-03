@@ -14,7 +14,9 @@ use Businessradar\Core\Contracts\BaseModel;
  *
  * @see Businessradar\Services\WebhooksService::list()
  *
- * @phpstan-type WebhookListParamsShape = array{nextKey?: string|null}
+ * @phpstan-type WebhookListParamsShape = array{
+ *   nextKey?: string|null, pageSize?: int|null
+ * }
  */
 final class WebhookListParams implements BaseModel
 {
@@ -28,6 +30,12 @@ final class WebhookListParams implements BaseModel
     #[Optional]
     public ?string $nextKey;
 
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    #[Optional]
+    public ?int $pageSize;
+
     public function __construct()
     {
         $this->initialize();
@@ -38,11 +46,14 @@ final class WebhookListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?string $nextKey = null): self
-    {
+    public static function with(
+        ?string $nextKey = null,
+        ?int $pageSize = null
+    ): self {
         $self = new self;
 
         null !== $nextKey && $self['nextKey'] = $nextKey;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
 
         return $self;
     }
@@ -54,6 +65,17 @@ final class WebhookListParams implements BaseModel
     {
         $self = clone $this;
         $self['nextKey'] = $nextKey;
+
+        return $self;
+    }
+
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    public function withPageSize(int $pageSize): self
+    {
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
         return $self;
     }

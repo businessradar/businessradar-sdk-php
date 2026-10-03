@@ -126,20 +126,32 @@ final class CompaniesRawService implements CompaniesRawContract
      *
      * Search for companies across internal and external databases.
      *
-     * - If `query` and an optional `country` are provided, the search is primarily
-     * conducted via Dun & Bradstreet.
+     * - A nonempty `query` with at most one `country` uses Dun & Bradstreet
+     * unless a website domain or additional filters require internal search.
      *
-     * - If other filters (like `portfolio_id`) are provided, the search is limited to
-     * our internal database.
+     * - A resolved website domain, multiple countries, no query, or additional
+     * filters (like `portfolio_id`) select internal search. `registration_number`,
+     * `include_annotations`, `page_size`, and `next_key` do not change routing.
      *
      * The results include an `external_id` if the company is already registered in
      * Business Radar.
+     *
+     * `page_size` defaults to 50 and accepts integers from 1 through 100;
+     * invalid sizes or filters raise `ValidationError` (400). Internal results
+     * support `next_key` continuation; undecodable cursors raise `ValidationError`.
+     * Dun & Bradstreet requests are capped at 50, ignore `next_key`, and return
+     * a null cursor with `total_results` equal to the returned result count.
+     *
+     * Dun & Bradstreet 404 responses become empty results. Its throttling,
+     * invalid-input, and connection exceptions propagate, as do internal search
+     * errors. Website parsing failures fall back to the supplied URL unchanged.
      *
      * @param array{
      *   country?: list<string>,
      *   dunsNumber?: list<string>,
      *   isListed?: bool,
      *   nextKey?: string,
+     *   pageSize?: int,
      *   portfolioID?: list<string>,
      *   query?: string,
      *   registrationNumber?: list<string>,
@@ -170,6 +182,7 @@ final class CompaniesRawService implements CompaniesRawContract
                     'dunsNumber' => 'duns_number',
                     'isListed' => 'is_listed',
                     'nextKey' => 'next_key',
+                    'pageSize' => 'page_size',
                     'portfolioID' => 'portfolio_id',
                     'registrationNumber' => 'registration_number',
                     'websiteURL' => 'website_url',
@@ -287,6 +300,7 @@ final class CompaniesRawService implements CompaniesRawContract
      *   maxCreatedAt?: \DateTimeInterface,
      *   minCreatedAt?: \DateTimeInterface,
      *   nextKey?: string,
+     *   pageSize?: int,
      * }|CompanyListAttributeChangesParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -313,6 +327,7 @@ final class CompaniesRawService implements CompaniesRawContract
                     'maxCreatedAt' => 'max_created_at',
                     'minCreatedAt' => 'min_created_at',
                     'nextKey' => 'next_key',
+                    'pageSize' => 'page_size',
                 ],
             ),
             options: $options,
@@ -330,7 +345,7 @@ final class CompaniesRawService implements CompaniesRawContract
      * found.
      *
      * @param array{
-     *   nextKey?: string
+     *   nextKey?: string, pageSize?: int
      * }|CompanyListMissingCompanyInvestigationsParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -351,7 +366,10 @@ final class CompaniesRawService implements CompaniesRawContract
         return $this->client->request(
             method: 'get',
             path: 'ext/v3/companies/investigations',
-            query: Util::array_transform_keys($parsed, ['nextKey' => 'next_key']),
+            query: Util::array_transform_keys(
+                $parsed,
+                ['nextKey' => 'next_key', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: CompanyListMissingCompanyInvestigationsResponse::class,
             page: NextKey::class,

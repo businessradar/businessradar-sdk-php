@@ -39,6 +39,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   createdAtLte?: \DateTimeInterface|null,
  *   nextKey?: string|null,
  *   order?: null|Order|value-of<Order>,
+ *   pageSize?: int|null,
  *   resultsChangedAtGte?: \DateTimeInterface|null,
  *   resultsChangedAtLte?: \DateTimeInterface|null,
  *   sanctionMonitoringEnabled?: bool|null,
@@ -91,6 +92,12 @@ final class ComplianceListParams implements BaseModel
      */
     #[Optional(enum: Order::class)]
     public ?string $order;
+
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    #[Optional]
+    public ?int $pageSize;
 
     /**
      * Filter checks with results changed at or after this time.
@@ -148,6 +155,7 @@ final class ComplianceListParams implements BaseModel
         ?\DateTimeInterface $createdAtLte = null,
         ?string $nextKey = null,
         Order|string|null $order = null,
+        ?int $pageSize = null,
         ?\DateTimeInterface $resultsChangedAtGte = null,
         ?\DateTimeInterface $resultsChangedAtLte = null,
         ?bool $sanctionMonitoringEnabled = null,
@@ -162,6 +170,7 @@ final class ComplianceListParams implements BaseModel
         null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
         null !== $nextKey && $self['nextKey'] = $nextKey;
         null !== $order && $self['order'] = $order;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $resultsChangedAtGte && $self['resultsChangedAtGte'] = $resultsChangedAtGte;
         null !== $resultsChangedAtLte && $self['resultsChangedAtLte'] = $resultsChangedAtLte;
         null !== $sanctionMonitoringEnabled && $self['sanctionMonitoringEnabled'] = $sanctionMonitoringEnabled;
@@ -239,6 +248,17 @@ final class ComplianceListParams implements BaseModel
     {
         $self = clone $this;
         $self['order'] = $order;
+
+        return $self;
+    }
+
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    public function withPageSize(int $pageSize): self
+    {
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
         return $self;
     }

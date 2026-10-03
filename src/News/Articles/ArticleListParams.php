@@ -17,6 +17,15 @@ use Businessradar\News\Articles\ArticleListParams\SortingOrder;
  * Retrieve articles matching the specified search criteria. Advanced queries and
  * incremental checks (using publication/creation dates) are supported.
  *
+ * Return `results`, `total_results`, and a `next_key` for continuation.
+ * `page_size` defaults to 30 and accepts integers from 1 through 100.
+ * Invalid page sizes, filters, or undecodable cursors raise `ValidationError`
+ * (400). Company-specific filters also enforce available company credits,
+ * raising `CreditsExhausted` (403) when blocked.
+ *
+ * Query parse and tokenizer errors from OpenSearch become
+ * `InvalidArticleFiltersError` (400); other search errors propagate.
+ *
  * @see Businessradar\Services\News\ArticlesService::list()
  *
  * @phpstan-type ArticleListParamsShape = array{
@@ -34,6 +43,7 @@ use Businessradar\News\Articles\ArticleListParams\SortingOrder;
  *   minCreationDate?: \DateTimeInterface|null,
  *   minPublicationDate?: \DateTimeInterface|null,
  *   nextKey?: string|null,
+ *   pageSize?: int|null,
  *   portfolioID?: list<string>|null,
  *   query?: string|null,
  *   registrationNumber?: list<string>|null,
@@ -146,6 +156,12 @@ final class ArticleListParams implements BaseModel
     public ?string $nextKey;
 
     /**
+     * Number of results per page. Default 30, max 100.
+     */
+    #[Optional]
+    public ?int $pageSize;
+
+    /**
      * Filter articles related to companies in specific Portfolios (UUIDs).
      *
      * @var list<string>|null $portfolioID
@@ -231,6 +247,7 @@ final class ArticleListParams implements BaseModel
         ?\DateTimeInterface $minCreationDate = null,
         ?\DateTimeInterface $minPublicationDate = null,
         ?string $nextKey = null,
+        ?int $pageSize = null,
         ?array $portfolioID = null,
         ?string $query = null,
         ?array $registrationNumber = null,
@@ -255,6 +272,7 @@ final class ArticleListParams implements BaseModel
         null !== $minCreationDate && $self['minCreationDate'] = $minCreationDate;
         null !== $minPublicationDate && $self['minPublicationDate'] = $minPublicationDate;
         null !== $nextKey && $self['nextKey'] = $nextKey;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $portfolioID && $self['portfolioID'] = $portfolioID;
         null !== $query && $self['query'] = $query;
         null !== $registrationNumber && $self['registrationNumber'] = $registrationNumber;
@@ -434,6 +452,17 @@ final class ArticleListParams implements BaseModel
     {
         $self = clone $this;
         $self['nextKey'] = $nextKey;
+
+        return $self;
+    }
+
+    /**
+     * Number of results per page. Default 30, max 100.
+     */
+    public function withPageSize(int $pageSize): self
+    {
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
         return $self;
     }

@@ -87,7 +87,7 @@ final class CompaniesRawService implements CompaniesRawContract
      * currently in the portfolio. - **POST**: Register and add a new company to the
      * portfolio.
      *
-     * @param array{nextKey?: string}|CompanyListParams $params
+     * @param array{nextKey?: string, pageSize?: int}|CompanyListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<NextKey<CompanyListResponse>>
@@ -108,7 +108,10 @@ final class CompaniesRawService implements CompaniesRawContract
         return $this->client->request(
             method: 'get',
             path: ['ext/v3/portfolios/%1$s/companies', $portfolioID],
-            query: Util::array_transform_keys($parsed, ['nextKey' => 'next_key']),
+            query: Util::array_transform_keys(
+                $parsed,
+                ['nextKey' => 'next_key', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: CompanyListResponse::class,
             page: NextKey::class,

@@ -57,6 +57,15 @@ final class ArticlesService implements ArticlesContract
      * Retrieve articles matching the specified search criteria. Advanced queries and
      * incremental checks (using publication/creation dates) are supported.
      *
+     * Return `results`, `total_results`, and a `next_key` for continuation.
+     * `page_size` defaults to 30 and accepts integers from 1 through 100.
+     * Invalid page sizes, filters, or undecodable cursors raise `ValidationError`
+     * (400). Company-specific filters also enforce available company credits,
+     * raising `CreditsExhausted` (403) when blocked.
+     *
+     * Query parse and tokenizer errors from OpenSearch become
+     * `InvalidArticleFiltersError` (400); other search errors propagate.
+     *
      * @param list<string> $category filter by article Category IDs (UUIDs)
      * @param list<string> $company filter by internal Company UUIDs
      * @param list<string> $country Filter by ISO 2-letter Country Codes (e.g., 'US', 'GB').
@@ -71,6 +80,7 @@ final class ArticlesService implements ArticlesContract
      * @param \DateTimeInterface $minCreationDate filter articles added to our database at or after this date/time
      * @param \DateTimeInterface $minPublicationDate filter articles published at or after this date/time
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 30, max 100.
      * @param list<string> $portfolioID filter articles related to companies in specific Portfolios (UUIDs)
      * @param string $query full-text search query for filtering articles by content
      * @param list<string> $registrationNumber filter by local company registration numbers
@@ -99,6 +109,7 @@ final class ArticlesService implements ArticlesContract
         ?\DateTimeInterface $minCreationDate = null,
         ?\DateTimeInterface $minPublicationDate = null,
         ?string $nextKey = null,
+        ?int $pageSize = null,
         ?array $portfolioID = null,
         ?string $query = null,
         ?array $registrationNumber = null,
@@ -124,6 +135,7 @@ final class ArticlesService implements ArticlesContract
                 'minCreationDate' => $minCreationDate,
                 'minPublicationDate' => $minPublicationDate,
                 'nextKey' => $nextKey,
+                'pageSize' => $pageSize,
                 'portfolioID' => $portfolioID,
                 'query' => $query,
                 'registrationNumber' => $registrationNumber,
@@ -187,6 +199,7 @@ final class ArticlesService implements ArticlesContract
      * parameter.
      *
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<ArticleListSavedArticleFiltersResponse>
@@ -195,9 +208,12 @@ final class ArticlesService implements ArticlesContract
      */
     public function listSavedArticleFilters(
         ?string $nextKey = null,
-        RequestOptions|array|null $requestOptions = null
+        ?int $pageSize = null,
+        RequestOptions|array|null $requestOptions = null,
     ): NextKey {
-        $params = Util::removeNulls(['nextKey' => $nextKey]);
+        $params = Util::removeNulls(
+            ['nextKey' => $nextKey, 'pageSize' => $pageSize]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listSavedArticleFilters(params: $params, requestOptions: $requestOptions);

@@ -14,14 +14,25 @@ use Businessradar\Core\Contracts\BaseModel;
  *
  * Search for companies across internal and external databases.
  *
- * - If `query` and an optional `country` are provided, the search is primarily
- * conducted via Dun & Bradstreet.
+ * - A nonempty `query` with at most one `country` uses Dun & Bradstreet
+ * unless a website domain or additional filters require internal search.
  *
- * - If other filters (like `portfolio_id`) are provided, the search is limited to
- * our internal database.
+ * - A resolved website domain, multiple countries, no query, or additional
+ * filters (like `portfolio_id`) select internal search. `registration_number`,
+ * `include_annotations`, `page_size`, and `next_key` do not change routing.
  *
  * The results include an `external_id` if the company is already registered in
  * Business Radar.
+ *
+ * `page_size` defaults to 50 and accepts integers from 1 through 100;
+ * invalid sizes or filters raise `ValidationError` (400). Internal results
+ * support `next_key` continuation; undecodable cursors raise `ValidationError`.
+ * Dun & Bradstreet requests are capped at 50, ignore `next_key`, and return
+ * a null cursor with `total_results` equal to the returned result count.
+ *
+ * Dun & Bradstreet 404 responses become empty results. Its throttling,
+ * invalid-input, and connection exceptions propagate, as do internal search
+ * errors. Website parsing failures fall back to the supplied URL unchanged.
  *
  * @see Businessradar\Services\CompaniesService::list()
  *
@@ -30,6 +41,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   dunsNumber?: list<string>|null,
  *   isListed?: bool|null,
  *   nextKey?: string|null,
+ *   pageSize?: int|null,
  *   portfolioID?: list<string>|null,
  *   query?: string|null,
  *   registrationNumber?: list<string>|null,
@@ -69,6 +81,12 @@ final class CompanyListParams implements BaseModel
      */
     #[Optional]
     public ?string $nextKey;
+
+    /**
+     * Number of results per page. Default 50, max 100. Dun & Bradstreet results (no other filters besides `query`/`country`) are capped at 50 and do not support continuation.
+     */
+    #[Optional]
+    public ?int $pageSize;
 
     /**
      * Filter companies belonging to specific Portfolio IDs (UUID).
@@ -118,6 +136,7 @@ final class CompanyListParams implements BaseModel
         ?array $dunsNumber = null,
         ?bool $isListed = null,
         ?string $nextKey = null,
+        ?int $pageSize = null,
         ?array $portfolioID = null,
         ?string $query = null,
         ?array $registrationNumber = null,
@@ -129,6 +148,7 @@ final class CompanyListParams implements BaseModel
         null !== $dunsNumber && $self['dunsNumber'] = $dunsNumber;
         null !== $isListed && $self['isListed'] = $isListed;
         null !== $nextKey && $self['nextKey'] = $nextKey;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $portfolioID && $self['portfolioID'] = $portfolioID;
         null !== $query && $self['query'] = $query;
         null !== $registrationNumber && $self['registrationNumber'] = $registrationNumber;
@@ -181,6 +201,17 @@ final class CompanyListParams implements BaseModel
     {
         $self = clone $this;
         $self['nextKey'] = $nextKey;
+
+        return $self;
+    }
+
+    /**
+     * Number of results per page. Default 50, max 100. Dun & Bradstreet results (no other filters besides `query`/`country`) are capped at 50 and do not support continuation.
+     */
+    public function withPageSize(int $pageSize): self
+    {
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
         return $self;
     }

@@ -47,6 +47,7 @@ interface CompaniesContract
      * @api
      *
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListResponse>
@@ -56,6 +57,7 @@ interface CompaniesContract
     public function list(
         string $portfolioID,
         ?string $nextKey = null,
+        ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
     ): NextKey;
 

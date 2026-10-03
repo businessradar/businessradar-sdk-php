@@ -37,7 +37,7 @@ final class DeliveriesRawService implements DeliveriesRawContract
      * ``-id`` tiebreaker keeps cursor paging stable when deliveries share a
      * ``created_at`` timestamp.
      *
-     * @param array{nextKey?: string}|DeliveryListParams $params
+     * @param array{nextKey?: string, pageSize?: int}|DeliveryListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<NextKey<WebhookDelivery>>
@@ -58,7 +58,10 @@ final class DeliveriesRawService implements DeliveriesRawContract
         return $this->client->request(
             method: 'get',
             path: ['ext/v3/webhooks/%1$s/deliveries/', $webhookExternalID],
-            query: Util::array_transform_keys($parsed, ['nextKey' => 'next_key']),
+            query: Util::array_transform_keys(
+                $parsed,
+                ['nextKey' => 'next_key', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: WebhookDelivery::class,
             page: NextKey::class,

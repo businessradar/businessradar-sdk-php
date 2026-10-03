@@ -19,7 +19,7 @@ use Businessradar\Core\Contracts\BaseModel;
  * @see Businessradar\Services\News\ArticlesService::listSavedArticleFilters()
  *
  * @phpstan-type ArticleListSavedArticleFiltersParamsShape = array{
- *   nextKey?: string|null
+ *   nextKey?: string|null, pageSize?: int|null
  * }
  */
 final class ArticleListSavedArticleFiltersParams implements BaseModel
@@ -34,6 +34,12 @@ final class ArticleListSavedArticleFiltersParams implements BaseModel
     #[Optional]
     public ?string $nextKey;
 
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    #[Optional]
+    public ?int $pageSize;
+
     public function __construct()
     {
         $this->initialize();
@@ -44,11 +50,14 @@ final class ArticleListSavedArticleFiltersParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?string $nextKey = null): self
-    {
+    public static function with(
+        ?string $nextKey = null,
+        ?int $pageSize = null
+    ): self {
         $self = new self;
 
         null !== $nextKey && $self['nextKey'] = $nextKey;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
 
         return $self;
     }
@@ -60,6 +69,17 @@ final class ArticleListSavedArticleFiltersParams implements BaseModel
     {
         $self = clone $this;
         $self['nextKey'] = $nextKey;
+
+        return $self;
+    }
+
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    public function withPageSize(int $pageSize): self
+    {
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
         return $self;
     }

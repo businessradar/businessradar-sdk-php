@@ -27,6 +27,7 @@ use Businessradar\Core\Contracts\BaseModel;
  *   minConfidence?: float|null,
  *   nextKey?: string|null,
  *   order?: null|Order|value-of<Order>,
+ *   pageSize?: int|null,
  *   resultType?: null|ResultType|value-of<ResultType>,
  *   sorting?: null|Sorting|value-of<Sorting>,
  *   sourceType?: null|SourceType|value-of<SourceType>,
@@ -69,6 +70,12 @@ final class ComplianceListResultsParams implements BaseModel
      */
     #[Optional(enum: Order::class)]
     public ?string $order;
+
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    #[Optional]
+    public ?int $pageSize;
 
     /**
      * Filter by result type.
@@ -115,6 +122,7 @@ final class ComplianceListResultsParams implements BaseModel
         ?float $minConfidence = null,
         ?string $nextKey = null,
         Order|string|null $order = null,
+        ?int $pageSize = null,
         ResultType|string|null $resultType = null,
         Sorting|string|null $sorting = null,
         SourceType|string|null $sourceType = null,
@@ -126,6 +134,7 @@ final class ComplianceListResultsParams implements BaseModel
         null !== $minConfidence && $self['minConfidence'] = $minConfidence;
         null !== $nextKey && $self['nextKey'] = $nextKey;
         null !== $order && $self['order'] = $order;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $resultType && $self['resultType'] = $resultType;
         null !== $sorting && $self['sorting'] = $sorting;
         null !== $sourceType && $self['sourceType'] = $sourceType;
@@ -187,6 +196,17 @@ final class ComplianceListResultsParams implements BaseModel
     {
         $self = clone $this;
         $self['order'] = $order;
+
+        return $self;
+    }
+
+    /**
+     * Number of results per page. Default 50, max 100.
+     */
+    public function withPageSize(int $pageSize): self
+    {
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
         return $self;
     }

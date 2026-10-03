@@ -42,6 +42,7 @@ final class DeliveriesService implements DeliveriesContract
      * ``created_at`` timestamp.
      *
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<WebhookDelivery>
@@ -51,9 +52,12 @@ final class DeliveriesService implements DeliveriesContract
     public function list(
         string $webhookExternalID,
         ?string $nextKey = null,
+        ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
     ): NextKey {
-        $params = Util::removeNulls(['nextKey' => $nextKey]);
+        $params = Util::removeNulls(
+            ['nextKey' => $nextKey, 'pageSize' => $pageSize]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list($webhookExternalID, params: $params, requestOptions: $requestOptions);

@@ -70,6 +70,7 @@ interface CompaniesContract
      * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number (can be multiple)
      * @param bool $isListed Filter on publicly listed companies (has a `ticker_symbol`)
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 50, max 100. Dun & Bradstreet results (no other filters besides `query`/`country`) are capped at 50 and do not support continuation.
      * @param list<string> $portfolioID Filter companies belonging to specific Portfolio IDs (UUID)
      * @param string $query custom search query to text search all companies
      * @param list<string> $registrationNumber Local Registration Number (can be multiple)
@@ -85,6 +86,7 @@ interface CompaniesContract
         ?array $dunsNumber = null,
         ?bool $isListed = null,
         ?string $nextKey = null,
+        ?int $pageSize = null,
         ?array $portfolioID = null,
         ?string $query = null,
         ?array $registrationNumber = null,
@@ -406,6 +408,7 @@ interface CompaniesContract
      * @param \DateTimeInterface $maxCreatedAt filter updates created at or before this time
      * @param \DateTimeInterface $minCreatedAt filter updates created at or after this time
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListAttributeChangesResponse>
@@ -416,6 +419,7 @@ interface CompaniesContract
         ?\DateTimeInterface $maxCreatedAt = null,
         ?\DateTimeInterface $minCreatedAt = null,
         ?string $nextKey = null,
+        ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
     ): NextKey;
 
@@ -423,6 +427,7 @@ interface CompaniesContract
      * @api
      *
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
+     * @param int $pageSize Number of results per page. Default 50, max 100.
      * @param RequestOpts|null $requestOptions
      *
      * @return NextKey<CompanyListMissingCompanyInvestigationsResponse>
@@ -431,7 +436,8 @@ interface CompaniesContract
      */
     public function listMissingCompanyInvestigations(
         ?string $nextKey = null,
-        RequestOptions|array|null $requestOptions = null
+        ?int $pageSize = null,
+        RequestOptions|array|null $requestOptions = null,
     ): NextKey;
 
     /**
