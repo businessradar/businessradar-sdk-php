@@ -146,10 +146,19 @@ final class CompaniesRawService implements CompaniesRawContract
      * invalid-input, and connection exceptions propagate, as do internal search
      * errors. Website parsing failures fall back to the supplied URL unchanged.
      *
+     * `min_created_at`, `max_created_at`, `min_updated_at` and `max_updated_at`
+     * filter on when a company was added or last updated (inclusive, ISO 8601,
+     * UTC). They use internal search, sort results by that timestamp, and cannot
+     * be combined with `query`.
+     *
      * @param array{
      *   country?: list<string>,
      *   dunsNumber?: list<string>,
      *   isListed?: bool,
+     *   maxCreatedAt?: \DateTimeInterface,
+     *   maxUpdatedAt?: \DateTimeInterface,
+     *   minCreatedAt?: \DateTimeInterface,
+     *   minUpdatedAt?: \DateTimeInterface,
      *   nextKey?: string,
      *   pageSize?: int,
      *   portfolioID?: list<string>,
@@ -181,6 +190,10 @@ final class CompaniesRawService implements CompaniesRawContract
                 [
                     'dunsNumber' => 'duns_number',
                     'isListed' => 'is_listed',
+                    'maxCreatedAt' => 'max_created_at',
+                    'maxUpdatedAt' => 'max_updated_at',
+                    'minCreatedAt' => 'min_created_at',
+                    'minUpdatedAt' => 'min_updated_at',
                     'nextKey' => 'next_key',
                     'pageSize' => 'page_size',
                     'portfolioID' => 'portfolio_id',

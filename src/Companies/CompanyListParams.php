@@ -34,12 +34,21 @@ use Businessradar\Core\Contracts\BaseModel;
  * invalid-input, and connection exceptions propagate, as do internal search
  * errors. Website parsing failures fall back to the supplied URL unchanged.
  *
+ * `min_created_at`, `max_created_at`, `min_updated_at` and `max_updated_at`
+ * filter on when a company was added or last updated (inclusive, ISO 8601,
+ * UTC). They use internal search, sort results by that timestamp, and cannot
+ * be combined with `query`.
+ *
  * @see Businessradar\Services\CompaniesService::list()
  *
  * @phpstan-type CompanyListParamsShape = array{
  *   country?: list<string>|null,
  *   dunsNumber?: list<string>|null,
  *   isListed?: bool|null,
+ *   maxCreatedAt?: \DateTimeInterface|null,
+ *   maxUpdatedAt?: \DateTimeInterface|null,
+ *   minCreatedAt?: \DateTimeInterface|null,
+ *   minUpdatedAt?: \DateTimeInterface|null,
  *   nextKey?: string|null,
  *   pageSize?: int|null,
  *   portfolioID?: list<string>|null,
@@ -75,6 +84,30 @@ final class CompanyListParams implements BaseModel
      */
     #[Optional]
     public ?bool $isListed;
+
+    /**
+     * Companies added at or before this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     */
+    #[Optional]
+    public ?\DateTimeInterface $maxCreatedAt;
+
+    /**
+     * Companies updated at or before this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     */
+    #[Optional]
+    public ?\DateTimeInterface $maxUpdatedAt;
+
+    /**
+     * Companies added at or after this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     */
+    #[Optional]
+    public ?\DateTimeInterface $minCreatedAt;
+
+    /**
+     * Companies updated at or after this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     */
+    #[Optional]
+    public ?\DateTimeInterface $minUpdatedAt;
 
     /**
      * A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
@@ -135,6 +168,10 @@ final class CompanyListParams implements BaseModel
         ?array $country = null,
         ?array $dunsNumber = null,
         ?bool $isListed = null,
+        ?\DateTimeInterface $maxCreatedAt = null,
+        ?\DateTimeInterface $maxUpdatedAt = null,
+        ?\DateTimeInterface $minCreatedAt = null,
+        ?\DateTimeInterface $minUpdatedAt = null,
         ?string $nextKey = null,
         ?int $pageSize = null,
         ?array $portfolioID = null,
@@ -147,6 +184,10 @@ final class CompanyListParams implements BaseModel
         null !== $country && $self['country'] = $country;
         null !== $dunsNumber && $self['dunsNumber'] = $dunsNumber;
         null !== $isListed && $self['isListed'] = $isListed;
+        null !== $maxCreatedAt && $self['maxCreatedAt'] = $maxCreatedAt;
+        null !== $maxUpdatedAt && $self['maxUpdatedAt'] = $maxUpdatedAt;
+        null !== $minCreatedAt && $self['minCreatedAt'] = $minCreatedAt;
+        null !== $minUpdatedAt && $self['minUpdatedAt'] = $minUpdatedAt;
         null !== $nextKey && $self['nextKey'] = $nextKey;
         null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $portfolioID && $self['portfolioID'] = $portfolioID;
@@ -190,6 +231,50 @@ final class CompanyListParams implements BaseModel
     {
         $self = clone $this;
         $self['isListed'] = $isListed;
+
+        return $self;
+    }
+
+    /**
+     * Companies added at or before this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     */
+    public function withMaxCreatedAt(\DateTimeInterface $maxCreatedAt): self
+    {
+        $self = clone $this;
+        $self['maxCreatedAt'] = $maxCreatedAt;
+
+        return $self;
+    }
+
+    /**
+     * Companies updated at or before this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     */
+    public function withMaxUpdatedAt(\DateTimeInterface $maxUpdatedAt): self
+    {
+        $self = clone $this;
+        $self['maxUpdatedAt'] = $maxUpdatedAt;
+
+        return $self;
+    }
+
+    /**
+     * Companies added at or after this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     */
+    public function withMinCreatedAt(\DateTimeInterface $minCreatedAt): self
+    {
+        $self = clone $this;
+        $self['minCreatedAt'] = $minCreatedAt;
+
+        return $self;
+    }
+
+    /**
+     * Companies updated at or after this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     */
+    public function withMinUpdatedAt(\DateTimeInterface $minUpdatedAt): self
+    {
+        $self = clone $this;
+        $self['minUpdatedAt'] = $minUpdatedAt;
 
         return $self;
     }
