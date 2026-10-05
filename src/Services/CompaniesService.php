@@ -144,9 +144,18 @@ final class CompaniesService implements CompaniesContract
      * invalid-input, and connection exceptions propagate, as do internal search
      * errors. Website parsing failures fall back to the supplied URL unchanged.
      *
+     * `min_created_at`, `max_created_at`, `min_updated_at` and `max_updated_at`
+     * filter on when a company was added or last updated (inclusive, ISO 8601,
+     * UTC). They use internal search, sort results by that timestamp, and cannot
+     * be combined with `query`.
+     *
      * @param list<string> $country ISO 2-letter Country Code (e.g., NL, US)
      * @param list<string> $dunsNumber 9-digit Dun And Bradstreet Number (can be multiple)
      * @param bool $isListed Filter on publicly listed companies (has a `ticker_symbol`)
+     * @param \DateTimeInterface $maxCreatedAt Companies added at or before this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     * @param \DateTimeInterface $maxUpdatedAt Companies updated at or before this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     * @param \DateTimeInterface $minCreatedAt Companies added at or after this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
+     * @param \DateTimeInterface $minUpdatedAt Companies updated at or after this time (inclusive). ISO 8601, UTC when no offset is given, millisecond precision. Cannot be combined with `query`.
      * @param string $nextKey A cursor value used for pagination. Include the `next_key` value from your previous request to retrieve the subsequent page of results. If this value is `null`, the first page of results is returned.
      * @param int $pageSize Number of results per page. Default 50, max 100. Dun & Bradstreet results (no other filters besides `query`/`country`) are capped at 50 and do not support continuation.
      * @param list<string> $portfolioID Filter companies belonging to specific Portfolio IDs (UUID)
@@ -163,6 +172,10 @@ final class CompaniesService implements CompaniesContract
         ?array $country = null,
         ?array $dunsNumber = null,
         ?bool $isListed = null,
+        ?\DateTimeInterface $maxCreatedAt = null,
+        ?\DateTimeInterface $maxUpdatedAt = null,
+        ?\DateTimeInterface $minCreatedAt = null,
+        ?\DateTimeInterface $minUpdatedAt = null,
         ?string $nextKey = null,
         ?int $pageSize = null,
         ?array $portfolioID = null,
@@ -176,6 +189,10 @@ final class CompaniesService implements CompaniesContract
                 'country' => $country,
                 'dunsNumber' => $dunsNumber,
                 'isListed' => $isListed,
+                'maxCreatedAt' => $maxCreatedAt,
+                'maxUpdatedAt' => $maxUpdatedAt,
+                'minCreatedAt' => $minCreatedAt,
+                'minUpdatedAt' => $minUpdatedAt,
                 'nextKey' => $nextKey,
                 'pageSize' => $pageSize,
                 'portfolioID' => $portfolioID,
