@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Businessradar\Companies;
 
+use Businessradar\Companies\CompanyGetResponse\GlobalUltimateCountry;
 use Businessradar\Companies\CompanyGetResponse\RegistrationNumber;
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Attributes\Required;
@@ -18,7 +19,7 @@ use Businessradar\Core\Contracts\BaseModel;
  * This data includes: - Basic info (name, country, website) - Identification (DUNS,
  * external ID, registration numbers) - Industry classifications - Geographical data
  * (address, coordinates) - Social and online presence - Summary metrics (article
- * count, review scores, etc.)
+ * count, review scores, etc.) - Corporate linkage (global and domestic ultimate)
  *
  * @phpstan-import-type IndustryCodeShape from \Businessradar\Companies\IndustryCode
  * @phpstan-import-type RegistrationNumberShape from \Businessradar\Companies\CompanyGetResponse\RegistrationNumber
@@ -44,7 +45,12 @@ use Businessradar\Core\Contracts\BaseModel;
  *   addressRegion?: string|null,
  *   addressStreet?: string|null,
  *   articleCount?: int|null,
+ *   domesticUltimateDunsNumber?: string|null,
+ *   domesticUltimateName?: string|null,
  *   externalID?: string|null,
+ *   globalUltimateCountry?: null|GlobalUltimateCountry|value-of<GlobalUltimateCountry>,
+ *   globalUltimateDunsNumber?: string|null,
+ *   globalUltimateName?: string|null,
  *   isOutOfBusiness?: bool|null,
  *   linkedinURL?: string|null,
  *   publicationCount?: int|null,
@@ -389,8 +395,28 @@ final class CompanyGetResponse implements BaseModel
     #[Optional('article_count')]
     public ?int $articleCount;
 
+    #[Optional('domestic_ultimate_duns_number', nullable: true)]
+    public ?string $domesticUltimateDunsNumber;
+
+    #[Optional('domestic_ultimate_name', nullable: true)]
+    public ?string $domesticUltimateName;
+
     #[Optional('external_id')]
     public ?string $externalID;
+
+    /** @var value-of<GlobalUltimateCountry>|null $globalUltimateCountry */
+    #[Optional(
+        'global_ultimate_country',
+        enum: GlobalUltimateCountry::class,
+        nullable: true,
+    )]
+    public ?string $globalUltimateCountry;
+
+    #[Optional('global_ultimate_duns_number', nullable: true)]
+    public ?string $globalUltimateDunsNumber;
+
+    #[Optional('global_ultimate_name', nullable: true)]
+    public ?string $globalUltimateName;
 
     /**
      * Indicates whether the company is out of business.
@@ -492,6 +518,7 @@ final class CompanyGetResponse implements BaseModel
      * @param list<IndustryCode|IndustryCodeShape> $primaryIndustryCodes
      * @param list<RegistrationNumber|RegistrationNumberShape> $registrationNumbers
      * @param list<string> $tradeNames
+     * @param GlobalUltimateCountry|value-of<GlobalUltimateCountry>|null $globalUltimateCountry
      */
     public static function with(
         CountryEnum|string $country,
@@ -514,7 +541,12 @@ final class CompanyGetResponse implements BaseModel
         ?string $addressRegion = null,
         ?string $addressStreet = null,
         ?int $articleCount = null,
+        ?string $domesticUltimateDunsNumber = null,
+        ?string $domesticUltimateName = null,
         ?string $externalID = null,
+        GlobalUltimateCountry|string|null $globalUltimateCountry = null,
+        ?string $globalUltimateDunsNumber = null,
+        ?string $globalUltimateName = null,
         ?bool $isOutOfBusiness = null,
         ?string $linkedinURL = null,
         ?int $publicationCount = null,
@@ -549,7 +581,12 @@ final class CompanyGetResponse implements BaseModel
         null !== $addressRegion && $self['addressRegion'] = $addressRegion;
         null !== $addressStreet && $self['addressStreet'] = $addressStreet;
         null !== $articleCount && $self['articleCount'] = $articleCount;
+        null !== $domesticUltimateDunsNumber && $self['domesticUltimateDunsNumber'] = $domesticUltimateDunsNumber;
+        null !== $domesticUltimateName && $self['domesticUltimateName'] = $domesticUltimateName;
         null !== $externalID && $self['externalID'] = $externalID;
+        null !== $globalUltimateCountry && $self['globalUltimateCountry'] = $globalUltimateCountry;
+        null !== $globalUltimateDunsNumber && $self['globalUltimateDunsNumber'] = $globalUltimateDunsNumber;
+        null !== $globalUltimateName && $self['globalUltimateName'] = $globalUltimateName;
         null !== $isOutOfBusiness && $self['isOutOfBusiness'] = $isOutOfBusiness;
         null !== $linkedinURL && $self['linkedinURL'] = $linkedinURL;
         null !== $publicationCount && $self['publicationCount'] = $publicationCount;
@@ -999,10 +1036,57 @@ final class CompanyGetResponse implements BaseModel
         return $self;
     }
 
+    public function withDomesticUltimateDunsNumber(
+        ?string $domesticUltimateDunsNumber
+    ): self {
+        $self = clone $this;
+        $self['domesticUltimateDunsNumber'] = $domesticUltimateDunsNumber;
+
+        return $self;
+    }
+
+    public function withDomesticUltimateName(
+        ?string $domesticUltimateName
+    ): self {
+        $self = clone $this;
+        $self['domesticUltimateName'] = $domesticUltimateName;
+
+        return $self;
+    }
+
     public function withExternalID(string $externalID): self
     {
         $self = clone $this;
         $self['externalID'] = $externalID;
+
+        return $self;
+    }
+
+    /**
+     * @param GlobalUltimateCountry|value-of<GlobalUltimateCountry>|null $globalUltimateCountry
+     */
+    public function withGlobalUltimateCountry(
+        GlobalUltimateCountry|string|null $globalUltimateCountry
+    ): self {
+        $self = clone $this;
+        $self['globalUltimateCountry'] = $globalUltimateCountry;
+
+        return $self;
+    }
+
+    public function withGlobalUltimateDunsNumber(
+        ?string $globalUltimateDunsNumber
+    ): self {
+        $self = clone $this;
+        $self['globalUltimateDunsNumber'] = $globalUltimateDunsNumber;
+
+        return $self;
+    }
+
+    public function withGlobalUltimateName(?string $globalUltimateName): self
+    {
+        $self = clone $this;
+        $self['globalUltimateName'] = $globalUltimateName;
 
         return $self;
     }
