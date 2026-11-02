@@ -6,6 +6,7 @@ namespace Businessradar\Services;
 
 use Businessradar\Client;
 use Businessradar\Compliance\ComplianceCreateParams;
+use Businessradar\Compliance\ComplianceCreateParams\DirectorRoleGroup;
 use Businessradar\Compliance\ComplianceCreateParams\Entity;
 use Businessradar\Compliance\ComplianceGetResponse;
 use Businessradar\Compliance\ComplianceListParams;
@@ -62,6 +63,7 @@ final class ComplianceRawService implements ComplianceRawContract
      * @param array{
      *   adverseMediaMonitoringEnabled?: bool,
      *   companyID?: string|null,
+     *   directorRoleGroups?: list<DirectorRoleGroup|value-of<DirectorRoleGroup>>|null,
      *   directorsScreeningEnabled?: bool,
      *   entities?: list<Entity|EntityShape>,
      *   name?: string|null,
