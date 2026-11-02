@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Businessradar\Services;
 
 use Businessradar\Client;
+use Businessradar\Compliance\ComplianceCreateParams\DirectorRoleGroup;
 use Businessradar\Compliance\ComplianceCreateParams\Entity;
 use Businessradar\Compliance\ComplianceGetResponse;
 use Businessradar\Compliance\ComplianceListParams\ComplianceScore;
@@ -63,6 +64,7 @@ final class ComplianceService implements ComplianceContract
      * /compliance/{external_id}](/ext/v3/#/ext/ext_v3_compliance_retrieve) endpoint.
      *
      * @param bool $adverseMediaMonitoringEnabled Deprecated: monitoring is now derived from screening. This flag (OR'd with sanction_monitoring_enabled) sets the check's monitoring master switch; per-type coverage follows which screenings run.
+     * @param list<DirectorRoleGroup|value-of<DirectorRoleGroup>>|null $directorRoleGroups Providing director role groups enables director screening. Null selects all roles; an empty list selects none. Cannot be combined with directors_screening_enabled=false.
      * @param bool $directorsScreeningEnabled if directors should be screened
      * @param list<Entity|EntityShape> $entities
      * @param string|null $name custom name for this compliance check
@@ -76,6 +78,7 @@ final class ComplianceService implements ComplianceContract
     public function create(
         bool $adverseMediaMonitoringEnabled = false,
         ?string $companyID = null,
+        ?array $directorRoleGroups = null,
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
         ?string $name = null,
@@ -88,6 +91,7 @@ final class ComplianceService implements ComplianceContract
             [
                 'adverseMediaMonitoringEnabled' => $adverseMediaMonitoringEnabled,
                 'companyID' => $companyID,
+                'directorRoleGroups' => $directorRoleGroups,
                 'directorsScreeningEnabled' => $directorsScreeningEnabled,
                 'entities' => $entities,
                 'name' => $name,

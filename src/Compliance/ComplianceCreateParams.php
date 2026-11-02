@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Businessradar\Compliance;
 
+use Businessradar\Compliance\ComplianceCreateParams\DirectorRoleGroup;
 use Businessradar\Compliance\ComplianceCreateParams\Entity;
 use Businessradar\Core\Attributes\Optional;
 use Businessradar\Core\Concerns\SdkModel;
@@ -36,6 +37,7 @@ use Businessradar\Core\Contracts\BaseModel;
  * @phpstan-type ComplianceCreateParamsShape = array{
  *   adverseMediaMonitoringEnabled?: bool|null,
  *   companyID?: string|null,
+ *   directorRoleGroups?: list<DirectorRoleGroup|value-of<DirectorRoleGroup>>|null,
  *   directorsScreeningEnabled?: bool|null,
  *   entities?: list<Entity|EntityShape>|null,
  *   name?: string|null,
@@ -58,6 +60,18 @@ final class ComplianceCreateParams implements BaseModel
 
     #[Optional('company_id', nullable: true)]
     public ?string $companyID;
+
+    /**
+     * Providing director role groups enables director screening. Null selects all roles; an empty list selects none. Cannot be combined with directors_screening_enabled=false.
+     *
+     * @var list<value-of<DirectorRoleGroup>>|null $directorRoleGroups
+     */
+    #[Optional(
+        'director_role_groups',
+        list: DirectorRoleGroup::class,
+        nullable: true
+    )]
+    public ?array $directorRoleGroups;
 
     /**
      * If directors should be screened.
@@ -103,11 +117,13 @@ final class ComplianceCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<DirectorRoleGroup|value-of<DirectorRoleGroup>>|null $directorRoleGroups
      * @param list<Entity|EntityShape>|null $entities
      */
     public static function with(
         ?bool $adverseMediaMonitoringEnabled = null,
         ?string $companyID = null,
+        ?array $directorRoleGroups = null,
         ?bool $directorsScreeningEnabled = null,
         ?array $entities = null,
         ?string $name = null,
@@ -119,6 +135,7 @@ final class ComplianceCreateParams implements BaseModel
 
         null !== $adverseMediaMonitoringEnabled && $self['adverseMediaMonitoringEnabled'] = $adverseMediaMonitoringEnabled;
         null !== $companyID && $self['companyID'] = $companyID;
+        null !== $directorRoleGroups && $self['directorRoleGroups'] = $directorRoleGroups;
         null !== $directorsScreeningEnabled && $self['directorsScreeningEnabled'] = $directorsScreeningEnabled;
         null !== $entities && $self['entities'] = $entities;
         null !== $name && $self['name'] = $name;
@@ -145,6 +162,19 @@ final class ComplianceCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['companyID'] = $companyID;
+
+        return $self;
+    }
+
+    /**
+     * Providing director role groups enables director screening. Null selects all roles; an empty list selects none. Cannot be combined with directors_screening_enabled=false.
+     *
+     * @param list<DirectorRoleGroup|value-of<DirectorRoleGroup>>|null $directorRoleGroups
+     */
+    public function withDirectorRoleGroups(?array $directorRoleGroups): self
+    {
+        $self = clone $this;
+        $self['directorRoleGroups'] = $directorRoleGroups;
 
         return $self;
     }

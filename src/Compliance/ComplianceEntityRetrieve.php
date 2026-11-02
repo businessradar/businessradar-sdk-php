@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Businessradar\Compliance;
 
+use Businessradar\Compliance\ComplianceEntityRetrieve\Director;
 use Businessradar\Compliance\ComplianceEntityRetrieve\EntityType;
 use Businessradar\Compliance\ComplianceEntityRetrieve\Gender;
 use Businessradar\Compliance\ComplianceEntityRetrieve\Status;
@@ -13,11 +14,13 @@ use Businessradar\Core\Concerns\SdkModel;
 use Businessradar\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type DirectorShape from \Businessradar\Compliance\ComplianceEntityRetrieve\Director
  * @phpstan-import-type UboShape from \Businessradar\Compliance\Ubo
  *
  * @phpstan-type ComplianceEntityRetrieveShape = array{
  *   adverseMediaMonitoringEnabled: bool,
  *   aliases: list<string>,
+ *   director: null|Director|DirectorShape,
  *   entityRole: string,
  *   entityType: EntityType|value-of<EntityType>,
  *   externalID: string,
@@ -41,6 +44,12 @@ final class ComplianceEntityRetrieve implements BaseModel
     /** @var list<string> $aliases */
     #[Required(list: 'string')]
     public array $aliases;
+
+    /**
+     * Custom Serializer for the Director Model.
+     */
+    #[Required]
+    public ?Director $director;
 
     #[Required('entity_role')]
     public string $entityRole;
@@ -98,6 +107,7 @@ final class ComplianceEntityRetrieve implements BaseModel
      * ComplianceEntityRetrieve::with(
      *   adverseMediaMonitoringEnabled: ...,
      *   aliases: ...,
+     *   director: ...,
      *   entityRole: ...,
      *   entityType: ...,
      *   externalID: ...,
@@ -113,6 +123,7 @@ final class ComplianceEntityRetrieve implements BaseModel
      * (new ComplianceEntityRetrieve)
      *   ->withAdverseMediaMonitoringEnabled(...)
      *   ->withAliases(...)
+     *   ->withDirector(...)
      *   ->withEntityRole(...)
      *   ->withEntityType(...)
      *   ->withExternalID(...)
@@ -132,6 +143,7 @@ final class ComplianceEntityRetrieve implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $aliases
+     * @param Director|DirectorShape|null $director
      * @param EntityType|value-of<EntityType> $entityType
      * @param Ubo|UboShape|null $ubo
      * @param Gender|value-of<Gender>|null $gender
@@ -140,6 +152,7 @@ final class ComplianceEntityRetrieve implements BaseModel
     public static function with(
         bool $adverseMediaMonitoringEnabled,
         array $aliases,
+        Director|array|null $director,
         string $entityRole,
         EntityType|string $entityType,
         string $externalID,
@@ -155,6 +168,7 @@ final class ComplianceEntityRetrieve implements BaseModel
 
         $self['adverseMediaMonitoringEnabled'] = $adverseMediaMonitoringEnabled;
         $self['aliases'] = $aliases;
+        $self['director'] = $director;
         $self['entityRole'] = $entityRole;
         $self['entityType'] = $entityType;
         $self['externalID'] = $externalID;
@@ -186,6 +200,19 @@ final class ComplianceEntityRetrieve implements BaseModel
     {
         $self = clone $this;
         $self['aliases'] = $aliases;
+
+        return $self;
+    }
+
+    /**
+     * Custom Serializer for the Director Model.
+     *
+     * @param Director|DirectorShape|null $director
+     */
+    public function withDirector(Director|array|null $director): self
+    {
+        $self = clone $this;
+        $self['director'] = $director;
 
         return $self;
     }
