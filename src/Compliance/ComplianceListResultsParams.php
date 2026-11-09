@@ -24,6 +24,7 @@ use Businessradar\Core\Contracts\BaseModel;
  * @phpstan-type ComplianceListResultsParamsShape = array{
  *   entity?: string|null,
  *   excludeAutomatedFalsePositives?: bool|null,
+ *   isClusterHead?: bool|null,
  *   minConfidence?: float|null,
  *   nextKey?: string|null,
  *   order?: null|Order|value-of<Order>,
@@ -50,6 +51,12 @@ final class ComplianceListResultsParams implements BaseModel
      */
     #[Optional]
     public ?bool $excludeAutomatedFalsePositives;
+
+    /**
+     * Filter by whether a result is the one representative of its similarity group, plus all ungrouped results. `true` gives a condensed, deduplicated reading view, not a complete screening set — use the unfiltered list for screening.
+     */
+    #[Optional]
+    public ?bool $isClusterHead;
 
     /**
      * Filter by minimum confidence score (0.0 - 1.0).
@@ -119,6 +126,7 @@ final class ComplianceListResultsParams implements BaseModel
     public static function with(
         ?string $entity = null,
         ?bool $excludeAutomatedFalsePositives = null,
+        ?bool $isClusterHead = null,
         ?float $minConfidence = null,
         ?string $nextKey = null,
         Order|string|null $order = null,
@@ -131,6 +139,7 @@ final class ComplianceListResultsParams implements BaseModel
 
         null !== $entity && $self['entity'] = $entity;
         null !== $excludeAutomatedFalsePositives && $self['excludeAutomatedFalsePositives'] = $excludeAutomatedFalsePositives;
+        null !== $isClusterHead && $self['isClusterHead'] = $isClusterHead;
         null !== $minConfidence && $self['minConfidence'] = $minConfidence;
         null !== $nextKey && $self['nextKey'] = $nextKey;
         null !== $order && $self['order'] = $order;
@@ -161,6 +170,17 @@ final class ComplianceListResultsParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['excludeAutomatedFalsePositives'] = $excludeAutomatedFalsePositives;
+
+        return $self;
+    }
+
+    /**
+     * Filter by whether a result is the one representative of its similarity group, plus all ungrouped results. `true` gives a condensed, deduplicated reading view, not a complete screening set — use the unfiltered list for screening.
+     */
+    public function withIsClusterHead(bool $isClusterHead): self
+    {
+        $self = clone $this;
+        $self['isClusterHead'] = $isClusterHead;
 
         return $self;
     }

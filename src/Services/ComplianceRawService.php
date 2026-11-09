@@ -206,6 +206,7 @@ final class ComplianceRawService implements ComplianceRawContract
      * @param array{
      *   entity?: string,
      *   excludeAutomatedFalsePositives?: bool,
+     *   isClusterHead?: bool,
      *   minConfidence?: float,
      *   nextKey?: string,
      *   order?: ComplianceListResultsParams\Order|value-of<ComplianceListResultsParams\Order>,
@@ -238,6 +239,7 @@ final class ComplianceRawService implements ComplianceRawContract
                 $parsed,
                 [
                     'excludeAutomatedFalsePositives' => 'exclude_automated_false_positives',
+                    'isClusterHead' => 'is_cluster_head',
                     'minConfidence' => 'min_confidence',
                     'nextKey' => 'next_key',
                     'pageSize' => 'page_size',
