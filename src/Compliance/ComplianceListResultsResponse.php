@@ -30,9 +30,11 @@ use Businessradar\Core\Contracts\BaseModel;
  *   addresses: list<Address|AddressShape>,
  *   automatedFalsePositiveRating: string|null,
  *   automatedFalsePositiveRatingComments: string|null,
+ *   clusterID: string|null,
  *   createdAt: \DateTimeInterface,
  *   entity: ComplianceEntityRetrieve|ComplianceEntityRetrieveShape,
  *   externalID: string,
+ *   isClusterHead: bool,
  *   name: string,
  *   resultType: ResultType|value-of<ResultType>,
  *   sources: list<Source|SourceShape>,
@@ -76,6 +78,12 @@ final class ComplianceListResultsResponse implements BaseModel
     #[Required('automated_false_positive_rating_comments')]
     public ?string $automatedFalsePositiveRatingComments;
 
+    /**
+     * Opaque group key from the Compliance API: results sharing the same cluster_id form one best-effort semantic similarity group within the same screened subject. Not an identifier of any other result (not an external_id). Null when ungrouped or not adverse media.
+     */
+    #[Required('cluster_id')]
+    public ?string $clusterID;
+
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
@@ -84,6 +92,12 @@ final class ComplianceListResultsResponse implements BaseModel
 
     #[Required('external_id')]
     public string $externalID;
+
+    /**
+     * True for the one representative result per similarity group, plus all ungrouped results. `true` gives a condensed, deduplicated reading view, not a complete screening set — use the unfiltered list for screening.
+     */
+    #[Required('is_cluster_head')]
+    public bool $isClusterHead;
 
     #[Required]
     public string $name;
@@ -237,9 +251,11 @@ final class ComplianceListResultsResponse implements BaseModel
      *   addresses: ...,
      *   automatedFalsePositiveRating: ...,
      *   automatedFalsePositiveRatingComments: ...,
+     *   clusterID: ...,
      *   createdAt: ...,
      *   entity: ...,
      *   externalID: ...,
+     *   isClusterHead: ...,
      *   name: ...,
      *   resultType: ...,
      *   sources: ...,
@@ -254,9 +270,11 @@ final class ComplianceListResultsResponse implements BaseModel
      *   ->withAddresses(...)
      *   ->withAutomatedFalsePositiveRating(...)
      *   ->withAutomatedFalsePositiveRatingComments(...)
+     *   ->withClusterID(...)
      *   ->withCreatedAt(...)
      *   ->withEntity(...)
      *   ->withExternalID(...)
+     *   ->withIsClusterHead(...)
      *   ->withName(...)
      *   ->withResultType(...)
      *   ->withSources(...)
@@ -288,9 +306,11 @@ final class ComplianceListResultsResponse implements BaseModel
         array $addresses,
         ?string $automatedFalsePositiveRating,
         ?string $automatedFalsePositiveRatingComments,
+        ?string $clusterID,
         \DateTimeInterface $createdAt,
         ComplianceEntityRetrieve|array $entity,
         string $externalID,
+        bool $isClusterHead,
         string $name,
         ResultType|string $resultType,
         array $sources,
@@ -323,9 +343,11 @@ final class ComplianceListResultsResponse implements BaseModel
         $self['addresses'] = $addresses;
         $self['automatedFalsePositiveRating'] = $automatedFalsePositiveRating;
         $self['automatedFalsePositiveRatingComments'] = $automatedFalsePositiveRatingComments;
+        $self['clusterID'] = $clusterID;
         $self['createdAt'] = $createdAt;
         $self['entity'] = $entity;
         $self['externalID'] = $externalID;
+        $self['isClusterHead'] = $isClusterHead;
         $self['name'] = $name;
         $self['resultType'] = $resultType;
         $self['sources'] = $sources;
@@ -386,6 +408,17 @@ final class ComplianceListResultsResponse implements BaseModel
         return $self;
     }
 
+    /**
+     * Opaque group key from the Compliance API: results sharing the same cluster_id form one best-effort semantic similarity group within the same screened subject. Not an identifier of any other result (not an external_id). Null when ungrouped or not adverse media.
+     */
+    public function withClusterID(?string $clusterID): self
+    {
+        $self = clone $this;
+        $self['clusterID'] = $clusterID;
+
+        return $self;
+    }
+
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $self = clone $this;
@@ -409,6 +442,17 @@ final class ComplianceListResultsResponse implements BaseModel
     {
         $self = clone $this;
         $self['externalID'] = $externalID;
+
+        return $self;
+    }
+
+    /**
+     * True for the one representative result per similarity group, plus all ungrouped results. `true` gives a condensed, deduplicated reading view, not a complete screening set — use the unfiltered list for screening.
+     */
+    public function withIsClusterHead(bool $isClusterHead): self
+    {
+        $self = clone $this;
+        $self['isClusterHead'] = $isClusterHead;
 
         return $self;
     }
