@@ -13,6 +13,7 @@ use Businessradar\News\Articles\Article;
 use Businessradar\News\Articles\ArticleCreateFeedbackParams;
 use Businessradar\News\Articles\ArticleCreateFeedbackParams\FeedbackType;
 use Businessradar\News\Articles\ArticleGetRelatedResponseItem;
+use Businessradar\News\Articles\ArticleGetSavedArticleFilterResponse;
 use Businessradar\News\Articles\ArticleListParams;
 use Businessradar\News\Articles\ArticleListParams\Sorting;
 use Businessradar\News\Articles\ArticleListParams\SortingOrder;
@@ -224,6 +225,33 @@ final class ArticlesRawService implements ArticlesRawContract
             path: ['ext/v3/articles/%1$s/related/', $articleID],
             options: $requestOptions,
             convert: new ListOf(ArticleGetRelatedResponseItem::class),
+        );
+    }
+
+    /**
+     * @api
+     *
+     * ### Saved Article Filter
+     *
+     * Retrieve a saved article filter of the current profile, including the filters
+     * applied by `saved_article_filter_id` on article search requests.
+     *
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<ArticleGetSavedArticleFilterResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveSavedArticleFilter(
+        string $externalID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['ext/v3/saved_article_filters/%1$s', $externalID],
+            options: $requestOptions,
+            convert: ArticleGetSavedArticleFilterResponse::class,
         );
     }
 }

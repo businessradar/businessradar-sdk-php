@@ -8,6 +8,7 @@ use Businessradar\Core\Contracts\BaseResponse;
 use Businessradar\Core\Exceptions\APIException;
 use Businessradar\News\Articles\Article;
 use Businessradar\News\Articles\ArticleCreateFeedbackParams;
+use Businessradar\News\Articles\ArticleGetSavedArticleFilterResponse;
 use Businessradar\News\Articles\ArticleListParams;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersParams;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
@@ -76,6 +77,20 @@ interface ArticlesRawContract
      */
     public function retrieveRelated(
         string $articleID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<ArticleGetSavedArticleFilterResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveSavedArticleFilter(
+        string $externalID,
         RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

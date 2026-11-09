@@ -7,6 +7,7 @@ namespace Businessradar\ServiceContracts\News;
 use Businessradar\Core\Exceptions\APIException;
 use Businessradar\News\Articles\Article;
 use Businessradar\News\Articles\ArticleCreateFeedbackParams\FeedbackType;
+use Businessradar\News\Articles\ArticleGetSavedArticleFilterResponse;
 use Businessradar\News\Articles\ArticleListParams\Sorting;
 use Businessradar\News\Articles\ArticleListParams\SortingOrder;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
@@ -124,4 +125,16 @@ interface ArticlesContract
         string $articleID,
         RequestOptions|array|null $requestOptions = null
     ): array;
+
+    /**
+     * @api
+     *
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retrieveSavedArticleFilter(
+        string $externalID,
+        RequestOptions|array|null $requestOptions = null
+    ): ArticleGetSavedArticleFilterResponse;
 }
