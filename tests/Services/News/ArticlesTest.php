@@ -5,6 +5,7 @@ namespace Tests\Services\News;
 use Businessradar\Client;
 use Businessradar\Core\Util;
 use Businessradar\News\Articles\Article;
+use Businessradar\News\Articles\ArticleGetSavedArticleFilterResponse;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
 use Businessradar\News\Articles\ArticleNewFeedbackResponse;
 use Businessradar\NextKey;
@@ -116,5 +117,23 @@ final class ArticlesTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertIsList($result);
+    }
+
+    #[Test]
+    public function testRetrieveSavedArticleFilter(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Mock server tests are disabled');
+        }
+
+        $result = $this->client->news->articles->retrieveSavedArticleFilter(
+            '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(
+            ArticleGetSavedArticleFilterResponse::class,
+            $result
+        );
     }
 }

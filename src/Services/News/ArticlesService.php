@@ -9,6 +9,7 @@ use Businessradar\Core\Exceptions\APIException;
 use Businessradar\Core\Util;
 use Businessradar\News\Articles\Article;
 use Businessradar\News\Articles\ArticleCreateFeedbackParams\FeedbackType;
+use Businessradar\News\Articles\ArticleGetSavedArticleFilterResponse;
 use Businessradar\News\Articles\ArticleListParams\Sorting;
 use Businessradar\News\Articles\ArticleListParams\SortingOrder;
 use Businessradar\News\Articles\ArticleListSavedArticleFiltersResponse;
@@ -241,6 +242,28 @@ final class ArticlesService implements ArticlesContract
     ): array {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveRelated($articleID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * ### Saved Article Filter
+     *
+     * Retrieve a saved article filter of the current profile, including the filters
+     * applied by `saved_article_filter_id` on article search requests.
+     *
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retrieveSavedArticleFilter(
+        string $externalID,
+        RequestOptions|array|null $requestOptions = null
+    ): ArticleGetSavedArticleFilterResponse {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieveSavedArticleFilter($externalID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
