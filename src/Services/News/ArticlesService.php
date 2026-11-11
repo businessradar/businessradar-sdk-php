@@ -64,8 +64,8 @@ final class ArticlesService implements ArticlesContract
      * (400). Company-specific filters also enforce available company credits,
      * raising `CreditsExhausted` (403) when blocked.
      *
-     * Query parse and tokenizer errors from OpenSearch become
-     * `InvalidArticleFiltersError` (400); other search errors propagate.
+     * Query parse and tokenizer errors from OpenSearch become a
+     * `ValidationError` (400); other search errors propagate.
      *
      * @param list<string> $category filter by article Category IDs (UUIDs)
      * @param list<string> $company filter by internal Company UUIDs
