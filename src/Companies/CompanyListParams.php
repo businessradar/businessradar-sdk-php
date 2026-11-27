@@ -22,7 +22,24 @@ use Businessradar\Core\Contracts\BaseModel;
  * `include_annotations`, `page_size`, and `next_key` do not change routing.
  *
  * The results include an `external_id` if the company is already registered in
- * Business Radar.
+ * Business Radar, and always a `registration_candidate_id`: register or add a
+ * result via [POST /companies](/ext/v3/#/ext/ext_v3_companies_create) using that
+ * id.
+ *
+ * `page_size` defaults to 50 and accepts integers from 1 through 100;
+ * invalid sizes or filters raise `ValidationError` (400). Internal results
+ * support `next_key` continuation; undecodable cursors raise `ValidationError`.
+ * Dun & Bradstreet requests are capped at 50, ignore `next_key`, and return
+ * a null cursor with `total_results` equal to the returned result count.
+ *
+ * Dun & Bradstreet 404 responses become empty results. Its throttling,
+ * invalid-input, and connection exceptions propagate, as do internal search
+ * errors. Website parsing failures fall back to the supplied URL unchanged.
+ *
+ * `min_created_at`, `max_created_at`, `min_updated_at` and `max_updated_at`
+ * filter on when a company was added or last updated (inclusive, ISO 8601,
+ * UTC). They use internal search, sort results by that timestamp, and cannot
+ * be combined with `query`.
  *
  * `page_size` defaults to 50 and accepts integers from 1 through 100;
  * invalid sizes or filters raise `ValidationError` (400). Internal results
