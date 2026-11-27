@@ -29,11 +29,11 @@ use Businessradar\Core\Contracts\BaseModel;
  * Dun & Bradstreet's Cleanse Match API and the single best candidate is
  * returned, even if the company is not yet registered in Business Radar.
  *
- * The result is a company object. When the company is already tracked in
- * Business Radar its `external_id` is populated; when it only exists at Dun &
- * Bradstreet the `external_id` is `null` and you can register it via [POST
- * /companies](/ext/v3/#/ext/ext_v3_companies_create) using the returned
- * `duns_number`.
+ * The result is a company object. `external_id` is set when the company is
+ * already tracked in Business Radar and `null` when it only exists at Dun &
+ * Bradstreet. Every result also carries a `registration_candidate_id`: register
+ * or add it via [POST /companies](/ext/v3/#/ext/ext_v3_companies_create) using
+ * that id.
  *
  * Returns `404` when no company can be matched.
  *

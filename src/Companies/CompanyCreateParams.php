@@ -14,8 +14,13 @@ use Businessradar\PortfolioCompanyDetailRequest;
 /**
  * ### Register Company (Asynchronous).
  *
- * Register a new company to Business Radar using its identification details. Once
- * posted, Business Radar processes the request in the background.
+ * Register a new company to Business Radar. The main way is the
+ * `registration_candidate_id` returned by [GET
+ * /companies](/ext/v3/#/ext/ext_v3_companies_list) or [GET
+ * /companies/match](/ext/v3/#/ext/ext_v3_companies_match_retrieve);
+ * `registration_number` (with `country`) or `primary_name` (with `country`) are
+ * also accepted. Once posted, Business Radar processes the request in the
+ * background.
  *
  * To check the progress and/or retrieve the final result, you can use the [GET
  * /registrations/{registration_id}](/ext/v3/#/ext/ext_v3_registrations_retrieve)

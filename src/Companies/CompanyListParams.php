@@ -22,7 +22,9 @@ use Businessradar\Core\Contracts\BaseModel;
  * `include_annotations`, `page_size`, and `next_key` do not change routing.
  *
  * The results include an `external_id` if the company is already registered in
- * Business Radar.
+ * Business Radar, and always a `registration_candidate_id`: register or add a
+ * result via [POST /companies](/ext/v3/#/ext/ext_v3_companies_create) using that
+ * id.
  *
  * `page_size` defaults to 50 and accepts integers from 1 through 100;
  * invalid sizes or filters raise `ValidationError` (400). Internal results
