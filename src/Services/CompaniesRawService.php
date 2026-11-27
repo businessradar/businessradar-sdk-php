@@ -65,6 +65,7 @@ final class CompaniesRawService implements CompaniesRawContract
      *   customerReference?: string|null,
      *   dunsNumber?: string|null,
      *   primaryName?: string|null,
+     *   registrationCandidateID?: string,
      *   registrationNumber?: string|null,
      *   submitInvestigationWhenNotIdentified?: bool,
      * }|CompanyCreateParams $params
