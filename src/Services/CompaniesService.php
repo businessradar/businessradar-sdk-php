@@ -63,6 +63,7 @@ final class CompaniesService implements CompaniesContract
      * A lightweight data structure for company identification (UUID, DUNS, Name, Country)
      * @param Country|value-of<Country>|null $country
      * @param string|null $customerReference customer reference for the client to understand relationship
+     * @param string $registrationCandidateID the reference number of the company to register, as returned by a company search or match result
      * @param bool $submitInvestigationWhenNotIdentified with this option enabled a missing company investigation is submitted automatically when the registration cannot be identified, instead of failing with company not found
      * @param RequestOpts|null $requestOptions
      *
@@ -74,6 +75,7 @@ final class CompaniesService implements CompaniesContract
         ?string $customerReference = null,
         ?string $dunsNumber = null,
         ?string $primaryName = null,
+        ?string $registrationCandidateID = null,
         ?string $registrationNumber = null,
         ?bool $submitInvestigationWhenNotIdentified = null,
         RequestOptions|array|null $requestOptions = null,
@@ -85,6 +87,7 @@ final class CompaniesService implements CompaniesContract
                 'customerReference' => $customerReference,
                 'dunsNumber' => $dunsNumber,
                 'primaryName' => $primaryName,
+                'registrationCandidateID' => $registrationCandidateID,
                 'registrationNumber' => $registrationNumber,
                 'submitInvestigationWhenNotIdentified' => $submitInvestigationWhenNotIdentified,
             ],

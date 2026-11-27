@@ -28,13 +28,14 @@ use Businessradar\Core\Contracts\BaseModel;
  *   addressRegion: string,
  *   addressStreet: string,
  *   country: string,
- *   dunsNumber: string,
+ *   dunsNumber: string|null,
  *   externalID: string|null,
  *   industryCodes: list<\Businessradar\Companies\CompanyMatchResponse\IndustryCode|IndustryCodeShape>,
  *   name: string,
  *   socialLogo: string|null,
  *   websiteIconURL: string|null,
  *   isOutOfBusiness?: bool|null,
+ *   registrationCandidateID?: string|null,
  *   tickerSymbol?: string|null,
  * }
  */
@@ -59,7 +60,7 @@ final class CompanyMatchResponse implements BaseModel
     public string $country;
 
     #[Required('duns_number')]
-    public string $dunsNumber;
+    public ?string $dunsNumber;
 
     #[Required('external_id')]
     public ?string $externalID;
@@ -84,6 +85,12 @@ final class CompanyMatchResponse implements BaseModel
 
     #[Optional('is_out_of_business', nullable: true)]
     public ?bool $isOutOfBusiness;
+
+    /**
+     * Reference number for this company. Always present. Pass it as `registration_candidate_id` to POST /companies or POST /portfolios/{id}/companies to register it.
+     */
+    #[Optional('registration_candidate_id')]
+    public ?string $registrationCandidateID;
 
     #[Optional('ticker_symbol', nullable: true)]
     public ?string $tickerSymbol;
@@ -143,13 +150,14 @@ final class CompanyMatchResponse implements BaseModel
         string $addressRegion,
         string $addressStreet,
         string $country,
-        string $dunsNumber,
+        ?string $dunsNumber,
         ?string $externalID,
         array $industryCodes,
         string $name,
         ?string $socialLogo,
         ?string $websiteIconURL,
         ?bool $isOutOfBusiness = null,
+        ?string $registrationCandidateID = null,
         ?string $tickerSymbol = null,
     ): self {
         $self = new self;
@@ -167,6 +175,7 @@ final class CompanyMatchResponse implements BaseModel
         $self['websiteIconURL'] = $websiteIconURL;
 
         null !== $isOutOfBusiness && $self['isOutOfBusiness'] = $isOutOfBusiness;
+        null !== $registrationCandidateID && $self['registrationCandidateID'] = $registrationCandidateID;
         null !== $tickerSymbol && $self['tickerSymbol'] = $tickerSymbol;
 
         return $self;
@@ -212,7 +221,7 @@ final class CompanyMatchResponse implements BaseModel
         return $self;
     }
 
-    public function withDunsNumber(string $dunsNumber): self
+    public function withDunsNumber(?string $dunsNumber): self
     {
         $self = clone $this;
         $self['dunsNumber'] = $dunsNumber;
@@ -267,6 +276,18 @@ final class CompanyMatchResponse implements BaseModel
     {
         $self = clone $this;
         $self['isOutOfBusiness'] = $isOutOfBusiness;
+
+        return $self;
+    }
+
+    /**
+     * Reference number for this company. Always present. Pass it as `registration_candidate_id` to POST /companies or POST /portfolios/{id}/companies to register it.
+     */
+    public function withRegistrationCandidateID(
+        string $registrationCandidateID
+    ): self {
+        $self = clone $this;
+        $self['registrationCandidateID'] = $registrationCandidateID;
 
         return $self;
     }

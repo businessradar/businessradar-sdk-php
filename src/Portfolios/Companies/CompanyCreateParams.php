@@ -31,6 +31,7 @@ use Businessradar\Portfolios\Companies\CompanyCreateParams\Country;
  *   customerReference?: string|null,
  *   dunsNumber?: string|null,
  *   primaryName?: string|null,
+ *   registrationCandidateID?: string|null,
  *   registrationNumber?: string|null,
  *   submitInvestigationWhenNotIdentified?: bool|null,
  * }
@@ -65,6 +66,12 @@ final class CompanyCreateParams implements BaseModel
     #[Optional('primary_name', nullable: true)]
     public ?string $primaryName;
 
+    /**
+     * The reference number of the company to register, as returned by a company search or match result.
+     */
+    #[Optional('registration_candidate_id')]
+    public ?string $registrationCandidateID;
+
     #[Optional('registration_number', nullable: true)]
     public ?string $registrationNumber;
 
@@ -93,6 +100,7 @@ final class CompanyCreateParams implements BaseModel
         ?string $customerReference = null,
         ?string $dunsNumber = null,
         ?string $primaryName = null,
+        ?string $registrationCandidateID = null,
         ?string $registrationNumber = null,
         ?bool $submitInvestigationWhenNotIdentified = null,
     ): self {
@@ -103,6 +111,7 @@ final class CompanyCreateParams implements BaseModel
         null !== $customerReference && $self['customerReference'] = $customerReference;
         null !== $dunsNumber && $self['dunsNumber'] = $dunsNumber;
         null !== $primaryName && $self['primaryName'] = $primaryName;
+        null !== $registrationCandidateID && $self['registrationCandidateID'] = $registrationCandidateID;
         null !== $registrationNumber && $self['registrationNumber'] = $registrationNumber;
         null !== $submitInvestigationWhenNotIdentified && $self['submitInvestigationWhenNotIdentified'] = $submitInvestigationWhenNotIdentified;
 
@@ -159,6 +168,18 @@ final class CompanyCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['primaryName'] = $primaryName;
+
+        return $self;
+    }
+
+    /**
+     * The reference number of the company to register, as returned by a company search or match result.
+     */
+    public function withRegistrationCandidateID(
+        string $registrationCandidateID
+    ): self {
+        $self = clone $this;
+        $self['registrationCandidateID'] = $registrationCandidateID;
 
         return $self;
     }
